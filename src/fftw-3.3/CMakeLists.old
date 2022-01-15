@@ -1,0 +1,104 @@
+#AMBER wrapper CMake file for fftw3
+#fftw doesn't have a CMake build system, so this just calls into its Automake build system
+set(BUILD_DIR "${CMAKE_BINARY_DIR}/AmberTools/src/fftw-3.3/build")
+set(INSTALL_DIR "${CMAKE_BINARY_DIR}/AmberTools/src/fftw-3.3/install")
+file(MAKE_DIRECTORY ${BUILD_DIR} ${INSTALL_DIR} "${INSTALL_DIR}/include") #create the include directory so that CMake doesn't complain about a nonexistant include path
+
+if(STATIC)
+	set(FFTW_LIB "${INSTALL_DIR}/lib/libfftw3.a")
+	set(FFTW_MPI_LIB "${INSTALL_DIR}/lib/libfftw3_mpi.a")
+else()
+	if(WIN32)
+		set(FFTW_LIB "${INSTALL_DIR}/lib/libfftw3.dll.a")
+		set(FFTW_MPI_LIB "${INSTALL_DIR}/lib/libfftw3_mpi.dll.a")
+	else()
+		set(FFTW_LIB "${INSTALL_DIR}/lib/libfftw3.so")
+		set(FFTW_MPI_LIB "${INSTALL_DIR}/lib/libfftw3_mpi.so")
+	endif()
+endif()
+
+#figure out the correct arguments
+#we set SHELL so that libtool doesn't break when dash is the default shell (Ubuntu and friends)
+set(CONFIGURE_ARGS --prefix=${INSTALL_DIR} --libdir=${INSTALL_DIR}/lib SHELL=${BASH})
+
+if(SHARED)
+	list(APPEND CONFIGURE_ARGS --enable-shared --disable-static)
+else()
+	list(APPEND CONFIGURE_ARGS --enable-static --disable-shared)
+endif()
+
+if(CROSSCOMPILE)
+	list(APPEND CONFIGURE_ARGS --host=${TARGET_TRIPLE})
+endif()	
+
+if(MINGW)
+	list(APPEND CONFIGURE_ARGS --with-our-malloc)
+endif()
+
+if(MPI)
+	list(APPEND CONFIGURE_ARGS --enable-mpi)
+endif()
+
+if(${MIC})
+	list(APPEND CONFIGURE_ARGS --host=x86_64-k1om-linux)
+else()
+	if(${SSE})
+		list(APPEND CONFIGURE_ARGS --enable-sse2=yes)
+	else()
+		list(APPEND CONFIGURE_ARGS --enable-sse=no --enable-sse2=no --enable-avx=no)
+	endif()
+endif()
+
+if(${CMAKE_BUILD_TYPE} STREQUAL Debug)
+	list(APPEND CONFIGURE_ARGS --enable-debug=yes --enable-debug-malloc=yes --enable-debug-alignment=yes)
+endif()
+
+#string(REPLACE "--std=c99" "" SANITIZED_CFLAGS ${CMAKE_C_FLAGS})#fftw won't build with --std=c99
+
+#TODO: pass CFLAGS?  Need to remove --std=c99.
+list(APPEND CONFIGURE_ARGS "CFLAGS=${OPT_CFLAGS_SPC}" "FFLAGS=${CMAKE_Fortran_FLAGS} ${OPT_FFLAGS_SPC}")
+
+list(APPEND CONFIGURE_ARGS CC=${CMAKE_C_COMPILER} F77=${CMAKE_Fortran_COMPILER})
+
+if(MPI)
+	list(APPEND CONFIGURE_ARGS MPICC=${MPI_C_COMPILER} MPIF77=${MPI_Fortran_COMPILER})
+endif()
+# --------------------------------------------------------------------
+
+set(CONFIGURE_COMMAND ${BASH} ${CMAKE_CURRENT_SOURCE_DIR}/configure ${CONFIGURE_ARGS})
+ 
+ExternalProject_Add(fftw3
+	PREFIX ${CMAKE_CURRENT_BINARY_DIR}
+	DOWNLOAD_COMMAND ""
+	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}
+	BINARY_DIR ${BUILD_DIR}
+	CONFIGURE_COMMAND ${CONFIGURE_COMMAND}
+	BUILD_COMMAND ${MAKE_COMMAND} 
+	INSTALL_COMMAND ${MAKE_COMMAND} install)
+
+
+import_library(fftw ${FFTW_LIB} "${INSTALL_DIR}/include")
+
+add_dependencies(fftw fftw3) #link the library file to the build step
+
+install(FILES ${FFTW_LIB} DESTINATION ${LIBDIR})
+
+if(WIN32)
+	install(FILES "${INSTALL_DIR}/lib/libfftw3-3.dll" DESTINATION ${DLLDIR})
+endif()
+
+if(MPI)
+	
+	if(STATIC)
+		add_library(fftw_mpi STATIC IMPORTED GLOBAL)
+	else()
+		add_library(fftw_mpi SHARED IMPORTED GLOBAL)
+	endif()
+		
+	set_property(TARGET fftw_mpi PROPERTY IMPORTED_LOCATION ${FFTW_MPI_LIB})
+	set_property(TARGET fftw_mpi PROPERTY INTERFACE_INCLUDE_DIRECTORIES "${INSTALL_DIR}/include")
+	
+	add_dependencies(fftw_mpi fftw3) #link the library file to the build step
+	
+	install(FILES ${FFTW_MPI_LIB} DESTINATION ${LIBDIR})
+endif()

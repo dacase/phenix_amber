@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Convert a xxxx-sf.cif file from RCSB to rdb/hkl format
+#   input argument is the 4-character PDBID
+
+cat <<EOF > awk.in
+BEGIN {print "h	k	l	fp	sigfp	fc	phic\n4N	4N	4N	12N	12N	12N	12N"}
+NF==11 {printf "%d\t%d\t%d\t%10.3f\t%10.3f\t%10.3f\t%10.3f\n", \$4,\$5,\$6, \$8,\$9,\$10,\$11 }
+EOF
+
+grep -v '?' $1-sf.cif | awk -f awk.in | sort -n -k1 -k2 -k3 > $1.hkl
+/bin/rm awk.in

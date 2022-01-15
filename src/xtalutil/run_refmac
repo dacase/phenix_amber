@@ -1,0 +1,39 @@
+#!/bin/bash 
+
+pdbin=$1
+mtzin=$2
+resolution=$3
+
+#--------------------------------------------------------------------------
+#  Run refmac with and without the solvent map contribution:
+#--------------------------------------------------------------------------
+
+# ========  combine observed data with solvent density as Fpart for refmac
+cad hklin1 $mtzin hklin2 solvent.mtz hklout refme.mtz << EOF > cad.log
+labin file 1 all
+labin file 2 all
+resolution over_all $resolution
+EOF
+
+# ========== run refmac with the md-derived solvent and 
+#            disable the default flat bulk solvent
+refmac5 hklin refme.mtz xyzin $pdbin xyzout refmac_rism.pdb \
+   hklout refmac_rism.mtz  tlsin tlsin << EOF > refmac_rism.log 
+LABIN FP=F-obs-filtered SIGFP=SIGF-obs-filtered FPART1=Fpart1 PHIP1=PHIpart1 FREE=R-free-flags
+SOLVENT NO
+MAKE NEWLigand Noexit
+SCPART 1
+NCYC 40
+REFI BREF MIXED
+EOF
+
+# ========== as a control, run refmac with the defaults
+refmac5 hklin refme.mtz xyzin $pdbin xyzout refmac_flat.pdb \
+    hklout refmac_flat.mtz  tlsin tlsin << EOF > refmac_flat.log
+LABIN FP=F-obs-filtered SIGFP=SIGF-obs-filtered FREE=R-free-flags
+MAKE NEWLigand Noexit
+NCYC 40
+REFI BREF MIXED
+EOF
+
+/bin/rm -f refme.mtz refmac_flat.mmcif refmac_rism.mmcif cad.log tlsin

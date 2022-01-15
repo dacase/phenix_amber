@@ -1,0 +1,32 @@
+#   top-level Makefile for msander
+
+include ../config.h
+
+install:
+	@cd msander && $(MAKE) msander
+	@cd msander && $(MAKE) msander.LES
+	@cd msander && $(MAKE) libsander
+	@cd msander && $(MAKE) libsanderles
+	@cd pysander && $(MAKE) pysander
+	@cd parmed && $(MAKE) parmed
+	@cd xray && $(MAKE) xray
+	@cd xtalutil && $(MAKE) xtalutil
+	@cd addles && $(MAKE) addles
+	@cd leap && $(MAKE) tleap
+	@cd antechamber && $(MAKE) ac
+	@cd sqm && $(MAKE) sqm
+
+clean:
+	-(cd blas && $(MAKE) clean )
+	-(cd lapack && $(MAKE) clean )
+	-(cd arpack && $(MAKE) clean )
+	-(cd sqm && $(MAKE) clean )
+	-(cd rism && $(MAKE) clean )
+	-(cd msander && $(MAKE) clean )
+	-(cd lib && $(MAKE) clean )
+	-(cd xray && $(MAKE) clean )
+	-(cd addles && $(MAKE) clean )
+	-(cd leap && $(MAKE) clean )
+	-(cd antechamber && $(MAKE) clean )
+	-(cd sqm && $(MAKE) clean )
+

@@ -1,0 +1,4056 @@
+#
+#   Please do not edit the "depend" file directly, since it is created by the
+#   "makedepend" script.  If changes are needed, edit "makedepend" itself.
+#
+align.o: \
+                    ../include/dprec.fh\
+                    file_io_dat.o\
+                    nmr.h\
+                    extra.h\
+                    ../include/md.h
+
+
+align.o:   align.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ align.F90
+
+AmberNetcdf.o: \
+                    netcdf.o
+
+
+AmberNetcdf.o:   AmberNetcdf.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ AmberNetcdf.F90
+
+ambmask.o: \
+                    ../include/dprec.fh\
+                    findmask.o\
+                    constants.o\
+                    parms.o
+
+
+ambmask.o:   ambmask.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ ambmask.F90
+
+amd.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    file_io_dat.o\
+                    parallel.h\
+                    constants.o
+
+
+amd.o:   amd.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ amd.F90
+
+
+amopen.o:   amopen.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ amopen.F90
+
+assert.o: \
+                    ../include/assert.fh
+
+
+assert.o:   assert.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ assert.F90
+
+barostats.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    random.o\
+                    parallel.h\
+                    extra.h\
+                    constants.o\
+                    memory_module.o\
+                    nonbond_list.o\
+                    state.o\
+                    ../include/md.h\
+                    nmr.h\
+                    softcore.o\
+                    box.h
+
+
+barostats.o:   barostats.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ barostats.F90
+
+binrestart.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    AmberNetcdf.o\
+                    netcdf.o\
+                    nonbond_list.o\
+                    sglds.o\
+                    constants.o
+
+
+binrestart.o:   binrestart.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ binrestart.F90
+
+binrestart.LES.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    AmberNetcdf.o\
+                    netcdf.o\
+                    nonbond_list.LES.o\
+                    sglds.o\
+                    constants.o
+
+binrestart.LES.o:   binrestart.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ binrestart.F90
+
+bintraj.o: \
+                    ../include/dprec.fh\
+                    AmberNetcdf.o\
+                    file_io_dat.o\
+                    remd.o\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    box.h\
+                    netcdf.o\
+                    nonbond_list.o\
+                    sglds.o
+
+
+bintraj.o:   bintraj.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ bintraj.F90
+
+bintraj.LES.o: \
+                    ../include/dprec.fh\
+                    AmberNetcdf.o\
+                    file_io_dat.o\
+                    remd.LES.o\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    box.h\
+                    netcdf.o\
+                    nonbond_list.LES.o\
+                    sglds.o
+
+bintraj.LES.o:   bintraj.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ bintraj.F90
+
+charmm.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    ew_cntrl.h\
+                    parms.o\
+                    qmmm_module.o\
+                    parallel.h\
+                    constants.o\
+                    state.o
+
+
+charmm.o:   charmm.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ charmm.F90
+
+charmm.API.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    ew_cntrl.h\
+                    parms.o\
+                    qmmm_module.o\
+                    parallel.h\
+                    constants.o\
+                    state.o
+
+charmm.API.o:   charmm.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -c $(FOPTFLAGS) $(FFLAGS) -o $@ charmm.F90
+
+constants.o: \
+                    ../include/dprec.fh
+
+
+constants.o:   constants.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ constants.F90
+
+cpparm.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    charmm.o\
+                    constants.o\
+                    file_io_dat.o\
+                    prmtop_type.o\
+                    parms.o\
+                    ../lib/nxtsec.h\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    box.h\
+                    nmr.h\
+                    extra_pts.h\
+                    ew_cntrl.h\
+                    dssp.o\
+                    molecule.o\
+                    nonbond_list.o\
+                    les.o\
+                    ew_mpole.h
+
+
+cpparm.o:   cpparm.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ cpparm.F90
+
+cpparm.LES.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    charmm.o\
+                    constants.o\
+                    file_io_dat.o\
+                    prmtop_type.o\
+                    parms.o\
+                    ../lib/nxtsec.h\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    box.h\
+                    nmr.h\
+                    extra_pts.h\
+                    ew_cntrl.h\
+                    dssp.o\
+                    molecule.o\
+                    nonbond_list.LES.o\
+                    les.o\
+                    ew_mpole.h
+
+cpparm.LES.o:   cpparm.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ cpparm.F90
+
+crg_reloc.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    parallel.h\
+                    constants.o\
+                    box.h\
+                    nonbond_list.o
+
+
+crg_reloc.o:   crg_reloc.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ crg_reloc.F90
+
+csa.o: \
+                    ../include/dprec.fh\
+                    file_io_dat.o\
+                    nmr.h\
+                    extra.h\
+                    ../include/md.h
+
+
+csa.o:   csa.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ csa.F90
+
+cshf.o: \
+                    ../include/dprec.fh\
+                    file_io_dat.o\
+                    nmr.h\
+                    ../include/md.h\
+                    def_time.h
+
+
+cshf.o:   cshf.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ cshf.F90
+
+debug.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    parms.o\
+                    debug.h\
+                    nonbond_list.o\
+                    charmm.o\
+                    flocntrl.h\
+                    ../include/md.h\
+                    random.o\
+                    state.o\
+                    ../include/memory.h\
+                    extra.h\
+                    ew_frc.h\
+                    ew_cntrl.h\
+                    ew_pme_recip.h\
+                    ew_mpole.h\
+                    stack.o\
+                    parallel.h\
+                    ew_recip.o
+
+
+debug.o:   debug.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ debug.F90
+
+debug.API.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    parms.o\
+                    debug.h\
+                    nonbond_list.API.o\
+                    charmm.API.o\
+                    flocntrl.h\
+                    ../include/md.h\
+                    random.o\
+                    state.o\
+                    ../include/memory.h\
+                    extra.h\
+                    ew_frc.h\
+                    ew_cntrl.h\
+                    ew_pme_recip.h\
+                    ew_mpole.h\
+                    stack.o\
+                    parallel.h\
+                    ew_recip.o
+
+debug.API.o:   debug.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -c $(FOPTFLAGS) $(FFLAGS) -o $@ debug.F90
+
+decnvh.o: \
+                    ../include/dprec.fh
+
+
+decnvh.o:   decnvh.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ decnvh.F90
+
+decomp.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    softcore.o\
+                    ../include/memory.h\
+                    parallel.h\
+                    ../include/md.h
+
+
+decomp.o:   decomp.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ decomp.F90
+
+degcnt.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    softcore.o
+
+
+degcnt.o:   degcnt.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ degcnt.F90
+
+degcnt.LES.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    softcore.o
+
+degcnt.LES.o:   degcnt.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ degcnt.F90
+
+
+dsarpack.o:   dsarpack.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ dsarpack.F90
+
+dssp.o: \
+                    ../include/dprec.fh
+
+
+dssp.o:   dssp.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ dssp.F90
+
+dynlib.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    bintraj.o\
+                    file_io_dat.o\
+                    mdfil.o\
+                    ../include/md.h\
+                    extra.h\
+                    remd.o\
+                    les.o\
+                    ../rism/amber_rism_interface.o\
+                    qmmm_module.o\
+                    state.o\
+                    charmm.o\
+                    crg_reloc.o\
+                    sglds.o\
+                    ips.o\
+                    emap.o\
+                    amd.o\
+                    ew_mpole.h\
+                    ew_cntrl.h\
+                    tgtmd.h\
+                    random.o\
+                    ../include/memory.h\
+                    constants.o\
+                    box.h\
+                    parallel.h
+
+
+dynlib.o:   dynlib.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ dynlib.F90
+
+dynlib.LES.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    bintraj.LES.o\
+                    file_io_dat.o\
+                    mdfil.LES.o\
+                    ../include/md.h\
+                    extra.h\
+                    remd.LES.o\
+                    les.o\
+                    ../rism/amber_rism_interface.o\
+                    qmmm_module.o\
+                    state.o\
+                    charmm.o\
+                    crg_reloc.o\
+                    sglds.o\
+                    ips.o\
+                    emap.o\
+                    amd.o\
+                    ew_mpole.h\
+                    ew_cntrl.h\
+                    tgtmd.h\
+                    random.o\
+                    ../include/memory.h\
+                    constants.o\
+                    box.h\
+                    parallel.h
+
+dynlib.LES.o:   dynlib.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ dynlib.F90
+
+dynlib.API.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    bintraj.o\
+                    file_io_dat.o\
+                    mdfil.o\
+                    ../include/md.h\
+                    extra.h\
+                    remd.o\
+                    les.o\
+                    ../rism/amber_rism_interface.o\
+                    qmmm_module.o\
+                    state.o\
+                    charmm.API.o\
+                    crg_reloc.o\
+                    sglds.o\
+                    ips.o\
+                    emap.o\
+                    amd.o\
+                    ew_mpole.h\
+                    ew_cntrl.h\
+                    tgtmd.h\
+                    random.o\
+                    ../include/memory.h\
+                    constants.o\
+                    box.h\
+                    parallel.h
+
+dynlib.API.o:   dynlib.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -c $(FOPTFLAGS) $(FFLAGS) -o $@ dynlib.F90
+
+dynlib.LESAPI.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    bintraj.o\
+                    file_io_dat.o\
+                    mdfil.o\
+                    ../include/md.h\
+                    extra.h\
+                    remd.o\
+                    les.o\
+                    ../rism/amber_rism_interface.o\
+                    qmmm_module.o\
+                    state.o\
+                    charmm.o\
+                    crg_reloc.o\
+                    sglds.o\
+                    ips.o\
+                    emap.o\
+                    amd.o\
+                    ew_mpole.h\
+                    ew_cntrl.h\
+                    tgtmd.h\
+                    random.o\
+                    ../include/memory.h\
+                    constants.o\
+                    box.h\
+                    parallel.h
+
+dynlib.LESAPI.o:   dynlib.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ dynlib.F90
+
+egb.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    icosasurf.o\
+                    qmmm_module.o\
+                    parms.o\
+                    constants.o\
+                    crg_reloc.o\
+                    mdfil.o\
+                    les.o\
+                    remd.o\
+                    parallel.h\
+                    ../include/md.h\
+                    def_time.h\
+                    gbneck.h\
+                    gbsa.h
+
+
+egb.o:   egb.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ egb.F90
+
+egb.LES.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    icosasurf.o\
+                    qmmm_module.o\
+                    parms.o\
+                    constants.o\
+                    crg_reloc.o\
+                    mdfil.LES.o\
+                    les.o\
+                    remd.LES.o\
+                    parallel.h\
+                    ../include/md.h\
+                    def_time.h\
+                    gbneck.h\
+                    gbsa.h
+
+egb.LES.o:   egb.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ egb.F90
+
+emap.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    constants.o\
+                    findmask.o\
+                    parallel.h\
+                    ../include/memory.h\
+                    ../include/md.h\
+                    ew_bspline.o\
+                    memory_module.o
+
+
+emap.o:   emap.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ emap.F90
+
+ene.o: \
+                    ../include/dprec.fh\
+                    les.o\
+                    parms.o\
+                    file_io_dat.o\
+                    remd.o\
+                    softcore.o\
+                    parallel.h\
+                    nmr.h\
+                    ../include/md.h\
+                    box.h\
+                    flocntrl.h\
+                    constants.o\
+                    charmm.o\
+                    crg_reloc.o\
+                    amd.o\
+                    mdfil.o\
+                    ../include/memory.h\
+                    ew_frc.h\
+                    ew_cntrl.h\
+                    ew_erfc_spline.h\
+                    extra_pts.h\
+                    extra.h
+
+
+ene.o:   ene.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ ene.F90
+
+ene.LES.o: \
+                    ../include/dprec.fh\
+                    les.o\
+                    parms.o\
+                    file_io_dat.o\
+                    remd.LES.o\
+                    softcore.o\
+                    parallel.h\
+                    nmr.h\
+                    ../include/md.h\
+                    box.h\
+                    flocntrl.h\
+                    constants.o\
+                    charmm.o\
+                    crg_reloc.o\
+                    amd.o\
+                    mdfil.LES.o\
+                    ../include/memory.h\
+                    ew_frc.h\
+                    ew_cntrl.h\
+                    ew_erfc_spline.h\
+                    extra_pts.h\
+                    extra.h
+
+ene.LES.o:   ene.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ ene.F90
+
+erfcfun.o: \
+                    ../include/dprec.fh\
+                    constants.o
+
+
+erfcfun.o:   erfcfun.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ erfcfun.F90
+
+ew_box.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    nonbond_list.o\
+                    ew_cntrl.h\
+                    box.h\
+                    constants.o\
+                    extra.h\
+                    ew_parallel.h\
+                    parallel.h\
+                    file_io_dat.o\
+                    AmberNetcdf.o\
+                    binrestart.o\
+                    ../include/md.h\
+                    sander_lib.o
+
+
+ew_box.o:   ew_box.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ ew_box.F90
+
+ew_box.LES.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    nonbond_list.LES.o\
+                    ew_cntrl.h\
+                    box.h\
+                    constants.o\
+                    extra.h\
+                    ew_parallel.h\
+                    parallel.h\
+                    file_io_dat.o\
+                    AmberNetcdf.o\
+                    binrestart.LES.o\
+                    ../include/md.h\
+                    sander_lib.o
+
+ew_box.LES.o:   ew_box.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ ew_box.F90
+
+ew_box.API.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    nonbond_list.API.o\
+                    ew_cntrl.h\
+                    box.h\
+                    constants.o\
+                    extra.h\
+                    ew_parallel.h\
+                    parallel.h\
+                    file_io_dat.o\
+                    AmberNetcdf.o\
+                    binrestart.o\
+                    ../include/md.h\
+                    sander_lib.o
+
+ew_box.API.o:   ew_box.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -c $(FOPTFLAGS) $(FFLAGS) -o $@ ew_box.F90
+
+ew_box.LESAPI.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    nonbond_list.LESAPI.o\
+                    ew_cntrl.h\
+                    box.h\
+                    constants.o\
+                    extra.h\
+                    ew_parallel.h\
+                    parallel.h\
+                    file_io_dat.o\
+                    AmberNetcdf.o\
+                    binrestart.o\
+                    ../include/md.h\
+                    sander_lib.o
+
+ew_box.LESAPI.o:   ew_box.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ ew_box.F90
+
+ew_bspline.o: \
+                    ../include/dprec.fh\
+                    parallel.h\
+                    ew_parallel.h\
+                    constants.o
+
+
+ew_bspline.o:   ew_bspline.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ ew_bspline.F90
+
+ew_fft.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    parallel.h\
+                    ew_parallel.h\
+                    constants.o\
+                    def_time.h\
+                    pubfft.F90
+
+
+ew_fft.o:   ew_fft.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ ew_fft.F90
+
+ew_force.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    ew_recip.o\
+                    stack.o\
+                    nonbond_list.o\
+                    constants.o\
+                    qmmm_module.o\
+                    file_io_dat.o\
+                    les.o\
+                    charmm.o\
+                    parms.o\
+                    ips.o\
+                    extra.h\
+                    ew_cntrl.h\
+                    def_time.h\
+                    ew_time.h\
+                    ew_pme_recip.h\
+                    ew_mpole.h\
+                    ew_erfc_spline.h\
+                    ../include/memory.h\
+                    ../include/md.h\
+                    extra_pts.h\
+                    box.h\
+                    ew_frc.h\
+                    ew_parallel.h\
+                    parallel.h\
+                    crg_reloc.o\
+                    flocntrl.h\
+                    linear_response.o
+
+
+ew_force.o:   ew_force.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ ew_force.F90
+
+ew_force.LES.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    ew_recip.LES.o\
+                    stack.o\
+                    nonbond_list.LES.o\
+                    constants.o\
+                    qmmm_module.o\
+                    file_io_dat.o\
+                    les.o\
+                    charmm.o\
+                    parms.o\
+                    ips.o\
+                    extra.h\
+                    ew_cntrl.h\
+                    def_time.h\
+                    ew_time.h\
+                    ew_pme_recip.h\
+                    ew_mpole.h\
+                    ew_erfc_spline.h\
+                    ../include/memory.h\
+                    ../include/md.h\
+                    extra_pts.h\
+                    box.h\
+                    ew_frc.h\
+                    ew_parallel.h\
+                    parallel.h\
+                    crg_reloc.o\
+                    flocntrl.h\
+                    linear_response.o
+
+ew_force.LES.o:   ew_force.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ ew_force.F90
+
+ew_recip.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    nonbond_list.o\
+                    stack.o\
+                    ew_bspline.o\
+                    flocntrl.h\
+                    ew_pme_recip.h\
+                    ew_frc.h\
+                    def_time.h\
+                    box.h\
+                    parallel.h\
+                    ew_parallel.h\
+                    constants.o\
+                    qmmm_module.o\
+                    crg_reloc.o\
+                    file_io_dat.o\
+                    ../include/md.h\
+                    extra.h
+
+
+ew_recip.o:   ew_recip.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ ew_recip.F90
+
+ew_recip.LES.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    nonbond_list.LES.o\
+                    stack.o\
+                    ew_bspline.o\
+                    flocntrl.h\
+                    ew_pme_recip.h\
+                    ew_frc.h\
+                    def_time.h\
+                    box.h\
+                    parallel.h\
+                    ew_parallel.h\
+                    constants.o\
+                    qmmm_module.o\
+                    crg_reloc.o\
+                    file_io_dat.o\
+                    ../include/md.h\
+                    extra.h
+
+ew_recip.LES.o:   ew_recip.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ ew_recip.F90
+
+ew_setup.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    constants.o\
+                    box.h\
+                    ew_cntrl.h\
+                    extra.h\
+                    nonbond_list.o\
+                    ew_pme_recip.h\
+                    ../include/memory.h\
+                    ew_erfc_spline.h\
+                    ew_mpole.h\
+                    ../include/md.h\
+                    parallel.h\
+                    ew_parallel.h\
+                    stack.o\
+                    qmmm_module.o\
+                    def_time.h\
+                    les.o\
+                    AmberNetcdf.o\
+                    binrestart.o\
+                    file_io_dat.o\
+                    ew_bspline.o\
+                    ew_legal.h
+
+
+ew_setup.o:   ew_setup.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ ew_setup.F90
+
+ew_setup.LES.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    constants.o\
+                    box.h\
+                    ew_cntrl.h\
+                    extra.h\
+                    nonbond_list.LES.o\
+                    ew_pme_recip.h\
+                    ../include/memory.h\
+                    ew_erfc_spline.h\
+                    ew_mpole.h\
+                    ../include/md.h\
+                    parallel.h\
+                    ew_parallel.h\
+                    stack.o\
+                    qmmm_module.o\
+                    def_time.h\
+                    les.o\
+                    AmberNetcdf.o\
+                    binrestart.LES.o\
+                    file_io_dat.o\
+                    ew_bspline.o\
+                    ew_legal.h
+
+ew_setup.LES.o:   ew_setup.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ ew_setup.F90
+
+ew_setup.API.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    constants.o\
+                    box.h\
+                    ew_cntrl.h\
+                    extra.h\
+                    nonbond_list.API.o\
+                    ew_pme_recip.h\
+                    ../include/memory.h\
+                    ew_erfc_spline.h\
+                    ew_mpole.h\
+                    ../include/md.h\
+                    parallel.h\
+                    ew_parallel.h\
+                    stack.o\
+                    qmmm_module.o\
+                    def_time.h\
+                    les.o\
+                    AmberNetcdf.o\
+                    binrestart.o\
+                    file_io_dat.o\
+                    ew_bspline.o\
+                    ew_legal.h
+
+ew_setup.API.o:   ew_setup.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -c $(FOPTFLAGS) $(FFLAGS) -o $@ ew_setup.F90
+
+ew_setup.LESAPI.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    constants.o\
+                    box.h\
+                    ew_cntrl.h\
+                    extra.h\
+                    nonbond_list.LESAPI.o\
+                    ew_pme_recip.h\
+                    ../include/memory.h\
+                    ew_erfc_spline.h\
+                    ew_mpole.h\
+                    ../include/md.h\
+                    parallel.h\
+                    ew_parallel.h\
+                    stack.o\
+                    qmmm_module.o\
+                    def_time.h\
+                    les.o\
+                    AmberNetcdf.o\
+                    binrestart.o\
+                    file_io_dat.o\
+                    ew_bspline.o\
+                    ew_legal.h
+
+ew_setup.LESAPI.o:   ew_setup.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ ew_setup.F90
+
+extra_pts.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    ../include/memory.h\
+                    extra_pts.h\
+                    ew_cntrl.h\
+                    constants.o\
+                    crg_reloc.o\
+                    file_io_dat.o\
+                    softcore.o\
+                    flocntrl.h\
+                    ../include/md.h\
+                    qmmm_module.o
+
+
+extra_pts.o:   extra_pts.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ extra_pts.F90
+
+extra_pts.LES.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    ../include/memory.h\
+                    extra_pts.h\
+                    ew_cntrl.h\
+                    constants.o\
+                    crg_reloc.o\
+                    file_io_dat.o\
+                    softcore.o\
+                    flocntrl.h\
+                    ../include/md.h\
+                    qmmm_module.o
+
+extra_pts.LES.o:   extra_pts.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ extra_pts.F90
+
+extra_pts.API.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    ../include/memory.h\
+                    extra_pts.h\
+                    ew_cntrl.h\
+                    constants.o\
+                    crg_reloc.o\
+                    file_io_dat.o\
+                    softcore.o\
+                    flocntrl.h\
+                    ../include/md.h\
+                    qmmm_module.o
+
+extra_pts.API.o:   extra_pts.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -c $(FOPTFLAGS) $(FFLAGS) -o $@ extra_pts.F90
+
+extra_pts.LESAPI.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    ../include/memory.h\
+                    extra_pts.h\
+                    ew_cntrl.h\
+                    constants.o\
+                    crg_reloc.o\
+                    file_io_dat.o\
+                    softcore.o\
+                    flocntrl.h\
+                    ../include/md.h\
+                    qmmm_module.o
+
+extra_pts.LESAPI.o:   extra_pts.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ extra_pts.F90
+
+fastwt.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    parallel.h\
+                    ../include/md.h\
+                    constants.o
+
+
+fastwt.o:   fastwt.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ fastwt.F90
+
+fastwt.API.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    parallel.h\
+                    ../include/md.h\
+                    constants.o
+
+fastwt.API.o:   fastwt.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -c $(FOPTFLAGS) $(FFLAGS) -o $@ fastwt.F90
+
+file_io_dat.o: \
+                    ../include/dprec.fh
+
+
+file_io_dat.o:   file_io_dat.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ file_io_dat.F90
+
+findmask.o: \
+                    ../include/dprec.fh
+
+
+findmask.o:   findmask.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ findmask.F90
+
+
+fixport.o:   fixport.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ fixport.F90
+
+force.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    nfe-config.h\
+                    nfe-sander-hooks.o\
+                    nfe-sander-proxy.o\
+                    file_io_dat.o\
+                    egb.o\
+                    les.o\
+                    qmmm_module.o\
+                    softcore.o\
+                    remd.o\
+                    ../rism/amber_rism_interface.o\
+                    stack.o\
+                    constants.o\
+                    relax_mat.o\
+                    ew_recip.o\
+                    parms.o\
+                    nonbond_list.o\
+                    dssp.o\
+                    amd.o\
+                    scaledMD.o\
+                    ips.o\
+                    emap.o\
+                    linear_response.o\
+                    charmm.o\
+                    state.o\
+                    crg_reloc.o\
+                    music_module.o\
+                    def_time.h\
+                    ew_frc.h\
+                    ew_cntrl.h\
+                    extra_pts.h\
+                    parallel.h\
+                    ew_parallel.h\
+                    ../include/md.h\
+                    box.h\
+                    nmr.h\
+                    ../include/memory.h\
+                    extra.h\
+                    tgtmd.h\
+                    multitmd.h\
+                    flocntrl.h
+
+
+force.o:   force.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ force.F90
+
+force.LES.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    nfe-config.h\
+                    nfe-sander-hooks.o\
+                    nfe-sander-proxy.o\
+                    file_io_dat.o\
+                    egb.LES.o\
+                    les.o\
+                    qmmm_module.o\
+                    softcore.o\
+                    remd.LES.o\
+                    ../rism/amber_rism_interface.o\
+                    stack.o\
+                    constants.o\
+                    relax_mat.o\
+                    ew_recip.LES.o\
+                    parms.o\
+                    nonbond_list.LES.o\
+                    dssp.o\
+                    amd.o\
+                    scaledMD.o\
+                    ips.o\
+                    emap.o\
+                    linear_response.o\
+                    charmm.o\
+                    state.o\
+                    crg_reloc.o\
+                    music_module.o\
+                    def_time.h\
+                    ew_frc.h\
+                    ew_cntrl.h\
+                    extra_pts.h\
+                    parallel.h\
+                    ew_parallel.h\
+                    ../include/md.h\
+                    box.h\
+                    nmr.h\
+                    ../include/memory.h\
+                    extra.h\
+                    tgtmd.h\
+                    multitmd.h\
+                    flocntrl.h
+
+force.LES.o:   force.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ force.F90
+
+getcor.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    constants.o\
+                    AmberNetcdf.o\
+                    binrestart.o\
+                    file_io_dat.o\
+                    sander_lib.o\
+                    remd.o\
+                    ew_cntrl.h
+
+
+getcor.o:   getcor.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ getcor.F90
+
+getcor.LES.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    constants.o\
+                    AmberNetcdf.o\
+                    binrestart.LES.o\
+                    file_io_dat.o\
+                    sander_lib.o\
+                    remd.LES.o\
+                    ew_cntrl.h
+
+getcor.LES.o:   getcor.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ getcor.F90
+
+icosasurf.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    constants.o
+
+
+icosasurf.o:   icosasurf.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ icosasurf.F90
+
+interface.o: \
+                    ../include/assert.fh\
+                    constants.o\
+                    file_io_dat.o\
+                    prmtop_type.o\
+                    qmmm_module.o\
+                    state.o\
+                    interface_setup.F90\
+                    lmod.o\
+                    md_scheme.o\
+                    les.o\
+                    stack.o\
+                    nmr.o\
+                    crg_reloc.o\
+                    sglds.o\
+                    amd.o\
+                    scaledMD.o\
+                    ips.o\
+                    emap.o\
+                    ../rism/amber_rism_interface.o\
+                    dssp.o\
+                    softcore.o\
+                    mbar.o\
+                    remd.o\
+                    linear_response.o\
+                    nfe-sander-proxy.o\
+                    box.h\
+                    def_time.h\
+                    ew_cntrl.h\
+                    ew_pme_recip.h\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    nmr.h\
+                    tgtmd.h\
+                    multitmd.h\
+                    ew_erfc_spline.h\
+                    findmask.o\
+                    egb.o\
+                    parms.o\
+                    nonbond_list.o\
+                    sander_lib.o\
+                    qmmm_vsolv_module.o\
+                    mdfil.o\
+                    parallel.h\
+                    extra_pts.h\
+                    ew_mpole.h\
+                    ew_legal.h\
+                    memory_module.o\
+                    qmmm_adaptive_module.o\
+                    charmm.o\
+                    molecule.o\
+                    AmberNetcdf.o\
+                    binrestart.o
+
+
+interface.o:   interface.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ interface.F90
+
+interface.LESAPI.o: \
+                    ../include/assert.fh\
+                    constants.o\
+                    file_io_dat.o\
+                    prmtop_type.o\
+                    qmmm_module.o\
+                    state.o\
+                    interface_setup.F90\
+                    lmod.o\
+                    md_scheme.o\
+                    les.o\
+                    stack.o\
+                    nmr.o\
+                    crg_reloc.o\
+                    sglds.o\
+                    amd.o\
+                    scaledMD.o\
+                    ips.o\
+                    emap.o\
+                    ../rism/amber_rism_interface.o\
+                    dssp.o\
+                    softcore.o\
+                    mbar.o\
+                    remd.o\
+                    linear_response.o\
+                    nfe-sander-proxy.o\
+                    box.h\
+                    def_time.h\
+                    ew_cntrl.h\
+                    ew_pme_recip.h\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    nmr.h\
+                    tgtmd.h\
+                    multitmd.h\
+                    ew_erfc_spline.h\
+                    findmask.o\
+                    egb.o\
+                    parms.o\
+                    nonbond_list.LESAPI.o\
+                    sander_lib.o\
+                    qmmm_vsolv_module.o\
+                    mdfil.o\
+                    parallel.h\
+                    extra_pts.h\
+                    ew_mpole.h\
+                    ew_legal.h\
+                    memory_module.o\
+                    qmmm_adaptive_module.o\
+                    charmm.o\
+                    molecule.o\
+                    AmberNetcdf.o\
+                    binrestart.o
+
+interface.LESAPI.o:   interface.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -DLES -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ interface.F90
+
+interface_setup.F90: \
+                    nfe-sander-hooks.o\
+                    lmod.o\
+                    constants.o\
+                    qmmm_module.o\
+                    qm2_read_nm_and_alloc.o\
+                    qmmm_vsolv_module.o\
+                    qm2_extern_module.o\
+                    egb.o\
+                    fastwt.o\
+                    les.o\
+                    relax_mat.o\
+                    nmr.o\
+                    ew_recip.o\
+                    parms.o\
+                    molecule.o\
+                    nonbond_list.o\
+                    stack.o\
+                    ../rism/amber_rism_interface.o\
+                    linear_response.o\
+                    charmm.o\
+                    memory_module.o\
+                    sglds.o\
+                    ips.o\
+                    crg_reloc.o\
+                    emap.o\
+                    file_io_dat.o\
+                    barostats.o\
+                    random.o\
+                    amd.o\
+                    scaledMD.o\
+                    prmtop_type.o\
+                    ../include/memory.h\
+                    nmr.h\
+                    box.h\
+                    ../include/md.h\
+                    extra.h\
+                    tgtmd.h\
+                    multitmd.h\
+                    parallel.h\
+                    ew_pme_recip.h\
+                    ew_frc.h\
+                    ew_erfc_spline.h\
+                    ew_parallel.h\
+                    ew_mpole.h\
+                    ew_cntrl.h\
+                    def_time.h
+
+ips.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    constants.o\
+                    extra.h\
+                    nonbond_list.o\
+                    parallel.h\
+                    stack.o\
+                    ew_bspline.o\
+                    flocntrl.h\
+                    def_time.h\
+                    box.h\
+                    ew_parallel.h\
+                    file_io_dat.o\
+                    ../include/md.h
+
+
+ips.o:   ips.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ ips.F90
+
+iwrap2.o: \
+                    ../include/dprec.fh\
+                    molecule.o\
+                    box.h
+
+
+iwrap2.o:   iwrap2.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ iwrap2.F90
+
+les.o: \
+                    ../include/dprec.fh
+
+
+les.o:   les.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ les.F90
+
+linear_response.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    findmask.o\
+                    nonbond_list.o\
+                    constants.o\
+                    icosasurf.o
+
+
+linear_response.o:   linear_response.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ linear_response.F90
+
+lmod.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    ../include/memory.h\
+                    state.o\
+                    file_io_dat.o\
+                    ../include/md.h\
+                    xmin.h\
+                    parallel.h\
+                    constants.o\
+                    bintraj.o\
+                    extra.h\
+                    nmr.h
+
+
+lmod.o:   lmod.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ lmod.F90
+
+lmod.LES.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    ../include/memory.h\
+                    state.o\
+                    file_io_dat.o\
+                    ../include/md.h\
+                    xmin.h\
+                    parallel.h\
+                    constants.o\
+                    bintraj.LES.o\
+                    extra.h\
+                    nmr.h
+
+lmod.LES.o:   lmod.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ lmod.F90
+
+locmem.o: \
+                    ../include/dprec.fh\
+                    nonbond_list.o\
+                    ../rism/amber_rism_interface.o\
+                    linear_response.o\
+                    box.h\
+                    nmr.h\
+                    ../include/memory.h\
+                    ../include/md.h\
+                    tgtmd.h\
+                    multitmd.h\
+                    ew_cntrl.h\
+                    extra_pts.h\
+                    dynph.h\
+                    parallel.h
+
+
+locmem.o:   locmem.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ locmem.F90
+
+locmem.LES.o: \
+                    ../include/dprec.fh\
+                    nonbond_list.LES.o\
+                    ../rism/amber_rism_interface.o\
+                    linear_response.o\
+                    box.h\
+                    nmr.h\
+                    ../include/memory.h\
+                    ../include/md.h\
+                    tgtmd.h\
+                    multitmd.h\
+                    ew_cntrl.h\
+                    extra_pts.h\
+                    dynph.h\
+                    parallel.h
+
+locmem.LES.o:   locmem.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ locmem.F90
+
+
+matinv.o:   matinv.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ matinv.F90
+
+mbar.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    parallel.h
+
+
+mbar.o:   mbar.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ mbar.F90
+
+md_scheme.o: \
+                    ../include/dprec.fh\
+                    ../include/md.h\
+                    parallel.h\
+                    constants.o\
+                    random.o\
+                    les.o
+
+
+md_scheme.o:   md_scheme.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ md_scheme.F90
+
+md_scheme.LES.o: \
+                    ../include/dprec.fh\
+                    ../include/md.h\
+                    parallel.h\
+                    constants.o\
+                    random.o\
+                    les.o
+
+md_scheme.LES.o:   md_scheme.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ md_scheme.F90
+
+mdfil.o: \
+                    file_io_dat.o\
+                    ../rism/amber_rism_interface.o\
+                    ew_parallel.h\
+                    parallel.h\
+                    ../include/dprec.fh
+
+
+mdfil.o:   mdfil.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ mdfil.F90
+
+mdfil.LES.o: \
+                    file_io_dat.o\
+                    ../rism/amber_rism_interface.o\
+                    ew_parallel.h\
+                    parallel.h\
+                    ../include/dprec.fh
+
+mdfil.LES.o:   mdfil.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ mdfil.F90
+
+mdread.o: \
+                    ../include/dprec.fh\
+                    nfe-config.h\
+                    ../include/assert.fh\
+                    file_io_dat.o\
+                    lmod.o\
+                    qmmm_module.o\
+                    constants.o\
+                    md_scheme.o\
+                    les.o\
+                    stack.o\
+                    nmr.o\
+                    crg_reloc.o\
+                    sglds.o\
+                    amd.o\
+                    scaledMD.o\
+                    ips.o\
+                    emap.o\
+                    dssp.o\
+                    softcore.o\
+                    mbar.o\
+                    remd.o\
+                    linear_response.o\
+                    ../rism/amber_rism_interface.o\
+                    nfe-sander-proxy.o\
+                    box.h\
+                    def_time.h\
+                    ew_cntrl.h\
+                    ew_pme_recip.h\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    nmr.h\
+                    tgtmd.h\
+                    multitmd.h\
+                    ew_erfc_spline.h\
+                    findmask.o\
+                    egb.o\
+                    parms.o\
+                    nonbond_list.o\
+                    sander_lib.o\
+                    qmmm_vsolv_module.o\
+                    mdfil.o\
+                    parallel.h\
+                    extra_pts.h\
+                    ew_mpole.h\
+                    ew_legal.h\
+                    mdreadutils.h
+
+
+mdread.o:   mdread.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ mdread.F90
+
+mdread.LES.o: \
+                    ../include/dprec.fh\
+                    nfe-config.h\
+                    ../include/assert.fh\
+                    file_io_dat.o\
+                    lmod.LES.o\
+                    qmmm_module.o\
+                    constants.o\
+                    md_scheme.LES.o\
+                    les.o\
+                    stack.o\
+                    nmr.LES.o\
+                    crg_reloc.o\
+                    sglds.o\
+                    amd.o\
+                    scaledMD.o\
+                    ips.o\
+                    emap.o\
+                    dssp.o\
+                    softcore.o\
+                    mbar.o\
+                    remd.LES.o\
+                    linear_response.o\
+                    ../rism/amber_rism_interface.o\
+                    nfe-sander-proxy.o\
+                    box.h\
+                    def_time.h\
+                    ew_cntrl.h\
+                    ew_pme_recip.h\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    nmr.h\
+                    tgtmd.h\
+                    multitmd.h\
+                    ew_erfc_spline.h\
+                    findmask.o\
+                    egb.LES.o\
+                    parms.o\
+                    nonbond_list.LES.o\
+                    sander_lib.o\
+                    qmmm_vsolv_module.o\
+                    mdfil.LES.o\
+                    parallel.h\
+                    extra_pts.h\
+                    ew_mpole.h\
+                    ew_legal.h\
+                    mdreadutils.h
+
+mdread.LES.o:   mdread.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ mdread.F90
+
+mdwrit.o: \
+                    ../include/dprec.fh\
+                    nfe-config.h\
+                    file_io_dat.o\
+                    nfe-sander-hooks.o\
+                    nfe-sander-proxy.o\
+                    binrestart.o\
+                    remd.o\
+                    sglds.o\
+                    nonbond_list.o
+
+
+mdwrit.o:   mdwrit.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ mdwrit.F90
+
+mdwrit.LES.o: \
+                    ../include/dprec.fh\
+                    nfe-config.h\
+                    file_io_dat.o\
+                    nfe-sander-hooks.o\
+                    nfe-sander-proxy.o\
+                    binrestart.LES.o\
+                    remd.LES.o\
+                    sglds.o\
+                    nonbond_list.LES.o
+
+mdwrit.LES.o:   mdwrit.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ mdwrit.F90
+
+memory_module.o: \
+                    ../include/dprec.fh\
+                    ../include/memory.h\
+                    ../include/md.h\
+                    nmr.h\
+                    dynph.h
+
+
+memory_module.o:   memory_module.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ memory_module.F90
+
+mexit.o: \
+                    parallel.h
+
+
+mexit.o:   mexit.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ mexit.F90
+
+minrit.o: \
+                    ../include/dprec.fh\
+                    file_io_dat.o\
+                    binrestart.o\
+                    box.h\
+                    nonbond_list.o
+
+
+minrit.o:   minrit.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ minrit.F90
+
+minrit.LES.o: \
+                    ../include/dprec.fh\
+                    file_io_dat.o\
+                    binrestart.LES.o\
+                    box.h\
+                    nonbond_list.LES.o
+
+minrit.LES.o:   minrit.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ minrit.F90
+
+molecule.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh
+
+
+molecule.o:   molecule.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ molecule.F90
+
+mt19937.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    netcdf.o\
+                    nfe-constants.o\
+                    nfe-sander-proxy.o\
+                    nfe-utils.o\
+                    nfe-mpi.h
+
+
+mt19937.o:   mt19937.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ mt19937.F90
+
+mtmdcall.o: \
+                    ../include/dprec.fh\
+                    multitmd.o\
+                    file_io_dat.o\
+                    parallel.h\
+                    multitmd.h
+
+
+mtmdcall.o:   mtmdcall.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ mtmdcall.F90
+
+multisander.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    nfe-config.h\
+                    remd.o\
+                    mdfil.o\
+                    file_io_dat.o\
+                    AmberNetcdf.o\
+                    nfe-sander-hooks.o\
+                    nfe-sander-proxy.o\
+                    omp_lib.o\
+                    parallel.h\
+                    ew_parallel.h\
+                    ../include/md.h
+
+
+multisander.o:   multisander.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ multisander.F90
+
+multisander.LES.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    nfe-config.h\
+                    remd.LES.o\
+                    mdfil.LES.o\
+                    file_io_dat.o\
+                    AmberNetcdf.o\
+                    nfe-sander-hooks.o\
+                    nfe-sander-proxy.o\
+                    omp_lib.o\
+                    parallel.h\
+                    ew_parallel.h\
+                    ../include/md.h
+
+multisander.LES.o:   multisander.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ multisander.F90
+
+multitmd.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    findmask.o\
+                    file_io_dat.o
+
+
+multitmd.o:   multitmd.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ multitmd.F90
+
+music_module.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    constants.o\
+                    parallel.h\
+                    nonbond_list.o\
+                    extra.h\
+                    memory_module.o
+
+
+music_module.o:   music_module.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ music_module.F90
+
+new_time.o: \
+                    ../include/dprec.fh\
+                    def_time.h\
+                    new_time.h\
+                    stack.o\
+                    extra.h\
+                    parallel.h\
+                    qmmm_module.o\
+                    ../include/md.h
+
+
+new_time.o:   new_time.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ new_time.F90
+
+new_time.API.o: \
+                    ../include/dprec.fh\
+                    def_time.h\
+                    new_time.h\
+                    stack.o\
+                    extra.h\
+                    parallel.h\
+                    qmmm_module.o\
+                    ../include/md.h
+
+new_time.API.o:   new_time.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ new_time.F90
+
+nfe-abmd-hooks.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-constants.o\
+                    nfe-umbrella.o\
+                    nfe-colvar-type.o\
+                    random.o\
+                    nfe-sander-proxy.o\
+                    nfe-mpi.h\
+                    nfe-utils.o\
+                    nfe-colvar.o\
+                    ../include/md.h\
+                    nonbond_list.o\
+                    box.h\
+                    ew_cntrl.h
+
+
+nfe-abmd-hooks.o:   nfe-abmd-hooks.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-abmd-hooks.F90
+
+nfe-bbmd-ctxt.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-constants.o\
+                    nfe-umbrella.o\
+                    nfe-colvar-type.o\
+                    nfe-utils.o\
+                    nfe-colvar.o\
+                    nfe-sander-proxy.o\
+                    file_io_dat.o\
+                    nfe-mpi.h
+
+
+nfe-bbmd-ctxt.o:   nfe-bbmd-ctxt.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ nfe-bbmd-ctxt.F90
+
+nfe-bbmd-hooks.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    mt19937.o\
+                    nfe-bbmd-ctxt.o\
+                    nfe-constants.o\
+                    nfe-utils.o\
+                    nfe-sander-proxy.o\
+                    file_io_dat.o\
+                    nfe-mpi.h
+
+
+nfe-bbmd-hooks.o:   nfe-bbmd-hooks.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ nfe-bbmd-hooks.F90
+
+nfe-colvar-math.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-constants.o\
+                    nfe-utils.o
+
+
+nfe-colvar-math.o:   nfe-colvar-math.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-colvar-math.F90
+
+nfe-colvar-type.o: \
+                    nfe-utils.h\
+                    nfe-config.h
+
+
+nfe-colvar-type.o:   nfe-colvar-type.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-colvar-type.F90
+
+nfe-colvar-utils.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-utils.o\
+                    nfe-constants.o\
+                    nfe-sander-proxy.o\
+                    nfe-mpi.h\
+                    nfe-colvar-type.o
+
+
+nfe-colvar-utils.o:   nfe-colvar-utils.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ nfe-colvar-utils.F90
+
+nfe-colvar.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-colvar-type.o\
+                    nfe-cv-ANGLE.o\
+                    nfe-cv-TORSION.o\
+                    nfe-cv-DISTANCE.o\
+                    nfe-cv-MULTI_RMSD.o\
+                    nfe-cv-R_OF_GYRATION.o\
+                    nfe-cv-HANDEDNESS.o\
+                    nfe-cv-N_OF_BONDS.o\
+                    nfe-cv-N_OF_STRUCTURES.o\
+                    nfe-cv-LCOD.o\
+                    nfe-cv-COS_OF_DIHEDRAL.o\
+                    nfe-cv-COM_ANGLE.o\
+                    nfe-cv-COM_TORSION.o\
+                    nfe-cv-COM_DISTANCE.o\
+                    nfe-cv-PCA.o\
+                    nfe-cv-SIN_OF_DIHEDRAL.o\
+                    nfe-cv-PAIR_DIHEDRAL.o\
+                    nfe-cv-PATTERN_DIHEDRAL.o\
+                    nfe-cv-DF_COM_DISTANCE.o\
+                    nfe-cv-ORIENTATION_ANGLE.o\
+                    nfe-cv-ORIENTATION_PROJ.o\
+                    nfe-cv-SPINANGLE.o\
+                    nfe-cv-TILT.o\
+                    nfe-cv-QUATERNION1.o\
+                    nfe-cv-QUATERNION2.o\
+                    nfe-cv-QUATERNION3.o\
+                    nfe-cv-QUATERNION0.o\
+                    nfe-constants.o\
+                    constants.o\
+                    nfe-utils.o\
+                    nfe-sander-proxy.o\
+                    nfe-mpi.h\
+                    sander_lib.o
+
+
+nfe-colvar.o:   nfe-colvar.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-colvar.F90
+
+nfe-constants.o: \
+                    nfe-config.h
+
+
+nfe-constants.o:   nfe-constants.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ nfe-constants.F90
+
+nfe-cv-ANGLE.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-utils.o\
+                    nfe-sander-proxy.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-colvar-math.o\
+                    nfe-mpi.h\
+                    nfe-colvar-utils.o
+
+
+nfe-cv-ANGLE.o:   nfe-cv-ANGLE.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-ANGLE.F90
+
+nfe-cv-COM_ANGLE.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-colvar-math.o\
+                    nfe-colvar-utils.o\
+                    nfe-mpi.h\
+                    nfe-sander-proxy.o\
+                    nfe-utils.o
+
+
+nfe-cv-COM_ANGLE.o:   nfe-cv-COM_ANGLE.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-COM_ANGLE.F90
+
+nfe-cv-COM_DISTANCE.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-colvar-math.o\
+                    nfe-colvar-utils.o\
+                    nfe-mpi.h\
+                    nfe-sander-proxy.o\
+                    nfe-utils.o
+
+
+nfe-cv-COM_DISTANCE.o:   nfe-cv-COM_DISTANCE.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-COM_DISTANCE.F90
+
+nfe-cv-COM_TORSION.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-colvar-math.o\
+                    nfe-colvar-utils.o\
+                    nfe-mpi.h\
+                    nfe-sander-proxy.o\
+                    nfe-utils.o
+
+
+nfe-cv-COM_TORSION.o:   nfe-cv-COM_TORSION.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-COM_TORSION.F90
+
+nfe-cv-COS_OF_DIHEDRAL.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-utils.o\
+                    nfe-sander-proxy.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-mpi.h\
+                    nfe-colvar-math.o
+
+
+nfe-cv-COS_OF_DIHEDRAL.o:   nfe-cv-COS_OF_DIHEDRAL.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-COS_OF_DIHEDRAL.F90
+
+nfe-cv-DF_COM_DISTANCE.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-colvar-math.o\
+                    nfe-colvar-utils.o\
+                    nfe-mpi.h\
+                    nfe-sander-proxy.o\
+                    nfe-utils.o
+
+
+nfe-cv-DF_COM_DISTANCE.o:   nfe-cv-DF_COM_DISTANCE.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-DF_COM_DISTANCE.F90
+
+nfe-cv-DISTANCE.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-sander-proxy.o\
+                    nonbond_list.o\
+                    nfe-colvar-math.o\
+                    nfe-utils.o\
+                    nfe-mpi.h\
+                    nfe-colvar-utils.o
+
+
+nfe-cv-DISTANCE.o:   nfe-cv-DISTANCE.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-DISTANCE.F90
+
+nfe-cv-HANDEDNESS.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-utils.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-mpi.h\
+                    nfe-colvar-utils.o\
+                    nfe-sander-proxy.o
+
+
+nfe-cv-HANDEDNESS.o:   nfe-cv-HANDEDNESS.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-HANDEDNESS.F90
+
+nfe-cv-LCOD.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-utils.o\
+                    nfe-sander-proxy.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-colvar-math.o\
+                    nfe-mpi.h\
+                    nfe-colvar-utils.o
+
+
+nfe-cv-LCOD.o:   nfe-cv-LCOD.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-LCOD.F90
+
+nfe-cv-MULTI_RMSD.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-cv-priv.type\
+                    nfe-cv-priv.decl\
+                    nfe-cv-priv.impl\
+                    nfe-rmsd.o\
+                    nfe-utils.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-mpi.h\
+                    nfe-sander-proxy.o\
+                    nfe-colvar-utils.o
+
+
+nfe-cv-MULTI_RMSD.o:   nfe-cv-MULTI_RMSD.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-MULTI_RMSD.F90
+
+nfe-cv-N_OF_BONDS.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-mpi.h\
+                    nfe-utils.o\
+                    nfe-sander-proxy.o
+
+
+nfe-cv-N_OF_BONDS.o:   nfe-cv-N_OF_BONDS.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-N_OF_BONDS.F90
+
+nfe-cv-N_OF_STRUCTURES.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-cv-priv.type\
+                    nfe-cv-priv.decl\
+                    nfe-cv-priv.impl\
+                    nfe-rmsd.o\
+                    nfe-utils.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-mpi.h\
+                    nfe-sander-proxy.o\
+                    nfe-colvar-utils.o
+
+
+nfe-cv-N_OF_STRUCTURES.o:   nfe-cv-N_OF_STRUCTURES.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-N_OF_STRUCTURES.F90
+
+nfe-cv-ORIENTATION_ANGLE.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-cv-priv.type\
+                    nfe-cv-priv.decl\
+                    nfe-cv-priv.impl\
+                    nfe-rmsd.o\
+                    nfe-utils.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-mpi.h\
+                    nfe-sander-proxy.o\
+                    nfe-colvar-utils.o
+
+
+nfe-cv-ORIENTATION_ANGLE.o:   nfe-cv-ORIENTATION_ANGLE.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-ORIENTATION_ANGLE.F90
+
+nfe-cv-ORIENTATION_PROJ.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-cv-priv.type\
+                    nfe-cv-priv.decl\
+                    nfe-cv-priv.impl\
+                    nfe-rmsd.o\
+                    nfe-utils.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-mpi.h\
+                    nfe-sander-proxy.o\
+                    nfe-colvar-utils.o
+
+
+nfe-cv-ORIENTATION_PROJ.o:   nfe-cv-ORIENTATION_PROJ.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-ORIENTATION_PROJ.F90
+
+nfe-cv-PAIR_DIHEDRAL.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-utils.o\
+                    nfe-sander-proxy.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-colvar-math.o\
+                    nfe-mpi.h
+
+
+nfe-cv-PAIR_DIHEDRAL.o:   nfe-cv-PAIR_DIHEDRAL.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-PAIR_DIHEDRAL.F90
+
+nfe-cv-PATTERN_DIHEDRAL.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-utils.o\
+                    nfe-sander-proxy.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-mpi.h\
+                    nfe-colvar-math.o
+
+
+nfe-cv-PATTERN_DIHEDRAL.o:   nfe-cv-PATTERN_DIHEDRAL.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-PATTERN_DIHEDRAL.F90
+
+nfe-cv-PCA.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-cv-priv.type\
+                    nfe-cv-priv.decl\
+                    nfe-cv-priv.impl\
+                    nfe-utils.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-rmsd.o\
+                    nfe-sander-proxy.o\
+                    nfe-mpi.h\
+                    nfe-colvar-utils.o
+
+
+nfe-cv-PCA.o:   nfe-cv-PCA.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-PCA.F90
+
+nfe-cv-QUATERNION0.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-cv-priv.type\
+                    nfe-cv-priv.decl\
+                    nfe-cv-priv.impl\
+                    nfe-rmsd.o\
+                    nfe-utils.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-mpi.h\
+                    nfe-sander-proxy.o\
+                    nfe-colvar-utils.o
+
+
+nfe-cv-QUATERNION0.o:   nfe-cv-QUATERNION0.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-QUATERNION0.F90
+
+nfe-cv-QUATERNION1.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-cv-priv.type\
+                    nfe-cv-priv.decl\
+                    nfe-cv-priv.impl\
+                    nfe-rmsd.o\
+                    nfe-utils.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-mpi.h\
+                    nfe-sander-proxy.o\
+                    nfe-colvar-utils.o
+
+
+nfe-cv-QUATERNION1.o:   nfe-cv-QUATERNION1.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-QUATERNION1.F90
+
+nfe-cv-QUATERNION2.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-cv-priv.type\
+                    nfe-cv-priv.decl\
+                    nfe-cv-priv.impl\
+                    nfe-rmsd.o\
+                    nfe-utils.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-mpi.h\
+                    nfe-sander-proxy.o\
+                    nfe-colvar-utils.o
+
+
+nfe-cv-QUATERNION2.o:   nfe-cv-QUATERNION2.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-QUATERNION2.F90
+
+nfe-cv-QUATERNION3.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-cv-priv.type\
+                    nfe-cv-priv.decl\
+                    nfe-cv-priv.impl\
+                    nfe-rmsd.o\
+                    nfe-utils.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-mpi.h\
+                    nfe-sander-proxy.o\
+                    nfe-colvar-utils.o
+
+
+nfe-cv-QUATERNION3.o:   nfe-cv-QUATERNION3.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-QUATERNION3.F90
+
+nfe-cv-R_OF_GYRATION.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-cv-priv.type\
+                    nfe-cv-priv.decl\
+                    nfe-cv-priv.impl\
+                    nfe-utils.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-mpi.h\
+                    nfe-colvar-utils.o\
+                    nfe-sander-proxy.o
+
+
+nfe-cv-R_OF_GYRATION.o:   nfe-cv-R_OF_GYRATION.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-R_OF_GYRATION.F90
+
+nfe-cv-SIN_OF_DIHEDRAL.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-utils.o\
+                    nfe-sander-proxy.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-mpi.h\
+                    nfe-colvar-math.o
+
+
+nfe-cv-SIN_OF_DIHEDRAL.o:   nfe-cv-SIN_OF_DIHEDRAL.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-SIN_OF_DIHEDRAL.F90
+
+nfe-cv-SPINANGLE.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-cv-priv.type\
+                    nfe-cv-priv.decl\
+                    nfe-cv-priv.impl\
+                    nfe-rmsd.o\
+                    nfe-utils.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-colvar-math.o\
+                    nfe-mpi.h\
+                    nfe-sander-proxy.o\
+                    nfe-colvar-utils.o
+
+
+nfe-cv-SPINANGLE.o:   nfe-cv-SPINANGLE.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-SPINANGLE.F90
+
+nfe-cv-TILT.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-cv-priv.type\
+                    nfe-cv-priv.decl\
+                    nfe-cv-priv.impl\
+                    nfe-rmsd.o\
+                    nfe-utils.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-colvar-math.o\
+                    nfe-mpi.h\
+                    nfe-sander-proxy.o\
+                    nfe-colvar-utils.o
+
+
+nfe-cv-TILT.o:   nfe-cv-TILT.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-TILT.F90
+
+nfe-cv-TORSION.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-utils.o\
+                    nfe-sander-proxy.o\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-colvar-math.o\
+                    nfe-mpi.h\
+                    nfe-colvar-utils.o
+
+
+nfe-cv-TORSION.o:   nfe-cv-TORSION.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-cv-TORSION.F90
+
+nfe-pmd-hooks.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-colvar.o\
+                    nfe-utils.o\
+                    nfe-sander-proxy.o\
+                    nfe-mpi.h
+
+
+nfe-pmd-hooks.o:   nfe-pmd-hooks.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-pmd-hooks.F90
+
+nfe-read-pca.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-colvar-type.o\
+                    nfe-constants.o\
+                    nfe-utils.o
+
+
+nfe-read-pca.o:   nfe-read-pca.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-read-pca.F90
+
+nfe-rmsd.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-utils.o\
+                    nfe-constants.o
+
+
+nfe-rmsd.o:   nfe-rmsd.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-rmsd.F90
+
+nfe-sander-hooks.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-constants.o\
+                    nfe-pmd-hooks.o\
+                    nfe-abmd-hooks.o\
+                    nfe-sander-proxy.o\
+                    nfe-stsm-hooks.o\
+                    nfe-mpi.h\
+                    nfe-smd-hooks.o\
+                    nfe-bbmd-hooks.o\
+                    nfe-utils.o\
+                    sglds.o
+
+
+nfe-sander-hooks.o:   nfe-sander-hooks.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-sander-hooks.F90
+
+nfe-sander-proxy.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    file_io_dat.o\
+                    ../include/md.h\
+                    nfe-mpi.h\
+                    ../include/memory.h\
+                    sglds.o\
+                    box.h\
+                    nfe-constants.o
+
+
+nfe-sander-proxy.o:   nfe-sander-proxy.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ nfe-sander-proxy.F90
+
+nfe-smd-hooks.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-utils.o\
+                    nfe-value.o\
+                    nfe-colvar.o\
+                    nfe-sander-proxy.o\
+                    sander_lib.o\
+                    nfe-mpi.h
+
+
+nfe-smd-hooks.o:   nfe-smd-hooks.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-smd-hooks.F90
+
+nfe-stsm-hooks.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-constants.o\
+                    nfe-colvar-type.o\
+                    nfe-colvar.o\
+                    nfe-mpi.h\
+                    nfe-utils.o\
+                    nfe-sander-proxy.o
+
+
+nfe-stsm-hooks.o:   nfe-stsm-hooks.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-stsm-hooks.F90
+
+nfe-umbrella.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    netcdf.o\
+                    nfe-constants.o\
+                    nfe-utils.o\
+                    nfe-mpi.h\
+                    nfe-sander-proxy.o
+
+
+nfe-umbrella.o:   nfe-umbrella.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nfe-umbrella.F90
+
+nfe-utils.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-constants.o\
+                    nfe-sander-proxy.o\
+                    nfe-mpi.h
+
+
+nfe-utils.o:   nfe-utils.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ nfe-utils.F90
+
+nfe-value.o: \
+                    nfe-utils.h\
+                    nfe-config.h\
+                    nfe-constants.o\
+                    nfe-utils.o
+
+
+nfe-value.o:   nfe-value.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ nfe-value.F90
+
+
+nmlsrc.o:   nmlsrc.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ nmlsrc.F90
+
+nmr.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    constants.o\
+                    softcore.o\
+                    nmr.h\
+                    ../include/memory.h\
+                    parms.o\
+                    remd.o\
+                    file_io_dat.o\
+                    extra.h\
+                    ../include/md.h\
+                    les.o\
+                    box.h
+
+
+nmr.o:   nmr.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nmr.F90
+
+nmr.LES.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    constants.o\
+                    softcore.o\
+                    nmr.h\
+                    ../include/memory.h\
+                    parms.o\
+                    remd.LES.o\
+                    file_io_dat.o\
+                    extra.h\
+                    ../include/md.h\
+                    les.o\
+                    box.h
+
+nmr.LES.o:   nmr.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ nmr.F90
+
+nmrcal.o: \
+                    ../include/dprec.fh\
+                    nmr.o\
+                    file_io_dat.o\
+                    nmr.h\
+                    parallel.h
+
+
+nmrcal.o:   nmrcal.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ nmrcal.F90
+
+nonbond_list.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    extra.h\
+                    ew_cntrl.h\
+                    ew_mpole.h\
+                    parallel.h\
+                    ew_parallel.h\
+                    def_time.h\
+                    constants.o\
+                    les.o\
+                    softcore.o\
+                    qmmm_module.o\
+                    box.h\
+                    ../include/memory.h
+
+
+nonbond_list.o:   nonbond_list.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ nonbond_list.F90
+
+nonbond_list.LES.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    extra.h\
+                    ew_cntrl.h\
+                    ew_mpole.h\
+                    parallel.h\
+                    ew_parallel.h\
+                    def_time.h\
+                    constants.o\
+                    les.o\
+                    softcore.o\
+                    qmmm_module.o\
+                    box.h\
+                    ../include/memory.h
+
+nonbond_list.LES.o:   nonbond_list.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ nonbond_list.F90
+
+nonbond_list.API.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    extra.h\
+                    ew_cntrl.h\
+                    ew_mpole.h\
+                    parallel.h\
+                    ew_parallel.h\
+                    def_time.h\
+                    constants.o\
+                    les.o\
+                    softcore.o\
+                    qmmm_module.o\
+                    box.h\
+                    ../include/memory.h
+
+nonbond_list.API.o:   nonbond_list.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -c $(FOPTFLAGS) $(FFLAGS) -o $@ nonbond_list.F90
+
+nonbond_list.LESAPI.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    extra.h\
+                    ew_cntrl.h\
+                    ew_mpole.h\
+                    parallel.h\
+                    ew_parallel.h\
+                    def_time.h\
+                    constants.o\
+                    les.o\
+                    softcore.o\
+                    qmmm_module.o\
+                    box.h\
+                    ../include/memory.h
+
+nonbond_list.LESAPI.o:   nonbond_list.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ nonbond_list.F90
+
+
+nxtsec.o:   nxtsec.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ nxtsec.F90
+
+parallel.o: \
+                    ../include/dprec.fh\
+                    parms.o\
+                    charmm.o\
+                    les.o\
+                    nonbond_list.o\
+                    file_io_dat.o\
+                    md_scheme.o\
+                    softcore.o\
+                    mbar.o\
+                    linear_response.o\
+                    sglds.o\
+                    ips.o\
+                    amd.o\
+                    scaledMD.o\
+                    emap.o\
+                    mdfil.o\
+                    crg_reloc.o\
+                    parallel.h\
+                    ew_parallel.h\
+                    extra.h\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    nmr.h\
+                    box.h\
+                    extra_pts.h\
+                    ew_pme_recip.h\
+                    ew_mpole.h\
+                    ew_erfc_spline.h\
+                    ew_cntrl.h\
+                    flocntrl.h\
+                    debug.h\
+                    new_time.h\
+                    tgtmd.h\
+                    qmmm_module.o\
+                    state.o
+
+
+parallel.o:   parallel.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ parallel.F90
+
+parallel.LES.o: \
+                    ../include/dprec.fh\
+                    parms.o\
+                    charmm.o\
+                    les.o\
+                    nonbond_list.LES.o\
+                    file_io_dat.o\
+                    md_scheme.LES.o\
+                    softcore.o\
+                    mbar.o\
+                    linear_response.o\
+                    sglds.o\
+                    ips.o\
+                    amd.o\
+                    scaledMD.o\
+                    emap.o\
+                    mdfil.LES.o\
+                    crg_reloc.o\
+                    parallel.h\
+                    ew_parallel.h\
+                    extra.h\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    nmr.h\
+                    box.h\
+                    extra_pts.h\
+                    ew_pme_recip.h\
+                    ew_mpole.h\
+                    ew_erfc_spline.h\
+                    ew_cntrl.h\
+                    flocntrl.h\
+                    debug.h\
+                    new_time.h\
+                    tgtmd.h\
+                    qmmm_module.o\
+                    state.o
+
+parallel.LES.o:   parallel.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ parallel.F90
+
+parms.o: \
+                    ../include/dprec.fh\
+                    memory_module.o\
+                    extra.h\
+                    parallel.h
+
+
+parms.o:   parms.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ parms.F90
+
+pcshift.o: \
+                    ../include/dprec.fh\
+                    file_io_dat.o\
+                    nmr.h\
+                    ../include/md.h\
+                    pcshift.h\
+                    def_time.h\
+                    constants.o
+
+
+pcshift.o:   pcshift.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ pcshift.F90
+
+pearsn.o: \
+                    ../include/dprec.fh\
+                    constants.o
+
+
+pearsn.o:   pearsn.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ pearsn.F90
+
+printe.o: \
+                    ../include/dprec.fh\
+                    state.o\
+                    file_io_dat.o\
+                    box.h\
+                    extra.h\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    nmr.h\
+                    tgtmd.h\
+                    multitmd.h\
+                    crg_reloc.o\
+                    constants.o\
+                    ../rism/amber_rism_interface.o\
+                    qmmm_module.o\
+                    charmm.o\
+                    emap.o\
+                    ew_mpole.h\
+                    ew_cntrl.h
+
+
+printe.o:   printe.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ printe.F90
+
+
+prmtop_type.o:   prmtop_type.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ prmtop_type.F90
+
+prn_qmmm_dipole.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    constants.o
+
+
+prn_qmmm_dipole.o:   prn_qmmm_dipole.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ prn_qmmm_dipole.F90
+
+pubfft.o: \
+                    ../include/dprec.fh
+
+
+pubfft.o:   pubfft.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ pubfft.F90
+
+qm2_extern_adf_module.o: \
+                    ../include/dprec.fh\
+                    qm2_extern_util_module.o\
+                    constants.o\
+                    file_io_dat.o\
+                    elementOrbitalIndex.o\
+                    utilitiesmodule.o
+
+
+qm2_extern_adf_module.o:   qm2_extern_adf_module.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm2_extern_adf_module.F90
+
+qm2_extern_fb_module.o: \
+                    ../include/dprec.fh\
+                    qm2_extern_util_module.o\
+                    constants.o\
+                    elementOrbitalIndex.o\
+                    qmmm_module.o\
+                    utilitiesmodule.o
+
+
+qm2_extern_fb_module.o:   qm2_extern_fb_module.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm2_extern_fb_module.F90
+
+qm2_extern_gau_module.o: \
+                    ../include/dprec.fh\
+                    qm2_extern_util_module.o\
+                    constants.o\
+                    file_io_dat.o\
+                    utilitiesmodule.o\
+                    elementOrbitalIndex.o
+
+
+qm2_extern_gau_module.o:   qm2_extern_gau_module.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm2_extern_gau_module.F90
+
+qm2_extern_genmpi_module.o: \
+                    ../include/dprec.fh\
+                    qm2_extern_util_module.o\
+                    constants.o\
+                    utilitiesmodule.o\
+                    elementOrbitalIndex.o
+
+
+qm2_extern_genmpi_module.o:   qm2_extern_genmpi_module.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm2_extern_genmpi_module.F90
+
+qm2_extern_gms_module.o: \
+                    ../include/dprec.fh\
+                    qm2_extern_util_module.o\
+                    constants.o\
+                    utilitiesmodule.o\
+                    elementOrbitalIndex.o
+
+
+qm2_extern_gms_module.o:   qm2_extern_gms_module.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm2_extern_gms_module.F90
+
+qm2_extern_lio_module.o: \
+                    ../include/dprec.fh\
+                    constants.o\
+                    file_io_dat.o\
+                    qmmm_module.o
+
+
+qm2_extern_lio_module.o:   qm2_extern_lio_module.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm2_extern_lio_module.F90
+
+qm2_extern_module.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    qm2_extern_adf_module.o\
+                    qm2_extern_gms_module.o\
+                    qm2_extern_tc_module.o\
+                    qm2_extern_gau_module.o\
+                    qm2_extern_orc_module.o\
+                    qm2_extern_nw_module.o\
+                    qm2_extern_mrcc_module.o\
+                    qm2_extern_quick_module.o\
+                    qm2_extern_reaxff_puremd_module.o\
+                    qm2_extern_genmpi_module.o\
+                    qm2_extern_qc_module.o\
+                    qm2_extern_lio_module.o\
+                    qm2_extern_fb_module.o\
+                    file_io_dat.o\
+                    parallel.h\
+                    ../include/md.h\
+                    constants.o
+
+
+qm2_extern_module.o:   qm2_extern_module.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm2_extern_module.F90
+
+qm2_extern_module.LES.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    qm2_extern_adf_module.o\
+                    qm2_extern_gms_module.o\
+                    qm2_extern_tc_module.o\
+                    qm2_extern_gau_module.o\
+                    qm2_extern_orc_module.o\
+                    qm2_extern_nw_module.o\
+                    qm2_extern_mrcc_module.o\
+                    qm2_extern_quick_module.o\
+                    qm2_extern_reaxff_puremd_module.o\
+                    qm2_extern_genmpi_module.o\
+                    qm2_extern_qc_module.o\
+                    qm2_extern_lio_module.o\
+                    qm2_extern_fb_module.o\
+                    file_io_dat.o\
+                    parallel.h\
+                    ../include/md.h\
+                    constants.o
+
+qm2_extern_module.LES.o:   qm2_extern_module.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm2_extern_module.F90
+
+qm2_extern_mrcc_module.o: \
+                    ../include/dprec.fh\
+                    qm2_extern_util_module.o\
+                    qmmm_module.o\
+                    constants.o\
+                    file_io_dat.o\
+                    elementOrbitalIndex.o
+
+
+qm2_extern_mrcc_module.o:   qm2_extern_mrcc_module.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm2_extern_mrcc_module.F90
+
+qm2_extern_nw_module.o: \
+                    ../include/dprec.fh\
+                    qm2_extern_util_module.o\
+                    constants.o\
+                    file_io_dat.o\
+                    utilitiesmodule.o\
+                    elementOrbitalIndex.o
+
+
+qm2_extern_nw_module.o:   qm2_extern_nw_module.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm2_extern_nw_module.F90
+
+qm2_extern_orc_module.o: \
+                    ../include/dprec.fh\
+                    qm2_extern_util_module.o\
+                    constants.o\
+                    utilitiesmodule.o\
+                    elementOrbitalIndex.o
+
+
+qm2_extern_orc_module.o:   qm2_extern_orc_module.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm2_extern_orc_module.F90
+
+qm2_extern_qc_module.o: \
+                    ../include/dprec.fh\
+                    qm2_extern_util_module.o\
+                    constants.o\
+                    file_io_dat.o\
+                    utilitiesmodule.o\
+                    elementOrbitalIndex.o
+
+
+qm2_extern_qc_module.o:   qm2_extern_qc_module.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm2_extern_qc_module.F90
+
+qm2_extern_quick_module.o: \
+                    ../include/dprec.fh\
+                    qm2_extern_util_module.o\
+                    constants.o\
+                    file_io_dat.o\
+                    elementOrbitalIndex.o\
+                    utilitiesmodule.o
+
+
+qm2_extern_quick_module.o:   qm2_extern_quick_module.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm2_extern_quick_module.F90
+
+qm2_extern_reaxff_puremd_module.o: \
+                    elementOrbitalIndex.o
+
+
+qm2_extern_reaxff_puremd_module.o:   qm2_extern_reaxff_puremd_module.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm2_extern_reaxff_puremd_module.F90
+
+qm2_extern_tc_module.o: \
+                    ../include/dprec.fh\
+                    qm2_extern_util_module.o\
+                    constants.o\
+                    utilitiesmodule.o\
+                    elementOrbitalIndex.o
+
+
+qm2_extern_tc_module.o:   qm2_extern_tc_module.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm2_extern_tc_module.F90
+
+qm2_extern_util_module.o: \
+                    ../include/dprec.fh\
+                    constants.o
+
+
+qm2_extern_util_module.o:   qm2_extern_util_module.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm2_extern_util_module.F90
+
+qm_div.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    ../include/memory.h
+
+
+qm_div.o:   qm_div.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ qm_div.F90
+
+qm_ewald.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    qmmm_module.o\
+                    nonbond_list.o\
+                    constants.o\
+                    qm2_array_locations.h\
+                    ew_pme_recip.h
+
+
+qm_ewald.o:   qm_ewald.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ qm_ewald.F90
+
+qm_mm.o: \
+                    ../include/dprec.fh\
+                    def_time.h\
+                    qmmm_module.o\
+                    constants.o\
+                    parms.o\
+                    nonbond_list.o\
+                    qm2_extern_module.o\
+                    tcpb_module.o\
+                    remd.o\
+                    ../include/assert.fh\
+                    parallel.h\
+                    qmmm_nml_module.o\
+                    qmmm_struct_module.o
+
+
+qm_mm.o:   qm_mm.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm_mm.F90
+
+qm_mm.LES.o: \
+                    ../include/dprec.fh\
+                    def_time.h\
+                    qmmm_module.o\
+                    constants.o\
+                    parms.o\
+                    nonbond_list.LES.o\
+                    qm2_extern_module.LES.o\
+                    tcpb_module.o\
+                    remd.LES.o\
+                    ../include/assert.fh\
+                    parallel.h\
+                    qmmm_nml_module.o\
+                    qmmm_struct_module.o
+
+qm_mm.LES.o:   qm_mm.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm_mm.F90
+
+qm_mm.API.o: \
+                    ../include/dprec.fh\
+                    def_time.h\
+                    qmmm_module.o\
+                    constants.o\
+                    parms.o\
+                    nonbond_list.API.o\
+                    qm2_extern_module.o\
+                    tcpb_module.o\
+                    remd.o\
+                    ../include/assert.fh\
+                    parallel.h\
+                    qmmm_nml_module.o\
+                    qmmm_struct_module.o
+
+qm_mm.API.o:   qm_mm.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm_mm.F90
+
+qm_mm.LESAPI.o: \
+                    ../include/dprec.fh\
+                    def_time.h\
+                    qmmm_module.o\
+                    constants.o\
+                    parms.o\
+                    nonbond_list.LESAPI.o\
+                    qm2_extern_module.o\
+                    tcpb_module.o\
+                    remd.o\
+                    ../include/assert.fh\
+                    parallel.h\
+                    qmmm_nml_module.o\
+                    qmmm_struct_module.o
+
+qm_mm.LESAPI.o:   qm_mm.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -DLES -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qm_mm.F90
+
+qmmm_adaptive_module.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    parallel.h\
+                    state.o\
+                    ../include/memory.h\
+                    file_io_dat.o\
+                    constants.o\
+                    molecule.o\
+                    box.h
+
+
+qmmm_adaptive_module.o:   qmmm_adaptive_module.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ qmmm_adaptive_module.F90
+
+qmmm_vsolv.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    qmmm_module.o\
+                    molecule.o\
+                    parallel.h\
+                    qmmm_vsolv_module.o\
+                    parms.o
+
+
+qmmm_vsolv.o:   qmmm_vsolv.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ qmmm_vsolv.F90
+
+quench.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    ../include/md.h\
+                    ../include/memory.h
+
+
+quench.o:   quench.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ quench.F90
+
+random.o: \
+                    random.h
+
+
+random.o:   random.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ random.F90
+
+rattle.o: \
+                    ../include/dprec.fh\
+                    parallel.h\
+                    ../include/md.h
+
+
+rattle.o:   rattle.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ rattle.F90
+
+rdparm.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    parms.o\
+                    charmm.o\
+                    file_io_dat.o\
+                    constants.o\
+                    ../lib/nxtsec.h\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    box.h\
+                    nmr.h\
+                    extra_pts.h\
+                    ew_cntrl.h\
+                    molecule.o\
+                    nonbond_list.o\
+                    les.o\
+                    dssp.o\
+                    ew_mpole.h
+
+
+rdparm.o:   rdparm.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ rdparm.F90
+
+rdparm.LES.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    parms.o\
+                    charmm.o\
+                    file_io_dat.o\
+                    constants.o\
+                    ../lib/nxtsec.h\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    box.h\
+                    nmr.h\
+                    extra_pts.h\
+                    ew_cntrl.h\
+                    molecule.o\
+                    nonbond_list.LES.o\
+                    les.o\
+                    dssp.o\
+                    ew_mpole.h
+
+rdparm.LES.o:   rdparm.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ rdparm.F90
+
+rdparm.API.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    parms.o\
+                    charmm.API.o\
+                    file_io_dat.o\
+                    constants.o\
+                    ../lib/nxtsec.h\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    box.h\
+                    nmr.h\
+                    extra_pts.h\
+                    ew_cntrl.h\
+                    molecule.o\
+                    nonbond_list.API.o\
+                    les.o\
+                    dssp.o\
+                    ew_mpole.h
+
+rdparm.API.o:   rdparm.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ rdparm.F90
+
+rdparm.LESAPI.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    parms.o\
+                    charmm.o\
+                    file_io_dat.o\
+                    constants.o\
+                    ../lib/nxtsec.h\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    box.h\
+                    nmr.h\
+                    extra_pts.h\
+                    ew_cntrl.h\
+                    molecule.o\
+                    nonbond_list.LESAPI.o\
+                    les.o\
+                    dssp.o\
+                    ew_mpole.h
+
+rdparm.LESAPI.o:   rdparm.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -DLES -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ rdparm.F90
+
+relax_mat.o: \
+                    ../include/dprec.fh\
+                    constants.o\
+                    nmr.h\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    def_time.h\
+                    box.h\
+                    extra.h\
+                    file_io_dat.o\
+                    parallel.h
+
+
+relax_mat.o:   relax_mat.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ relax_mat.F90
+
+relaxmd.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    bintraj.o\
+                    barostats.o\
+                    constants.o\
+                    fastwt.o\
+                    file_io_dat.o\
+                    nonbond_list.o\
+                    qmmm_module.o\
+                    random.o\
+                    stack.o\
+                    state.o\
+                    parallel.h\
+                    ../include/md.h\
+                    box.h\
+                    nmr.h\
+                    ../include/memory.h\
+                    extra.h\
+                    ew_frc.h\
+                    ew_cntrl.h\
+                    ew_mpole.h\
+                    def_time.h\
+                    extra_pts.h
+
+
+relaxmd.o:   relaxmd.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ relaxmd.F90
+
+remd.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    file_io_dat.o\
+                    mdfil.o\
+                    random.o\
+                    extra.h\
+                    sglds.o\
+                    parallel.h\
+                    AmberNetcdf.o\
+                    sander_lib.o\
+                    constants.o\
+                    les.o\
+                    netcdf.o\
+                    state.o\
+                    ../include/memory.h\
+                    box.h\
+                    nonbond_list.o
+
+
+remd.o:   remd.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ remd.F90
+
+remd.LES.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    file_io_dat.o\
+                    mdfil.LES.o\
+                    random.o\
+                    extra.h\
+                    sglds.o\
+                    parallel.h\
+                    AmberNetcdf.o\
+                    sander_lib.o\
+                    constants.o\
+                    les.o\
+                    netcdf.o\
+                    state.o\
+                    ../include/memory.h\
+                    box.h\
+                    nonbond_list.LES.o
+
+remd.LES.o:   remd.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ remd.F90
+
+rfree.o: \
+                    ../include/dprec.fh\
+                    rgroup.h
+
+
+rfree.o:   rfree.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ rfree.F90
+
+rgroup.o: \
+                    ../include/dprec.fh\
+                    rgroup.h
+
+
+rgroup.o:   rgroup.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ rgroup.F90
+
+rmsgrd.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    constants.o\
+                    ../include/md.h\
+                    box.h\
+                    ../include/memory.h
+
+
+rmsgrd.o:   rmsgrd.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ rmsgrd.F90
+
+runmd.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    nfe-config.h\
+                    state.o\
+                    nfe-sander-hooks.o\
+                    nfe-sander-proxy.o\
+                    mdfil.o\
+                    md_scheme.o\
+                    ../rism/amber_rism_interface.o\
+                    qmmm_module.o\
+                    file_io_dat.o\
+                    constants.o\
+                    stack.o\
+                    fastwt.o\
+                    bintraj.o\
+                    nonbond_list.o\
+                    sglds.o\
+                    remd.o\
+                    softcore.o\
+                    mbar.o\
+                    emap.o\
+                    barostats.o\
+                    random.o\
+                    qmmm_adaptive_module.o\
+                    crg_reloc.o\
+                    amd.o\
+                    scaledMD.o\
+                    parallel.h\
+                    ../include/md.h\
+                    box.h\
+                    nmr.h\
+                    tgtmd.h\
+                    multitmd.h\
+                    ../include/memory.h\
+                    extra.h\
+                    ew_frc.h\
+                    ew_cntrl.h\
+                    ew_mpole.h\
+                    def_time.h\
+                    extra_pts.h\
+                    Plumed_force.inc\
+                    degcnt.inc\
+                    Plumed_init.inc
+
+
+runmd.o:   runmd.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ runmd.F90
+
+runmd.LES.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    nfe-config.h\
+                    state.o\
+                    nfe-sander-hooks.o\
+                    nfe-sander-proxy.o\
+                    mdfil.LES.o\
+                    md_scheme.LES.o\
+                    ../rism/amber_rism_interface.o\
+                    qmmm_module.o\
+                    file_io_dat.o\
+                    constants.o\
+                    stack.o\
+                    fastwt.o\
+                    bintraj.LES.o\
+                    nonbond_list.LES.o\
+                    sglds.o\
+                    remd.LES.o\
+                    softcore.o\
+                    mbar.o\
+                    emap.o\
+                    barostats.o\
+                    random.o\
+                    qmmm_adaptive_module.o\
+                    crg_reloc.o\
+                    amd.o\
+                    scaledMD.o\
+                    parallel.h\
+                    ../include/md.h\
+                    box.h\
+                    nmr.h\
+                    tgtmd.h\
+                    multitmd.h\
+                    ../include/memory.h\
+                    extra.h\
+                    ew_frc.h\
+                    ew_cntrl.h\
+                    ew_mpole.h\
+                    def_time.h\
+                    extra_pts.h\
+                    Plumed_force.inc\
+                    degcnt.inc\
+                    Plumed_init.inc
+
+runmd.LES.o:   runmd.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ runmd.F90
+
+sander.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    nfe-config.h\
+                    state.o\
+                    runmd.o\
+                    nfe-sander-hooks.o\
+                    nfe-sander-proxy.o\
+                    lmod.o\
+                    constants.o\
+                    qm2_read_nm_and_alloc.o\
+                    qmmm_vsolv_module.o\
+                    qm2_extern_module.o\
+                    qmmm_module.o\
+                    egb.o\
+                    les.o\
+                    fastwt.o\
+                    relax_mat.o\
+                    nmr.o\
+                    ew_recip.o\
+                    parms.o\
+                    molecule.o\
+                    nonbond_list.o\
+                    stack.o\
+                    ../rism/amber_rism_interface.o\
+                    softcore.o\
+                    mbar.o\
+                    linear_response.o\
+                    remd.o\
+                    bintraj.o\
+                    trajene.o\
+                    charmm.o\
+                    memory_module.o\
+                    sglds.o\
+                    ips.o\
+                    crg_reloc.o\
+                    emap.o\
+                    file_io_dat.o\
+                    barostats.o\
+                    random.o\
+                    amd.o\
+                    scaledMD.o\
+                    music_module.o\
+                    mdfil.o\
+                    nmr.h\
+                    box.h\
+                    ../include/md.h\
+                    extra.h\
+                    tgtmd.h\
+                    multitmd.h\
+                    parallel.h\
+                    ew_pme_recip.h\
+                    ew_frc.h\
+                    ew_erfc_spline.h\
+                    ew_parallel.h\
+                    ew_mpole.h\
+                    ew_cntrl.h\
+                    def_time.h
+
+
+sander.o:   sander.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ sander.F90
+
+sander.LES.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    nfe-config.h\
+                    state.o\
+                    runmd.LES.o\
+                    nfe-sander-hooks.o\
+                    nfe-sander-proxy.o\
+                    lmod.LES.o\
+                    constants.o\
+                    qm2_read_nm_and_alloc.o\
+                    qmmm_vsolv_module.o\
+                    qm2_extern_module.LES.o\
+                    qmmm_module.o\
+                    egb.LES.o\
+                    les.o\
+                    fastwt.o\
+                    relax_mat.o\
+                    nmr.LES.o\
+                    ew_recip.LES.o\
+                    parms.o\
+                    molecule.o\
+                    nonbond_list.LES.o\
+                    stack.o\
+                    ../rism/amber_rism_interface.o\
+                    softcore.o\
+                    mbar.o\
+                    linear_response.o\
+                    remd.LES.o\
+                    bintraj.LES.o\
+                    trajene.o\
+                    charmm.o\
+                    memory_module.o\
+                    sglds.o\
+                    ips.o\
+                    crg_reloc.o\
+                    emap.o\
+                    file_io_dat.o\
+                    barostats.o\
+                    random.o\
+                    amd.o\
+                    scaledMD.o\
+                    music_module.o\
+                    mdfil.LES.o\
+                    nmr.h\
+                    box.h\
+                    ../include/md.h\
+                    extra.h\
+                    tgtmd.h\
+                    multitmd.h\
+                    parallel.h\
+                    ew_pme_recip.h\
+                    ew_frc.h\
+                    ew_erfc_spline.h\
+                    ew_parallel.h\
+                    ew_mpole.h\
+                    ew_cntrl.h\
+                    def_time.h
+
+sander.LES.o:   sander.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ sander.F90
+
+
+sander_lib.o:   sander_lib.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ sander_lib.F90
+
+scaledMD.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    file_io_dat.o\
+                    parallel.h
+
+
+scaledMD.o:   scaledMD.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ scaledMD.F90
+
+set.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    parms.o\
+                    constants.o\
+                    file_io_dat.o\
+                    AmberNetcdf.o\
+                    binrestart.o\
+                    remd.o\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    parallel.h\
+                    extra.h\
+                    nmr.h\
+                    box.h\
+                    softcore.o
+
+
+set.o:   set.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ set.F90
+
+set.LES.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    parms.o\
+                    constants.o\
+                    file_io_dat.o\
+                    AmberNetcdf.o\
+                    binrestart.LES.o\
+                    remd.LES.o\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    parallel.h\
+                    extra.h\
+                    nmr.h\
+                    box.h\
+                    softcore.o
+
+set.LES.o:   set.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ set.F90
+
+set.API.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    parms.o\
+                    constants.o\
+                    file_io_dat.o\
+                    AmberNetcdf.o\
+                    binrestart.o\
+                    remd.o\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    parallel.h\
+                    extra.h\
+                    nmr.h\
+                    box.h\
+                    softcore.o
+
+set.API.o:   set.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ set.F90
+
+set.LESAPI.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    parms.o\
+                    constants.o\
+                    file_io_dat.o\
+                    AmberNetcdf.o\
+                    binrestart.o\
+                    remd.o\
+                    ../include/md.h\
+                    ../include/memory.h\
+                    parallel.h\
+                    extra.h\
+                    nmr.h\
+                    box.h\
+                    softcore.o
+
+set.LESAPI.o:   set.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DAPI -DLES -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ set.F90
+
+sglds.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    ../include/md.h\
+                    parallel.h\
+                    state.o\
+                    random.o
+
+
+sglds.o:   sglds.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ sglds.F90
+
+shake.o: \
+                    ../include/dprec.fh\
+                    parallel.h\
+                    ../include/md.h
+
+
+shake.o:   shake.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ shake.F90
+
+short_ene.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    nonbond_list.o\
+                    constants.o\
+                    stack.o\
+                    softcore.o\
+                    ew_parallel.h\
+                    parallel.h\
+                    flocntrl.h\
+                    def_time.h\
+                    file_io_dat.o\
+                    les.o\
+                    ips.o\
+                    mbar.o\
+                    crg_reloc.o\
+                    ew_cntrl.h\
+                    ../include/md.h\
+                    ips_lj.h\
+                    ew_directp.h\
+                    ew_directe3.h\
+                    ew_directe4.h\
+                    eedmeth2-6.h
+
+
+short_ene.o:   short_ene.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ short_ene.F90
+
+short_ene.LES.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    nonbond_list.LES.o\
+                    constants.o\
+                    stack.o\
+                    softcore.o\
+                    ew_parallel.h\
+                    parallel.h\
+                    flocntrl.h\
+                    def_time.h\
+                    file_io_dat.o\
+                    les.o\
+                    ips.o\
+                    mbar.o\
+                    crg_reloc.o\
+                    ew_cntrl.h\
+                    ../include/md.h\
+                    ips_lj.h\
+                    ew_directp.h\
+                    ew_directe3.h\
+                    ew_directe4.h\
+                    eedmeth2-6.h
+
+short_ene.LES.o:   short_ene.F90
+	@echo '[MSANDER_LES]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -DLES -c $(FOPTFLAGS) $(FFLAGS) -o $@ short_ene.F90
+
+softcore.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    findmask.o\
+                    parallel.h\
+                    parms.o\
+                    random.o\
+                    state.o\
+                    constants.o\
+                    box.h\
+                    ew_cntrl.h\
+                    extra.h
+
+
+softcore.o:   softcore.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ softcore.F90
+
+stack.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh
+
+
+stack.o:   stack.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ stack.F90
+
+state.o: \
+                    ../include/dprec.fh
+
+
+state.o:   state.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ state.F90
+
+tcpb_module.o: \
+                    ../include/dprec.fh\
+                    utilitiesmodule.o\
+                    qmmm_module.o\
+                    elementOrbitalIndex.o\
+                    constants.o
+
+
+tcpb_module.o:   tcpb_module.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ tcpb_module.F90
+
+thermo_int.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    state.o\
+                    softcore.o
+
+
+thermo_int.o:   thermo_int.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ thermo_int.F90
+
+trajene.o: \
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    nonbond_list.o\
+                    constants.o\
+                    state.o\
+                    file_io_dat.o\
+                    AmberNetcdf.o\
+                    memory_module.o\
+                    lmod.o\
+                    netcdf.o\
+                    bintraj.o\
+                    tgtmd.h\
+                    extra.h\
+                    box.h\
+                    ew_pme_recip.h
+
+
+trajene.o:   trajene.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ trajene.F90
+
+veclib.o: \
+                    ../include/dprec.fh
+
+
+veclib.o:   veclib.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FOPTFLAGS) $(FFLAGS) -o $@ veclib.F90
+
+wallclock.o: \
+                    ../include/dprec.fh
+
+
+wallclock.o:   wallclock.F90
+	@echo '[MSANDER]  FC $<'
+	$(VB)$(FC) $(LOCALFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ wallclock.F90
+
+netcdf.o:  $(NETCDF)
+	@(test -e $@ || touch netcdf.o)
+
+omp_lib.o:
+	@(test -e $@ || touch omp_lib.o)
+
+iso_c_binding.o:
+	@(test -e $@ || touch iso_c_binding.o)
+
+qmmm_module.o: 
+	@(test -e $@ || touch $@)
+
+qmmm_nml_module.o:  
+	@(test -e $@ || touch $@)
+
+qmmm_qmtheorymodule.o:  
+	@(test -e $@ || touch $@)
+
+qmmm_struct_module.o:  
+	@(test -e $@ || touch $@)
+
+qmmm_vsolv_module.o:  
+	@(test -e $@ || touch $@)
+
+qm2_read_nm_and_alloc.o:  
+	@(test -e $@ || touch $@)
+
+elementOrbitalIndex.o:  
+	@(test -e $@ || touch $@)
+
+utilitiesmodule.o:  
+	@(test -e $@ || touch $@)
+

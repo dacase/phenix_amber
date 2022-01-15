@@ -1,0 +1,46 @@
+package:
+  name: amber_phenix
+#  version 1.4.1 adds --openmp to configure
+#  version 1.5   uses the new Jan 2022 code from Sergei
+  version: 1.5
+
+source:
+  path: ../
+  
+build:
+  number: 0
+
+requirements:
+  build:
+   - {{ compiler('fortran') }}
+   - {{ compiler('c') }}
+   - {{ compiler('cxx') }}
+   - llvm-openmp  # [osx]
+
+  host:
+   - python
+   - numpy
+   - setuptools
+   - bzip2
+   - zlib
+#  - mkl
+#  - libnetcdf
+#  - netcdf-fortran
+#  - openblas
+#  - arpack
+   - llvm-openmp  # [osx]
+
+  run:
+   - python
+   - numpy
+#  - mkl
+#  - libnetcdf
+#  - netcdf-fortran
+#  - openblas
+#  - arpack
+   - llvm-openmp  # [osx]
+
+about:
+    home: https://www.phenix-online.org/documentation/reference/amber.html
+    license: GNU General Public License (GPL/LGPL)
+    summary: Parts of AmberTools that are needed for interaction with the phenix crystallographic refinement package.
