@@ -10,6 +10,14 @@ are:
 ```
 Also included are the API's to msander, and various X-ray-related utilities
 
+# Warning
+
+This project is really only useful for building a conda package for phenix.
+Testing of the code needs to be done inside phenix.  We will try to keep
+things here in a useable state, but that may not always be the case.
+
+Visit https://phenix-online.org/ for more information about phenix.
+
 # Building the code
 
 *Conda build
