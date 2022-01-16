@@ -9,8 +9,6 @@ install:
 	@cd msander && $(MAKE) libsanderles
 	@cd pysander && $(MAKE) pysander
 	@cd parmed && $(MAKE) parmed
-	@cd xray && $(MAKE) xray
-	@cd xtalutil && $(MAKE) xtalutil
 	@cd addles && $(MAKE) addles
 	@cd leap && $(MAKE) tleap
 	@cd antechamber && $(MAKE) ac
@@ -24,7 +22,6 @@ clean:
 	-(cd rism && $(MAKE) clean )
 	-(cd msander && $(MAKE) clean )
 	-(cd lib && $(MAKE) clean )
-	-(cd xray && $(MAKE) clean )
 	-(cd addles && $(MAKE) clean )
 	-(cd leap && $(MAKE) clean )
 	-(cd antechamber && $(MAKE) clean )
