@@ -1,4 +1,5 @@
 #!/bin/sh
+set -xe
 
 export MSANDERHOME=`pwd`
 ./configure --conda --openmp
