@@ -266,7 +266,7 @@ if [ ! -s "lib/libnetcdf.a" ]; then
          --enable-shared --disable-doxygen > ../netcdf_c.config.log 2>&1
       ncerror=$?
    else
-      ./configure CFLAGS="-fPIC" LDFLAGS="" \
+      ./configure CC="$CC_FOR_BUILD" CFLAGS="$CFLAGS -fPIC" LDFLAGS="$LDFLAGS" \
          --prefix=$msanderhome --disable-netcdf-4 --disable-dap \
          --enable-shared --disable-doxygen > ../netcdf_c.config.log 2>&1
       ncerror=$?
@@ -302,11 +302,13 @@ if [ ! -s "lib/libnetcdf.a" ]; then
                   --prefix=$msanderhome >> ../netcdf_f.config.log 2>&1
       ncerror=$?
    else
-      ./configure CFLAGS="-fPIC" \
-                  LDFLAGS="-L$msanderhome/lib $ldflags" \
-                  CPPFLAGS="-I$msanderhome/include" \
-                  FCFLAGS="" \
-                  FFLAGS="-fPIC" --enable-shared  --disable-doxygen \
+      ./configure CC="$CC_FOR_BUILD" \
+                  CFLAGS="$CFLAGS -fPIC" \
+                  LDFLAGS="$LDFLAGS -L$msanderhome/lib $ldflags" \
+                  CPPFLAGS="$CPPFLAGS -I$msanderhome/include" \
+                  FC="$FC_FOR_BUILD" \
+                  FCFLAGS="$FFLAGS" \
+                  FFLAGS="$FFLAGS -fPIC" --enable-shared  --disable-doxygen \
                   --prefix=$msanderhome >> ../netcdf_f.config.log 2>&1
       ncerror=$?
    fi
@@ -353,8 +355,10 @@ if [ "$flibs_fftw" != "" ]; then
               ./configure --disable-doc --prefix=$msanderhome \
               --libdir=$msanderhome/lib $enableomp $fftw_flags \
               --enable-static $enable_sse  \
-              CFLAGS="$optflags -fPIC"  \
-              FFLAGS="$optflags -fPIC"  \
+              CC="$CC_FOR_BUILD" \
+              FC="$FC_FOR_BUILD" \
+              CFLAGS="$CFLAGS $optflags -fPIC"  \
+              FFLAGS="$FFLAGS $optflags -fPIC"  \
               FLIBS="$flibs_arch"  > fftw3_config.log 2>&1
             ncerror=$?
           if [ $ncerror -gt 0 ]; then
