@@ -5,7 +5,7 @@ package:
   version: "1.5"
 
 source:
-  path: ../
+  path: ./original
 
 build:
   number: 0
