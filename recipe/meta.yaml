@@ -45,7 +45,8 @@ requirements:
 
 about:
   home: https://www.phenix-online.org/documentation/reference/amber.html
-  license: GNU General Public License (GPL/LGPL)
+  license: LGPL-3.0-only AND GPL-3.0-only
+  license_file: ./original/GNU_LGPL_v3
   summary: Parts of AmberTools that are needed for interaction with the phenix crystallographic refinement package.
 
 extra:
