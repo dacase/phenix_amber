@@ -256,7 +256,9 @@ fi   # end of if conda block
 #--------------------------------------------------------------------------
 #  Configure and build netcdf:
 #--------------------------------------------------------------------------
-if [ ! -s "lib/libnetcdf.a" ]; then
+if [ -f "lib/libnetcdf.a" ] || [ -f "${PREFIX}/lib/libnetcdf.a" ]; then
+   echo "Using the existing netcdf libraries"
+else
    cd src/netcdf-c-4.7.2
    printf "Configuring the NetCDF C interface..."
    make clean > /dev/null 2>&1
@@ -328,18 +330,17 @@ if [ ! -s "lib/libnetcdf.a" ]; then
        echo "OK"
    fi
    cd ../..
-else
-   echo "Using the existing netcdf libraries"
 fi
 
 #--------------------------------------------------------------------------
 #  Configure and build FFTW3:
 #--------------------------------------------------------------------------
 if [ "$flibs_fftw" != "" ]; then
-
-    if [ ! -s "lib/libfftw3.a" ] || \
-       [ "$openmp" == "yes" -a ! -s "lib/libfftw3_omp.a" ]; then
-
+    if [ -f "lib/libfftw3.a" ] || \
+       [ -f "${PREFIX}/lib/libfftw3.a" ] || \
+       [ "$openmp" == "yes" -a -f "lib/libfftw3_omp.a" ]; then
+       echo "Using the existing fftw3  libraries"
+    else
        if [ "$openmp" == "no" ]; then
           enableomp=""
        else
@@ -397,8 +398,6 @@ if [ "$flibs_fftw" != "" ]; then
          printf "OK\n"
       fi
       cd ../..
-   else
-      echo "Using the existing fftw3  libraries"
    fi
 fi
 
