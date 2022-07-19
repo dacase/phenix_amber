@@ -6,41 +6,46 @@ package:
 
 source:
   path: ../
-  
+
 build:
   number: 0
 
 requirements:
   build:
-   - {{ compiler('fortran') }}
-   - {{ compiler('c') }}
-   - {{ compiler('cxx') }}
-   - llvm-openmp  # [osx]
+    - {{ compiler('fortran') }}
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - llvm-openmp  # [osx]
 
   host:
-   - python
-   - numpy
-   - setuptools
-   - bzip2
-   - zlib
+    - python
+    - numpy
+    - setuptools
+    - bzip2
+    - zlib
 #  - mkl
 #  - libnetcdf
 #  - netcdf-fortran
 #  - openblas
 #  - arpack
-   - llvm-openmp  # [osx]
+    - llvm-openmp  # [osx]
 
   run:
-   - python
-   - numpy
+    - python
+    - numpy
 #  - mkl
 #  - libnetcdf
 #  - netcdf-fortran
 #  - openblas
 #  - arpack
-   - llvm-openmp  # [osx]
+    - llvm-openmp  # [osx]
 
 about:
-    home: https://www.phenix-online.org/documentation/reference/amber.html
-    license: GNU General Public License (GPL/LGPL)
-    summary: Parts of AmberTools that are needed for interaction with the phenix crystallographic refinement package.
+  home: https://www.phenix-online.org/documentation/reference/amber.html
+  license: GNU General Public License (GPL/LGPL)
+  summary: Parts of AmberTools that are needed for interaction with the phenix crystallographic refinement package.
+
+extra:
+  recipe-maintainers:
+    - bkpoon
+    - dacase
