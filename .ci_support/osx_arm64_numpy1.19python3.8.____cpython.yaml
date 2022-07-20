@@ -10,7 +10,6 @@ c_compiler_version:
 - '13'
 channel_sources:
 - conda-forge
-- phenix-project
 channel_targets:
 - phenix-project main
 cxx_compiler:
