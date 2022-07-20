@@ -467,7 +467,7 @@ BLAS=$blas
 
 #  (4)  C compiler
 
-CFLAGS=$CFLAGS $clangf $inc $gcc10c $ompflag $iccflags $fpic $debug
+CFLAGS=$CFLAGS -I$PREFIX/include $clangf $inc $gcc10c $ompflag $iccflags $fpic $debug
 CNOOPTFLAGS=-g -O0
 COPTFLAGS=$optflags
 
@@ -475,7 +475,7 @@ COPTFLAGS=$optflags
 
 #  (5)  Fortran compiler
 
-FFLAGS=$FFLAGS $clangf $inc $ompflag $gcc10f $fpic $longlines
+FFLAGS=$FFLAGS -I$PREFIX/include $clangf $inc $ompflag $gcc10f $fpic $longlines
 FLIBSF=-lrism -lsqm -larpack $flibs_fftw $flibs_la
 FNOOPTFLAGS= -O0 -g
 FOPTFLAGS=$optflags
