@@ -194,6 +194,7 @@ typedef struct  {
 
 #define YYSTYPE YYSTYPEt
 
+#define YYERROR_IS_DECLARED 1
 
 extern  OBJEKT oGetObject( char *sName );
 int    yyerror( char *sStr );
