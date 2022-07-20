@@ -1,3 +1,5 @@
+arpack:
+- '3.7'
 bzip2:
 - '1'
 c_compiler:
@@ -16,22 +18,36 @@ cxx_compiler_version:
 - '10'
 docker_image:
 - quay.io/condaforge/linux-anvil-cos7-x86_64
+fftw:
+- '3'
 fortran_compiler:
 - gfortran
 fortran_compiler_version:
 - '10'
+libnetcdf:
+- 4.8.1
+netcdf_fortran:
+- '4.5'
 numpy:
-- '1.19'
+- '1.21'
+openblas:
+- 0.3.*
 pin_run_as_build:
+  arpack:
+    max_pin: x.x.x
   bzip2:
     max_pin: x
+  fftw:
+    max_pin: x
+  netcdf-fortran:
+    max_pin: x.x
   python:
     min_pin: x.x
     max_pin: x.x
   zlib:
     max_pin: x.x
 python:
-- 3.9.* *_cpython
+- 3.10.* *_cpython
 target_platform:
 - linux-64
 zip_keys:
