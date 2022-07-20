@@ -196,7 +196,7 @@ typedef struct  {
 
 
 extern  OBJEKT oGetObject( char *sName );
-int    yyerror( char *sStr );
+//int    yyerror( char *sStr );
 int    yylex();
 extern  int    yyparse();
 %}
