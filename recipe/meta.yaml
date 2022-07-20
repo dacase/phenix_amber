@@ -21,25 +21,27 @@ requirements:
     - {{ compiler('cxx') }}
 
   host:
-    - fftw
-    - python
-    - numpy
-    - setuptools
+    - arpack
     - bzip2
-    - zlib
+    - fftw
+    - lapack
     - libnetcdf
     - netcdf-fortran
+    - numpy
     - openblas
-    - arpack
+    - python
+    - setuptools
+    - zlib
 
   run:
+    - arpack
     - fftw
-    - python
-    - {{ pin_compatible('numpy') }}
+    - lapack
     - libnetcdf
     - netcdf-fortran
+    - {{ pin_compatible('numpy') }}
     - openblas
-    - arpack
+    - python
 
 about:
   home: https://www.phenix-online.org/documentation/reference/amber.html
