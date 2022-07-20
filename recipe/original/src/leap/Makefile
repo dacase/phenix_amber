@@ -154,7 +154,7 @@ parser.c:       parser.y parser.h
 
 helptext.c: helptext.text utilMakeHelp$(SFX)
 ifeq ($(CONDA_BUILD_CROSS_COMPILATION),"1")
-	$(VB)$(BUILD_PREFIX)/utilMakeHelp$(SFX) helptext.text helptext.c
+	$(VB)$(RECIPE_DIR)/utilMakeHelp$(SFX) helptext.text helptext.c
 else
 	$(VB)./utilMakeHelp$(SFX) helptext.text helptext.c
 endif
