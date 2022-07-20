@@ -35,6 +35,10 @@ optflags="-g -Ofast -mtune=native"
 
 yacc="bison -y"
 
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" == "1" ]]; then
+  yacc="${BUILD_PREFIX}/bin/bison -y"
+fi
+
 openmp='no'
 ompflag=""
 ldflags=""
