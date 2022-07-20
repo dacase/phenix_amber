@@ -3,9 +3,6 @@ azure:
 build_platform:
   osx_arm64: osx_64
 channels:
-  sources:
-    - phenix-project
-    - conda-forge
   targets:
     - ["phenix-project", "main"]
 test: native

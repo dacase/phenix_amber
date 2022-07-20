@@ -1,5 +1,2 @@
-channel_sources:
-  - phenix-project
-  - conda-forge
 channel_targets:
   - phenix-project main
