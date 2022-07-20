@@ -2,8 +2,15 @@ azure:
   store_build_artifacts: true
 build_platform:
   osx_arm64: osx_64
-conda_forge_output_validation: true
+channels:
+  sources:
+    - phenix-project
+    - conda-forge
+  targets:
+    - ["phenix-project", "main"]
 test: native
 github:
+  user_or_org: dacase
+  repo_name: phenix_amber
   branch_name: main
   tooling_branch_name: main
