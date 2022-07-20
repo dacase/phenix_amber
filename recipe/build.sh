@@ -11,7 +11,7 @@ export MSANDERHOME=`pwd`
 ./configure --conda --openmp
 
 # check configuration
-cat config.sh
+cat config.h
 
 cd src
 make -f Makefile.ap install
