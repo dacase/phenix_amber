@@ -11,3 +11,4 @@ github:
   repo_name: phenix_amber
   branch_name: main
   tooling_branch_name: main
+upload_on_branch: azure
