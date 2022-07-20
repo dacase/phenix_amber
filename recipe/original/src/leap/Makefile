@@ -157,7 +157,7 @@ helptext.c: helptext.text utilMakeHelp$(SFX)
 	@echo $(RECIPE_DIR)
 	@echo $(PREFIX)
 	@echo $(BUILD_PREFIX)
-ifeq ($(CONDA_BUILD_CROSS_COMPILATION),"1")
+ifeq ($(CONDA_BUILD_CROSS_COMPILATION),1)
 	$(VB)$(RECIPE_DIR)/utilMakeHelp$(SFX) helptext.text helptext.c
 else
 	$(VB)./utilMakeHelp$(SFX) helptext.text helptext.c
