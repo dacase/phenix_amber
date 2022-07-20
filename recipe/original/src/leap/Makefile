@@ -153,10 +153,6 @@ parser.c:       parser.y parser.h
 	@mv y.tab.c parser.c
 
 helptext.c: helptext.text utilMakeHelp$(SFX)
-	@echo $(CONDA_BUILD_CROSS_COMPILATION)
-	@echo $(RECIPE_DIR)
-	@echo $(PREFIX)
-	@echo $(BUILD_PREFIX)
 ifeq ($(CONDA_BUILD_CROSS_COMPILATION),1)
 	$(VB)$(RECIPE_DIR)/utilMakeHelp$(SFX) helptext.text helptext.c
 else
