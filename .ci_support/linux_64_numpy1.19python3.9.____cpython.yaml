@@ -10,7 +10,6 @@ cdt_name:
 - cos6
 channel_sources:
 - conda-forge
-- phenix-project
 channel_targets:
 - phenix-project main
 cxx_compiler:
