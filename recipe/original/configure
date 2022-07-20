@@ -604,6 +604,4 @@ fi
 
 printf "\nThe next step is to type 'make clean && make install'\n\n"
 
-cat config.h
-
 exit 0
