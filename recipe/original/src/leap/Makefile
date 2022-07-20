@@ -6,39 +6,39 @@ include ../../config.h
 	@echo "[TLEAP] CC $<"
 	$(VB)$(CC) -c -I$(INCDIR) $(CFLAGS) $(LOCALFLAGS) -o $@ $<
 
-# 
+#
 #  Absolutely necessary routines
-# 
+#
 
 OA1= basics.o sysdepend.o stringExtra.o varArray.o getline.o avl.o
 OA = $(OA1)
 
-# 
+#
 #  General tools
-# 
+#
 
-OG1= pdb_format.o pdb_read.o pdb_sprntf.o 
+OG1= pdb_format.o pdb_read.o pdb_sprntf.o
 OG2= pdb_sscanf.o pdb_write.o
-OG3= vector.o zMatrix.o sort.o bag.o hash.o 
+OG3= vector.o zMatrix.o sort.o bag.o hash.o
 OG4= dictionary.o database.o nVector.o ring.o matrix.o
 OG5= fortran.o displayer.o
 OG = $(OG1) $(OG2) $(OG3) $(OG4) $(OG5)
 
-# 
+#
 #  Object hierarchy objekts
-# 
+#
 
-OO1= assoc.o atom.o byteArray.o 
+OO1= assoc.o atom.o byteArray.o
 OO2= collection.o container.o internal.o
-OO3= list.o loop.o molecule.o 
+OO3= list.o loop.o molecule.o
 OO4= oDouble.o oInteger.o oString.o
 OO5= objekt.o parmSet.o residue.o unit.o unitio.o tripos.o
 OO6= graphUtil.o select.o
 OO = $(OO1) $(OO2) $(OO3) $(OO4) $(OO5) $(OO6)
 
-# 
+#
 #  xaLeap and leap specific objects and tools
-# 
+#
 
 OL1= amber.o build.o elements.o library.o chirality.o
 OL2= minimizer.o model.o parmLib.o pdbFile.o mol2File.o mol3File.o tools.o
@@ -47,23 +47,23 @@ OL4= commands.o mathop.o block.o restraint.o hybrid.o
 OL = $(OL1) $(OL2) $(OL3) $(OL4)
 
 
-# 
+#
 #  Terminal interface specifics
-# 
+#
 
 OC1= tLeap.o
 OC  = $(OC1)
 
 
 #  utilities specifics
-# 
+#
 #        OXUMF:  xaUtilMessageFilter
 #        OUCWB:  utilConvertWaterBox
 #        OUC2O:  utilCrd2Off
 #        OUDT:   utilDescribeTopology
 #        OUMH:   utilMakeHelp
 #        OUT:	mol2_to_off
-# 
+#
 
 OUCWB= utilConvertWaterBox.o
 OUDT= utilDescribeTopology.o
@@ -72,9 +72,9 @@ OUC2O= utilCrd2Off.o
 OUMH= utilMakeHelp.o
 OUL2P= utilLib2Pdb.o
 
-# 
+#
 #  Other dependancy files
-# 
+#
 
 OBJ = $(OA) $(OG) $(OO) $(OL)
 
@@ -153,7 +153,11 @@ parser.c:       parser.y parser.h
 	@mv y.tab.c parser.c
 
 helptext.c: helptext.text utilMakeHelp$(SFX)
+ifeq ($(CONDA_BUILD_CROSS_COMPILATION),"1")
+	$(VB)$(BUILD_PREFIX)/utilMakeHelp$(SFX) helptext.text helptext.c
+else
 	$(VB)./utilMakeHelp$(SFX) helptext.text helptext.c
+endif
 
 depend: $(TLEAP_OBJ:.o=.c)
 	@echo "[TLEAP] make depend"

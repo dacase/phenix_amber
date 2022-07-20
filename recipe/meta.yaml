@@ -13,6 +13,7 @@ build:
 
 requirements:
   build:
+    - amber_phenix                           # [build_platform != target_platform]
     - bison                                  # [build_platform != target_platform]
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
