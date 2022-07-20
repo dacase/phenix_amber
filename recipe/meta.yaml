@@ -8,6 +8,7 @@ source:
   path: ./original
 
 build:
+  skip: true  # [win]
   number: 0
 
 requirements:
