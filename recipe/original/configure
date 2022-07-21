@@ -37,6 +37,7 @@ yacc="bison -y"
 
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" == "1" ]]; then
   yacc="${BUILD_PREFIX}/bin/bison -y"
+  optflags="-g -Ofast"
 fi
 
 openmp='no'
