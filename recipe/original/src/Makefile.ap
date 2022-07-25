@@ -13,6 +13,7 @@ install:
 	@cd leap && $(MAKE) tleap
 	@cd antechamber && $(MAKE) ac
 	@cd sqm && $(MAKE) sqm
+	@cd xtalutil && $(MAKE) xtalutil
 
 clean:
 	-(cd blas && $(MAKE) clean )
@@ -26,4 +27,5 @@ clean:
 	-(cd leap && $(MAKE) clean )
 	-(cd antechamber && $(MAKE) clean )
 	-(cd sqm && $(MAKE) clean )
+	-(cd xtalutil && $(MAKE) clean )
 
