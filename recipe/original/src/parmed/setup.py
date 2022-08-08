@@ -31,11 +31,13 @@ def prepare_env_for_osx():
         '20': '11.5',
         '21': '12.0',
     }
-    os.environ['CXX'] = 'clang++'
-    os.environ['CC'] = 'clang'
-    darwin_major = os.uname()[2].split('.')[0]
-    if darwin_major in darwin_major_to_osx_map:
-        os.environ['MACOSX_DEPLOYMENT_TARGET'] = darwin_major_to_osx_map[darwin_major]
+    # assume that if CXX is set, we're inside conda-build
+    if os.environ.get('CXX') is None:
+        os.environ['CXX'] = 'clang++'
+        os.environ['CC'] = 'clang'
+        darwin_major = os.uname()[2].split('.')[0]
+        if darwin_major in darwin_major_to_osx_map:
+            os.environ['MACOSX_DEPLOYMENT_TARGET'] = darwin_major_to_osx_map[darwin_major]
 
 class CleanCommand(Clean):
     """python setup.py clean

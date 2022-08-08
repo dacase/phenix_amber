@@ -7,14 +7,15 @@ import sys
 
 
 # Update/correct sys env vars to be correct for OS X.
-if sys.platform == 'darwin':
-    os.environ['CXX'] = 'clang++'
-    os.environ['CC'] = 'clang'
-# PGI does not work with Python, it appears. So force gcc, which is almost
-# universally available
-elif os.environ.get('CC', '').endswith('pgcc'):
-    os.environ['CXX'] = 'g++'
-    os.environ['CC'] = 'gcc'
+if os.environ.get('CXX') is None:
+    if sys.platform == 'darwin':
+        os.environ['CXX'] = 'clang++'
+        os.environ['CC'] = 'clang'
+    # PGI does not work with Python, it appears. So force gcc, which is almost
+    # universally available
+    elif os.environ.get('CC', '').endswith('pgcc'):
+        os.environ['CXX'] = 'g++'
+        os.environ['CC'] = 'gcc'
 
 sander_extension_source = 'sander/src/pysandermodule.c'
 sanderles_extension_source = 'sanderles/src/pysandermodule.c'
