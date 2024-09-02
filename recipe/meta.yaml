@@ -44,7 +44,6 @@ requirements:
     - lapack
     - libnetcdf
     - netcdf-fortran
-    - {{ pin_compatible('numpy') }}
     - openblas
     - python
 
