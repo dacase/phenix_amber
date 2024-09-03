@@ -33,6 +33,7 @@ requirements:
     - netcdf-fortran
     - numpy
     - openblas
+    - pip
     - python
     - rsync
     - setuptools
