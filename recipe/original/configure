@@ -261,7 +261,10 @@ fi   # end of if conda block
 #--------------------------------------------------------------------------
 #  Configure and build netcdf:
 #--------------------------------------------------------------------------
-if [ -f "lib/libnetcdf.a" ] || [ -f "${PREFIX}/lib/libnetcdf.a" ]; then
+if [ -f "lib/libnetcdf.a" ] || \
+   [ -f "${PREFIX}/lib/libnetcdf.a" ] || \
+   [ -f "${PREFIX}/lib/libnetcdf.so" ] || \
+   [ -f "${PREFIX}/lib/libnetcdf.dylib" ]; then
    echo "Using the existing netcdf libraries"
 else
    cd src/netcdf-c-4.7.2
@@ -343,6 +346,8 @@ fi
 if [ "$flibs_fftw" != "" ]; then
     if [ -f "lib/libfftw3.a" ] || \
        [ -f "${PREFIX}/lib/libfftw3.a" ] || \
+       [ -f "${PREFIX}/lib/libfftw3.so" ] || \
+       [ -f "${PREFIX}/lib/libfftw3.dylib" ] || \
        [ "$openmp" == "yes" -a -f "lib/libfftw3_omp.a" ]; then
        echo "Using the existing fftw3  libraries"
     else
