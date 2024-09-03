@@ -1,55 +1,47 @@
+MACOSX_DEPLOYMENT_TARGET:
+- '10.13'
+MACOSX_SDK_VERSION:
+- '10.13'
 arpack:
-- '3.7'
+- '3.9'
 bzip2:
 - '1'
 c_compiler:
-- gcc
+- clang
 c_compiler_version:
-- '10'
-cdt_name:
-- cos6
+- '17'
 channel_sources:
 - conda-forge
 channel_targets:
 - phenix-project main
 cxx_compiler:
-- gxx
+- clangxx
 cxx_compiler_version:
-- '10'
-docker_image:
-- quay.io/condaforge/linux-anvil-cos7-x86_64
+- '17'
 fftw:
 - '3'
 fortran_compiler:
 - gfortran
 fortran_compiler_version:
-- '10'
+- '13'
 libnetcdf:
-- 4.8.1
+- 4.9.2
+macos_machine:
+- x86_64-apple-darwin13.4.0
 netcdf_fortran:
-- '4.5'
+- '4.6'
 numpy:
-- '1.19'
+- '2.0'
 openblas:
 - 0.3.*
 pin_run_as_build:
-  arpack:
-    max_pin: x.x.x
-  bzip2:
-    max_pin: x
-  fftw:
-    max_pin: x
-  netcdf-fortran:
-    max_pin: x.x
   python:
     min_pin: x.x
     max_pin: x.x
-  zlib:
-    max_pin: x.x
 python:
-- 3.7.* *_cpython
+- 3.9.* *_cpython
 target_platform:
-- linux-64
+- osx-64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
@@ -57,4 +49,4 @@ zip_keys:
 - - python
   - numpy
 zlib:
-- '1.2'
+- '1'

@@ -1,11 +1,11 @@
-About amber_phenix
-==================
+About amber_phenix-feedstock
+============================
+
+Feedstock license: [BSD-3-Clause](https://github.com/dacase/phenix_amber/blob/main/LICENSE.txt)
 
 Home: https://www.phenix-online.org/documentation/reference/amber.html
 
 Package license: LGPL-3.0-only AND GPL-3.0-only
-
-Feedstock license: [BSD-3-Clause](https://github.com/dacase/phenix_amber/blob/main/LICENSE.txt)
 
 Summary: Parts of AmberTools that are needed for interaction with the phenix crystallographic refinement package.
 
@@ -20,87 +20,94 @@ Current build status
     <td>
       <details>
         <summary>
-          <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=&branchName=main">
+          <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=None&branchName=main">
             <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main">
           </a>
         </summary>
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_64_numpy1.19python3.7.____cpython</td>
+              <td>linux_64_python3.10.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=linux&configuration=linux_64_numpy1.19python3.7.____cpython" alt="variant">
+                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=linux&configuration=linux%20linux_64_python3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_numpy1.19python3.8.____cpython</td>
+              <td>linux_64_python3.11.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=linux&configuration=linux_64_numpy1.19python3.8.____cpython" alt="variant">
+                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=linux&configuration=linux%20linux_64_python3.11.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_numpy1.19python3.9.____cpython</td>
+              <td>linux_64_python3.12.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=linux&configuration=linux_64_numpy1.19python3.9.____cpython" alt="variant">
+                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=linux&configuration=linux%20linux_64_python3.12.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_numpy1.21python3.10.____cpython</td>
+              <td>linux_64_python3.9.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=linux&configuration=linux_64_numpy1.21python3.10.____cpython" alt="variant">
+                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=linux&configuration=linux%20linux_64_python3.9.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_64_numpy1.19python3.7.____cpython</td>
+              <td>osx_64_python3.10.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx_64_numpy1.19python3.7.____cpython" alt="variant">
+                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx%20osx_64_python3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_64_numpy1.19python3.8.____cpython</td>
+              <td>osx_64_python3.11.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx_64_numpy1.19python3.8.____cpython" alt="variant">
+                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx%20osx_64_python3.11.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_64_numpy1.19python3.9.____cpython</td>
+              <td>osx_64_python3.12.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx_64_numpy1.19python3.9.____cpython" alt="variant">
+                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx%20osx_64_python3.12.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_64_numpy1.21python3.10.____cpython</td>
+              <td>osx_64_python3.9.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx_64_numpy1.21python3.10.____cpython" alt="variant">
+                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx%20osx_64_python3.9.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_arm64_numpy1.19python3.8.____cpython</td>
+              <td>osx_arm64_python3.10.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx_arm64_numpy1.19python3.8.____cpython" alt="variant">
+                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx%20osx_arm64_python3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_arm64_numpy1.19python3.9.____cpython</td>
+              <td>osx_arm64_python3.11.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx_arm64_numpy1.19python3.9.____cpython" alt="variant">
+                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx%20osx_arm64_python3.11.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_arm64_numpy1.21python3.10.____cpython</td>
+              <td>osx_arm64_python3.12.____cpython</td>
               <td>
-                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx_arm64_numpy1.21python3.10.____cpython" alt="variant">
+                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx%20osx_arm64_python3.12.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_python3.9.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/dacase/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/dacase/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx%20osx_arm64_python3.9.____cpython" alt="variant">
                 </a>
               </td>
             </tr>
