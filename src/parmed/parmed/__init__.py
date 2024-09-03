@@ -14,9 +14,8 @@ __all__ = ['exceptions', 'periodic_table', 'residue', 'unit', 'utils',
            'load_file', 'read_PDB', 'read_CIF', 'write_PDB', 'write_CIF',
            'load_rosetta', 'load_rdkit', 'download_PDB', 'download_CIF', 'tools', 'version']
 
-from ._version import get_versions
-__version__ = get_versions()['version']
-del get_versions
+from . import _version
+__version__ = _version.get_versions()['version']
 
 from parmed import exceptions, periodic_table, residue
 from parmed import unit, utils
