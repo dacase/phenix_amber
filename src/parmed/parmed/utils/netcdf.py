@@ -45,7 +45,6 @@ from collections import OrderedDict
 import mmap as mm
 
 import numpy as np
-from numpy.compat import asbytes, asstr
 from numpy import frombuffer, dtype, empty, array, asarray
 from numpy import little_endian as LITTLE_ENDIAN
 from functools import reduce
@@ -99,6 +98,16 @@ REVERSE = {('b', 1): NC_BYTE,
            ('l', 4): NC_INT,
            ('S', 1): NC_CHAR}
 
+# functions copied from numpy/compat/py3k.py for numpy version < 2
+def asbytes(s):
+    if isinstance(s, bytes):
+        return s
+    return str(s).encode('latin1')
+
+def asstr(s):
+    if isinstance(s, bytes):
+        return s.decode('latin1')
+    return str(s)
 
 class netcdf_file(object):
     """
