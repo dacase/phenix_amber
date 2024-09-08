@@ -1,6 +1,6 @@
 # Note: always find header files in $MSANDERHOME/include
 
-from distutils.core import setup, Extension
+from setuptools import setup, Extension
 import os
 from os.path import join
 import sys
