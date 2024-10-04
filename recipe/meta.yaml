@@ -9,7 +9,7 @@ source:
 
 build:
   skip: true  # [win]
-  number: 3
+  number: 4
 
 requirements:
   build:
@@ -45,6 +45,7 @@ requirements:
     - lapack
     - libnetcdf
     - netcdf-fortran
+    - {{ pin_compatible('numpy') }}
     - openblas
     - python
 
