@@ -1,0 +1,61 @@
+package:
+  name: amber_phenix
+#  version 1.4.1 adds --openmp to configure
+#  version 1.5   uses the new Jan 2022 code from Sergei
+  version: "1.5"
+
+source:
+  path: ./original
+
+build:
+  skip: true  # [win]
+  number: 4
+
+requirements:
+  build:
+    - bison                                  # [build_platform != target_platform]
+    - python                                 # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+    - numpy                                  # [build_platform != target_platform]
+    - rsync                                  # [build_platform != target_platform]
+    - make
+    - {{ compiler('fortran') }}
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+
+  host:
+    - arpack
+    - bison
+    - bzip2
+    - fftw
+    - lapack
+    - libnetcdf
+    - netcdf-fortran
+    - numpy
+    - openblas
+    - pip
+    - python
+    - rsync
+    - setuptools
+    - zlib
+
+  run:
+    - arpack
+    - fftw
+    - lapack
+    - libnetcdf
+    - netcdf-fortran
+    - {{ pin_compatible('numpy') }}
+    - openblas
+    - python
+
+about:
+  home: https://www.phenix-online.org/documentation/reference/amber.html
+  license: LGPL-3.0-only AND GPL-3.0-only
+  license_file: ./original/GNU_LGPL_v3
+  summary: Parts of AmberTools that are needed for interaction with the phenix crystallographic refinement package.
+
+extra:
+  recipe-maintainers:
+    - bkpoon
+    - dacase
