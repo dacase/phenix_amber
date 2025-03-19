@@ -1556,7 +1556,6 @@ md_scheme.LES.o:   md_scheme.F90
 
 mdfil.o: \
                     file_io_dat.o\
-                    ../rism/amber_rism_interface.o\
                     ew_parallel.h\
                     parallel.h\
                     ../include/dprec.fh
@@ -1568,7 +1567,6 @@ mdfil.o:   mdfil.F90
 
 mdfil.LES.o: \
                     file_io_dat.o\
-                    ../rism/amber_rism_interface.o\
                     ew_parallel.h\
                     parallel.h\
                     ../include/dprec.fh

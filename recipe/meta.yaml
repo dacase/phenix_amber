@@ -2,7 +2,8 @@ package:
   name: amber_phenix
 #  version 1.4.1 adds --openmp to configure
 #  version 1.5   uses the new Jan 2022 code from Sergei
-  version: 1.5
+#  version 1.6   use more conda libraries -- no rism or fftw
+  version: 1.6
 
 source:
   path: ../
@@ -16,6 +17,8 @@ requirements:
    - {{ compiler('c') }}
    - {{ compiler('cxx') }}
    - llvm-openmp  # [osx]
+   - libnetcdf
+   - netcdf-fortran
 
   host:
    - python
@@ -23,21 +26,19 @@ requirements:
    - setuptools
    - bzip2
    - zlib
-#  - mkl
-#  - libnetcdf
-#  - netcdf-fortran
-#  - openblas
-#  - arpack
+   - libnetcdf
+   - netcdf-fortran
+   - openblas
+   - arpack
    - llvm-openmp  # [osx]
 
   run:
    - python
    - numpy
-#  - mkl
-#  - libnetcdf
-#  - netcdf-fortran
-#  - openblas
-#  - arpack
+   - libnetcdf
+   - netcdf-fortran
+   - openblas
+   - arpack
    - llvm-openmp  # [osx]
 
 about:

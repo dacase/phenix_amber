@@ -5,7 +5,7 @@ SHELL=/bin/sh
 VPATH=
 
 # Add search paths for .mod files
-LOCALFLAGS = $(CUDAFLAGS) -I../sqm -I../rism 
+LOCALFLAGS = $(CUDAFLAGS) -I../sqm
 
 LESAPIOBJ= memory_module.o stack.o file_io_dat.o les.o \
     constants.o state.o wallclock.o veclib.o \
@@ -23,7 +23,6 @@ LESAPIOBJ= memory_module.o stack.o file_io_dat.o les.o \
     mexit.o new_time.API.o extra_pts.LESAPI.o thermo_int.o matinv.o assert.o \
     erfcfun.o md_scheme.LES.o \
     ips.o sglds.o iwrap2.o emap.o \
-    amber_rism_interface.API.o \
     parms.o softcore.o mbar.o \
     linear_response.o molecule.o dssp.o \
     charmm.API.o crg_reloc.o barostats.o prmtop_type.o \
@@ -73,7 +72,6 @@ APIOBJ=  file_io_dat.o constants.o state.o memory_module.o stack.o \
     debug.API.o mexit.o new_time.API.o extra_pts.API.o thermo_int.o les.o \
     matinv.o assert.o erfcfun.o md_scheme.o \
     ips.o sglds.o iwrap2.o emap.o\
-    amber_rism_interface.API.o \
     AmberNetcdf.o bintraj.o binrestart.o \
     parms.o softcore.o mbar.o linear_response.o \
     molecule.o dssp.o \
@@ -157,10 +155,6 @@ libsander_skip::
 libsanderles_skip::
 	@echo "Skipping libsander"
 
-amber_rism_interface.API.o: ../rism/amber_rism_interface.F90
-	@echo "[MSANDER]  FC $<"
-	$(VB)$(FC) -DAPI -c $(FOPTFLAGS) $(FFLAGS) -o $@ $< 
-
 dummy:
 
 #---------------------------------------------------------------------------
@@ -228,8 +222,6 @@ libs:
 	$(VB)cd ../lapack && $(MAKE) $(LAPACK)
 	$(VB)cd ../arpack && $(MAKE) $(ARPACK)
 	$(VB)cd ../sqm && $(MAKE) libsqm
-	$(VB)$(MAKE) binrestart.o    # needed by rism_io 
-	$(VB)cd ../rism && $(MAKE) $(RISM)
     
 #---------------------------------------------------------------------------
 Plumed.o: Plumed.c
