@@ -55,7 +55,6 @@ subroutine force(xx, ix, ih, ipairs, x, f, ener, vir, fs, rborn, reff, &
 #if defined(LES) && defined(MPI)
   use remd, only: rem ! wasn't used for LES above
 #endif /* LES && MPI */
-  use sander_rism_interface, only: rismprm, rism_force
   use stack
   use qmmm_module, only : qmmm_nml
   use constants, only: zero, one
@@ -708,14 +707,6 @@ subroutine force(xx, ix, ih, ipairs, x, f, ener, vir, fs, rborn, reff, &
 #endif
   end if  ! ( igb /= 0 .and. igb /= 10 .and. ipb == 0 )
   ! End handoff of nonbonded computations to subroutine egb
-
-  ! Force and energy computations by the Reference Interaction Site Model
-  if (rismprm%rism == 1) then
-    call timer_start(TIME_RISM)
-    call rism_force(x, f, erism, irespa, imin)
-    pot%rism = erism
-    call timer_stop(TIME_RISM)
-  endif
 
   if (master) then
     !  These parts of the NMR energies are not parallelized, so only

@@ -260,8 +260,6 @@ fi
 
 /bin/rm -f testp.y y.tab.c testp.f testp.o testp
 
-fi   # end of if conda block
-
 #--------------------------------------------------------------------------
 #  Configure the linear algebra libraries:
 #--------------------------------------------------------------------------

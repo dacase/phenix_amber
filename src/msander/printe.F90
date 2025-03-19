@@ -167,8 +167,6 @@ end subroutine grdmax
 subroutine printe( nstep, gradient_rms, gradient_max, ene, &
       atom_number_of_gmax, atom_name_of_gmax )
    
-   use sander_rism_interface, only : rismprm, RISM_NONE, RISM_FULL, RISM_INTERP,&
-        rism_calc_type, rism_thermo_print
    use qmmm_module, only : qmmm_nml
    use state ! Access to energy_rec
    use charmm_mod, only : charmm_active
@@ -235,12 +233,10 @@ subroutine printe( nstep, gradient_rms, gradient_max, ene, &
                                     ene%pot%imp,      &
                                     ene%pot%cmap
 
-   if( igb == 0 .and. ipb == 0 .and. rismprm%rism == 0) then
+   if( igb == 0 .and. ipb == 0 ) then
       write(6,9048) enonb,enele,ehbond
    else if ( igb == 10 .or. ipb /= 0 ) then
       write(6,9050) enonb,enele,epb
-   else if(rismprm%rism == 1 )then
-      write(6,9051) enonb,enele,erism
    else
       write(6,9049) enonb,enele,egb
    end if
@@ -326,13 +322,10 @@ subroutine printe( nstep, gradient_rms, gradient_max, ene, &
                                     ene%pot%cmap
 
 
-      if( igb == 0 .and. ipb == 0 .and. rismprm%rism == 0) then
+      if( igb == 0 .and. ipb == 0 ) then
          write(7,9048) enonb,enele,ehbond
       else if ( igb == 10 .or. ipb /= 0 ) then
          write(7,9050) enonb,enele,epb
-      else if ( rismprm%rism == 1 ) then
-         write(7,9051) enonb,enele,erism
-      else
          write(7,9049) enonb,enele,egb
       end if
       write(7,9058) enb14,eel14,econst
@@ -396,11 +389,6 @@ subroutine printe( nstep, gradient_rms, gradient_max, ene, &
       end if
       if (econst /= 0.0) write(7,9078) epot-econst
       if ( dvdl /= 0.d0) write(7,9100) dvdl
-   end if
-
-   if(rismprm%rism==1 .and. rismprm%write_thermo==1)then
-      if(rism_calc_type(nstep) == RISM_FULL)&
-           call rism_thermo_print(.false.,transfer(ene%pot,pot_array))
    end if
 
    9018 format (/ /,3x,'NSTEP',7x,'ENERGY',10x,'RMS',12x,'GMAX',9x, &

@@ -26,7 +26,7 @@ LESAPIOBJ= memory_module.o stack.o file_io_dat.o les.o \
     parms.o softcore.o mbar.o \
     linear_response.o molecule.o dssp.o \
     charmm.API.o crg_reloc.o barostats.o prmtop_type.o \
-    AmberNetcdf.o bintraj.LES.o binrestart.LES.o getcor.LES.o mdfil.LES.o \
+    bintraj.LES.o binrestart.LES.o getcor.LES.o mdfil.LES.o \
     mdwrit.LES.o lmod.LES.o trajene.o ew_box.LESAPI.o minrit.LES.o \
     set.LESAPI.o qm_mm.LESAPI.o amd.o scaledMD.o interface.LESAPI.o \
     music_module.o dsarpack.o nxtsec.o
@@ -91,7 +91,7 @@ QMAPIOBJ = \
     qmmm_adaptive_module.o prn_qmmm_dipole.o
 
 MMOBJ = \
-    align.o AmberNetcdf.o amd.o amopen.o assert.o \
+    align.o amd.o amopen.o assert.o \
     barostats.o binrestart.o bintraj.o charmm.o \
     constants.o crg_reloc.o csa.o cshf.o \
     debug.o decnvh.o degcnt.o dssp.o \
@@ -114,7 +114,7 @@ MMOBJ = \
     wallclock.o xminC.o veclib.o dsarpack.o nxtsec.o
 
 LESOBJ= \
-    align.o AmberNetcdf.o amd.o amopen.o \
+    align.o amd.o amopen.o \
     assert.o barostats.o binrestart.LES.o bintraj.LES.o charmm.o \
     constants.o crg_reloc.o csa.o \
     cshf.o debug.o decnvh.o degcnt.LES.o \
@@ -164,7 +164,7 @@ $(BINDIR)/msander$(SFX): libs $(MMOBJ) $(QMOBJ) \
 	@echo "[MSANDER]  FC $@"
 	$(VB)$(FC) $(FFLAGS) -o $@  $(MMOBJ) $(QMOBJ) \
 	     $(NFE_OBJECTS) \
-	     -L$(LIBDIR) $(NETCDFLIBF) $(FLIBSF) $(LDFLAGS) $(PLUMED_LOAD)
+	     -L$(LIBDIR) $(FLIBSF) $(LDFLAGS) $(PLUMED_LOAD)
 
 #---------------------------------------------------------------------------
 $(BINDIR)/msander.cuda$(SFX): libs lib_cuda $(MMOBJ) $(QMOBJ) \
@@ -173,7 +173,7 @@ $(BINDIR)/msander.cuda$(SFX): libs lib_cuda $(MMOBJ) $(QMOBJ) \
 	@echo "[MSANDER]  FC $@"
 	$(VB)$(FC) -o $@  $(MMOBJ) $(QMOBJ) \
 	     $(NFE_OBJECTS)  \
-	     -L$(LIBDIR) $(NETCDFLIBF) $(FLIBSF) $(LDFLAGS) $(PLUMED_LOAD) \
+	     -L$(LIBDIR) $(FLIBSF) $(LDFLAGS) $(PLUMED_LOAD) \
          -L$(CUDA_HOME)/lib64 -L$(CUDA_HOME)/lib \
          -lcurand -lcufft -lcudart -lcudadevrt -lgfortran -lstdc++
 
@@ -183,7 +183,7 @@ $(BINDIR)/msander.LES$(SFX): libs $(LESOBJ) $(QMOBJ) \
          $(PLUMED_DEPENDENCIES) dummy
 	@echo "[MSANDER_LES]  FC $@"
 	$(VB)$(FC) $(FFLAGS) -o $@ $(LESOBJ) $(QMOBJ) \
-	     $(NFE_OBJECTS) -L$(LIBDIR) $(NETCDFLIBF) \
+	     $(NFE_OBJECTS) -L$(LIBDIR)  \
 	     $(FLIBSF) $(LDFLAGS) $(PLUMED_LOAD)
 
 #---------------------------------------------------------------------------
@@ -194,7 +194,7 @@ $(LIBDIR)/libsander$(SHARED_SUFFIX): libs $(APIOBJ) \
 	$(VB)$(FC) $(MAKE_SHARED) $(FPPFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@  \
         $(APIOBJ) $(QMAPIOBJ) force.o \
         -L$(LIBDIR) $(NFE_OBJECTS) \
-        $(NETCDFLIBF) $(LDFLAGS) $(FLIBSF) $(PLUMED_LOAD)
+        $(LDFLAGS) $(FLIBSF) $(PLUMED_LOAD)
 
 #---------------------------------------------------------------------------
 $(LIBDIR)/libsanderles$(SHARED_SUFFIX): libs $(LESAPIOBJ) \
@@ -205,7 +205,7 @@ $(LIBDIR)/libsanderles$(SHARED_SUFFIX): libs $(LESAPIOBJ) \
 	$(VB)$(FC) $(MAKE_SHARED) $(FPPFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ \
         $(LESAPIOBJ) $(QMAPIOBJ) \
         -L$(LIBDIR) $(PLUMED_LOAD) \
-        $(NFE_OBJECTS) $(NETCDFLIBF) $(LDFLAGS) $(FLIBSF) 
+        $(NFE_OBJECTS) $(LDFLAGS) $(FLIBSF) 
 
 $(INCDIR)/sander_api.mod: interface.o
 	$(VB)/bin/cp sander_api.mod $(INCDIR)
@@ -218,9 +218,9 @@ $(INCDIR)/sander.h: sander.h
 
 #---------------------------------------------------------------------------
 libs:
-	$(VB)cd ../blas && $(MAKE) $(BLAS)
-	$(VB)cd ../lapack && $(MAKE) $(LAPACK)
-	$(VB)cd ../arpack && $(MAKE) $(ARPACK)
+#	$(VB)cd ../blas && $(MAKE) $(BLAS)
+#	$(VB)cd ../lapack && $(MAKE) $(LAPACK)
+#	$(VB)cd ../arpack && $(MAKE) $(ARPACK)
 	$(VB)cd ../sqm && $(MAKE) libsqm
     
 #---------------------------------------------------------------------------

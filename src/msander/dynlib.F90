@@ -161,10 +161,6 @@ subroutine prntmd(nstep, time, ener, onefac, iout7, rms)
 #ifdef LES
   use les_data, only : temp0les
 #endif
-  use sander_rism_interface, only: rismprm, RISM_NONE, RISM_FULL, &
-                                   RISM_INTERP, rism_calc_type, &
-                                   rism_thermo_print
-
   use qmmm_module, only: qmmm_nml,qmmm_struct
   use state
   use charmm_mod, only: charmm_active
@@ -306,12 +302,10 @@ subroutine prntmd(nstep, time, ener, onefac, iout7, rms)
   end if
   write(6, 9048) enb14, eel14, enonb
 
-  if (igb == 0 .and. ipb == 0 .and. rismprm%rism == 0) then
+  if (igb == 0 .and. ipb == 0) then
     write(6, 9058) eel, ehbond, econst
   else if (igb == 10 .or. ipb /= 0) then
     write(6, 9060) eel, epb, econst
-  else if (rismprm%rism == 1) then
-    write(6, 9061) eel, erism, econst
   else
     write(6, 9059) eel, egb, econst
   end if
@@ -469,12 +463,10 @@ subroutine prntmd(nstep, time, ener, onefac, iout7, rms)
   end if
 
   write(7, 9048) enb14, eel14, enonb
-  if (igb == 0 .and. ipb == 0 .and. rismprm%rism == 0) then
+  if (igb == 0 .and. ipb == 0 ) then
     write(7, 9058) eel, ehbond, econst
   else if ( igb == 10 .or. ipb /= 0) then
     write(7, 9060) eel, epb, econst
-  else if (rismprm%rism == 1) then
-    write(7, 9061) eel, erism, econst
   else
     write(7, 9059) eel, egb, econst
   end if
@@ -606,12 +598,6 @@ subroutine prntmd(nstep, time, ener, onefac, iout7, rms)
                    ener%sgld%virsg
   endif
   call nmrptx(7)
-
-  if (rismprm%rism == 1 .and. rismprm%write_thermo == 1) then
-    if (rism_calc_type(nstep) == RISM_FULL) then
-      call rism_thermo_print(.false., transfer(ener%pot, pot_array))
-    end if
-  end if
 
 #ifndef NO_DETAILED_TIMINGS
   !Print Timing estimates to mdinfo.

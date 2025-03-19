@@ -47,7 +47,6 @@ subroutine mdread1()
         excessChemicalPotentialfile, solvationEnergyfile, entropyfile, &
         solventPotentialEnergyfile
 #  endif /* API */
-   use sander_rism_interface, only: rismprm
    use nfe_sander_proxy, only: infe
    implicit none
 #  include "box.h"
@@ -712,8 +711,6 @@ subroutine mdread1()
    ! Force igb=6 to get vacuum electrostatics or igb=0 for periodic
    ! boundary conditions. This must be done ASAP to ensure SANDER's
    ! electrostatics are initialized properly.
-
-   rismprm%rism=irism
 
    if (irism /= 0) then
       periodicPotential = 'pme'

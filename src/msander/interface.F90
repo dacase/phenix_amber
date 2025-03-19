@@ -334,7 +334,6 @@ subroutine api_mdread1(input_options, ierr)
    use nbips, only: ips,teips,tvips,teaips,tvaips,raips,mipsx,mipsy,mipsz, &
                     mipso,gridips,dvbips
    use emap,only: temap,gammamap
-   use sander_rism_interface, only: rismprm
 #ifdef DSSP
    use dssp, only: idssp
 #endif /* DSSP */
@@ -356,7 +355,6 @@ subroutine api_mdread1(input_options, ierr)
         excessChemicalPotentialUCfile, solvationEnergyUCfile, entropyUCfile,&
         solventPotentialEnergyfile
 #  endif /* API */
-   use sander_rism_interface, only: rismprm
    use nfe_sander_proxy, only: infe
    implicit none
 #  include "box.h"
@@ -1069,16 +1067,6 @@ subroutine api_mdread1(input_options, ierr)
    ! Force igb=6 to get vacuum electrostatics or igb=0 for periodic
    ! boundary conditions. This must be done ASAP to ensure SANDER's
    ! electrostatics are initialized properly.
-
-   rismprm%rism=irism
-   rismprm%verbose=rism_verbose
-   rismprm%grdspc(:)=grdspc1
-   rismprm%mdiis_del=mdiis_del
-
-   if (irism /= 0) then
-      periodicPotential = 'pme'
-      igb = 0
-   end if
 
    if (ifqnt>0) then
       qmmm_nml%ifqnt = .true.

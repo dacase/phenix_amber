@@ -57,9 +57,6 @@ module runmd_module
 
   use commandline_module, only: cpein_specified
   use md_scheme, only: thermostat_step, ithermostat
-  use sander_rism_interface, only: rismprm, RISM_NONE, RISM_FULL, &
-                                   RISM_INTERP, rism_calc_type, &
-                                   rism_solvdist_thermo_calc, mylcm
 
   use qmmm_module, only: qmmm_nml,qmmm_struct, qmmm_mpi, qm2_struct
 
@@ -441,17 +438,6 @@ subroutine runmd(xx, ix, ih, ipairs, x, winv, amass, f, v, vold, xc, &
   ! More setup {{{
 
     ! Print the initial energies and temperatures
-
-    if (rismprm%rism == 1 .and. rismprm%write_thermo==1 .and. &
-        nstep <= 0 .and. facc .ne. 'A') then
-      if (rism_calc_type(0) == RISM_FULL) then
-        if (nstlim == 0) then
-          call rism_solvdist_thermo_calc(.true., 0)
-        else
-          call rism_solvdist_thermo_calc(.false., 0)
-        end if
-      end if
-    end if
 
     if (nstep <= 0 .and. master .and. facc .ne. 'A') then
       if (isgld > 0) call sgenergy(ener)
@@ -861,15 +847,6 @@ subroutine runmd(xx, ix, ih, ipairs, x, winv, amass, f, v, vold, xc, &
   end if
 #endif
 
-  ! Write RISM files this step?
-  irismdump = .false.
-  if (rismprm%rism == 1) then
-    if (rismprm%ntwrism > 0) then
-      irismdump = (mod(nstep+1,rismprm%ntwrism) == 0)
-      if (nstep + 1 >= nstlim) irismdump = .true.
-    end if
-  end if
-
 #ifdef MPI
 !------------------------------------------------------------------------------
   ! Distribute the coordinates, dipoles, and velocities as necessary
@@ -1056,17 +1033,6 @@ subroutine runmd(xx, ix, ih, ipairs, x, winv, amass, f, v, vold, xc, &
 
 !------------------------------------------------------------------------------
   ! Step 9: output from this step if required: {{{
-  !    RISM dumping: {{{
-  ! Some 3D-RISM files require all processes to participate in output
-  ! due to the distributed memory.  RISM archive:
-  if (rismprm%rism == 1) then
-    ! Combined thermodynamics and distribution output.
-    ! Execute if we need to do either.
-    if (irismdump .or. (rism_calc_type(nstep) == RISM_FULL .and. &
-        rismprm%write_thermo == 1 .and. lout)) &
-      call rism_solvdist_thermo_calc(irismdump, nstep)
-  end if
-   ! }}}
   !    some non-standard dumps: {{{
   if (itdump) then
     ! Accelerated MD: Flush amdlog file
@@ -1260,11 +1226,7 @@ subroutine runmd(xx, ix, ih, ipairs, x, winv, amass, f, v, vold, xc, &
     if (ntave > 0) then
       if (mod(total_nstep,ntave) == 0 .and. onstep) then
         write(6, 542)
-        if (rismprm%rism == 1) then
-          tspan = ntave / mylcm(nrespa, rismprm%rismnrespa)
-        else
           tspan = ntave / nrespa
-        end if
 
         ! Update all elements of these sequence types
         enert_tmp  = enert - enert_old
@@ -1291,11 +1253,7 @@ subroutine runmd(xx, ix, ih, ipairs, x, winv, amass, f, v, vold, xc, &
           end do
         end if
 #endif
-        if (rismprm%rism == 1) then
-          write(6, 540) ntave / mylcm(nrespa, rismprm%rismnrespa)
-        else
-          write(6, 540) ntave/nrespa
-        end if
+        write(6, 540) ntave/nrespa
         call prntmd(total_nstep, t, enert_tmp, onefac, 0, .false.)
 #ifdef MPI
         if (ifsc .ne. 0) call sc_print_energies(6, sc_ener_tmp)
@@ -1306,11 +1264,7 @@ subroutine runmd(xx, ix, ih, ipairs, x, winv, amass, f, v, vold, xc, &
         if (ifsc .ne. 0) call sc_print_energies(6, sc_ener_tmp2)
 #endif /* MPI */
         if (icfe > 0) then
-          if (rismprm%rism == 1) then
-            write (6, 541) ntave / mylcm(nrespa, rismprm%rismnrespa)
-          else
-            write (6, 541) ntave/nrespa
-          end if
+          write (6, 541) ntave/nrespa
           edvdl_r = edvdl_r/tspan
           edvdl_r%pot%dvdl = enert_tmp%pot%dvdl  ! fix for DV/DL output
           edvdl_r%virvsene = 0.d0 ! virvsene should not but included here
