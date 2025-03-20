@@ -1,5 +1,0 @@
-# Doxygen documentation.
-doc/
-# Fortran output.
-*.mod
-*.o
