@@ -17,8 +17,4 @@ cd src
 make -f Makefile.ap install
 cd ..
 
-# remove libblas.a and liblapack.a
-rm -f ./lib/libblas.a
-rm -f ./lib/liblapack.a
-
 ${RSYNC} -av bin dat lib $PREFIX

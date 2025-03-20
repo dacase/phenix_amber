@@ -2,14 +2,15 @@ package:
   name: amber_phenix
 #  version 1.4.1 adds --openmp to configure
 #  version 1.5   uses the new Jan 2022 code from Sergei
-  version: "1.5"
+#  version 1.6   removes fftw, lots of other code cleanup
+  version: "1.6"
 
 source:
-  path: ./original
+  path: ../
 
 build:
   skip: true  # [win]
-  number: 4
+  number: 0
 
 requirements:
   build:
@@ -27,8 +28,6 @@ requirements:
     - arpack
     - bison
     - bzip2
-    - fftw
-    - lapack
     - libnetcdf
     - netcdf-fortran
     - numpy
@@ -42,7 +41,6 @@ requirements:
   run:
     - arpack
     - fftw
-    - lapack
     - libnetcdf
     - netcdf-fortran
     - {{ pin_compatible('numpy') }}
