@@ -30,7 +30,6 @@
    use molecule, only : mol_info, allocate_molecule, deallocate_molecule
    use nblist, only: first_list_flag
    use stack
-   use sander_rism_interface, only: rism_setparam, rism_init
    ! for LIE calculations
    use linear_response, only: ilrt, setup_linear_response, &
                               cleanup_linear_response
@@ -234,16 +233,7 @@
    call api_mdread2(x,ix,ih, ierr)
    if (ierr /= 0) goto ERROR2
 
-      call rism_setparam(mdin,&
-           commsander,&
-           natom,ntypes,x(L15:L15+natom-1),&
-           x(LMASS:LMASS+natom-1),cn1,cn2,&
-           ix(i04:i04+ntypes**2-1), ix(i06:i06+natom-1))
-
-      ! In the future, the msander and rism values for omp_num_threads might
-      !   be different; for now, they are the same
 !$    call set_omp_num_threads()
-!$    call set_omp_num_threads_rism()
 
       if ( ifcr /= 0 ) then
          call cr_read_input(natom)
@@ -427,8 +417,6 @@
 
    ! --- end of master process setup ---
    end if masterwork ! (master)
-
-   call rism_init(commsander)
 
    !   debug needs to copy charges at start and they can't change later
    !   ---------------- Check system is neutral and print warning message ------

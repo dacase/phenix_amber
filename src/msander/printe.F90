@@ -190,7 +190,6 @@ subroutine printe( nstep, gradient_rms, gradient_max, ene, &
    _REAL_  epot,enonb,enele,ehbond,ebond,eangle,edihed,enb14,eel14,egb,epb
    _REAL_  econst,epolar,aveper,aveind,avetot,esurf,edisp,diprms,dipiter
    _REAL_  dipole_temp,escf,dvdl,enemap
-   _REAL_ :: erism
    _REAL_ :: pot_array(potential_energy_rec_len)
    _REAL_ :: ect
 
@@ -221,7 +220,6 @@ subroutine printe( nstep, gradient_rms, gradient_max, ene, &
    escf    = ene%pot%scf
    edisp   = ene%pot%disp
    enemap   = ene%pot%emap
-   erism   = ene%pot%rism
    ect = ene%pot%ct
 
    write(6,9018)
@@ -404,8 +402,6 @@ subroutine printe( nstep, gradient_rms, gradient_max, ene, &
          'EGB        = ',f13.4)
    9050 format (1x,'VDWAALS = ',f13.4,2x,'EEL     = ',f13.4,2x, &
          'EPB        = ',f13.4)
-   9051 format (1x,'VDWAALS = ',f13.4,2x,'EEL     = ',f13.4,2x, &
-         'ERISM      = ',f13.4)
    9058 format (1x,'1-4 VDW = ',f13.4,2x,'1-4 EEL = ',f13.4,2x, &
          'RESTRAINT  = ',f13.4)
    9062 format (1x,'EMAP   = ',f14.4,   '  EMSCORE = ',f8.4)

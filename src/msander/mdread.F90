@@ -41,12 +41,6 @@ subroutine mdread1()
 #endif /* MPI */
    ! Parameter for LIE module
    use linear_response, only: ilrt, lrt_interval, lrtmask
-#  ifndef API
-   use sander_rism_interface, only: xvvfile, guvfile, huvfile, cuvfile,&
-        uuvfile, quvFile, chgDistFile,  &
-        excessChemicalPotentialfile, solvationEnergyfile, entropyfile, &
-        solventPotentialEnergyfile
-#  endif /* API */
    use nfe_sander_proxy, only: infe
    implicit none
 #  include "box.h"
@@ -89,7 +83,6 @@ subroutine mdread1()
    character(len=512) :: char_tmp_512
 #endif /* API */
 
-   integer irism
    character(len=8) periodicPotential
 
 !  N.B.: If you make changes to this namelist, you also need to make
@@ -124,7 +117,6 @@ subroutine mdread1()
          numexchg, repcrd, numwatkeep, hybridgb, reservoir_exchange_step, &
          ntwprt,tausw, &
          ntwr,iyammp,imcdo, &
-         plumed,plumedfile, &
          igb,alpb,Arad,rgbmax,saltcon,offset,gbsa,vrand, &
          surften,nrespa,nrespai,gamma_ln,extdiel,intdiel, &
          cut_inner,icfe,clambda,klambda, rbornstat,lastrst,lastist,  &
@@ -154,7 +146,6 @@ subroutine mdread1()
 #ifdef DSSP
          idssp, &
 #endif
-         irism,&
          vdwmodel, & ! mjhsieh - the model used for van der Waals
          ! retired:
          dtemp, dxm, heat, timlim, &
@@ -212,28 +203,6 @@ subroutine mdread1()
                  'RESERVOIR',  trim(reservoirname), &
                  'REMDDIM',    trim(remd_dimension_file)
 #  endif
-   if (len_trim(xvvfile) > 0) &
-        write(6,9701) 'Xvv', trim(xvvfile)
-   if (len_trim(guvfile) > 0) &
-        write(6,9701) 'Guv', trim(Guvfile)
-   if (len_trim(huvfile) > 0) &
-        write(6,9701) 'Huv', trim(Huvfile)
-   if (len_trim(cuvfile) > 0) &
-        write(6,9701) 'Cuv', trim(Cuvfile)
-   if (len_trim(uuvfile) > 0) &
-        write(6,9701) 'Uuv', trim(Uuvfile)
-   if (len_trim(quvfile) > 0) &
-        write(6,9701) 'Quv', trim(Quvfile)
-   if (len_trim(chgDistfile) > 0) &
-        write(6,9701) 'ChgDist', trim(chgDistfile)
-   if (len_trim(excessChemicalPotentialfile) > 0) &
-        write(6,9701) 'ExChem', trim(excessChemicalPotentialfile)
-   if (len_trim(solvationEnergyfile) > 0) &
-        write(6,9701) 'SolvEne', trim(solvationEnergyfile)
-   if (len_trim(entropyfile) > 0) &
-        write(6,9701) 'Entropy', trim(entropyfile)
-   if (len_trim(solventPotentialEnergyfile) > 0) &
-        write(6,9701) 'PotUV', trim(solventPotentialEnergyfile)
 
    ! Echo the input file to the user:
    call echoin(5,6)
@@ -269,10 +238,6 @@ subroutine mdread1()
    ithermostat = 1
    therm_par = 5.0d0
 ! } 
-! PLUMED
-   plumed = 0
-   plumedfile = 'plumed.dat'
-! END PLUMED
 #ifdef LES
    ! alternate temp for LES copies, if negative then use single bath
    ! single bath not the same as 2 baths with same target T
@@ -309,7 +274,6 @@ subroutine mdread1()
    ntwe = 0
    ipb = 0
    inp = 2
-   irism = 0
    ntave = 0
    ioutfm = 1
    ntr = 0
@@ -657,11 +621,6 @@ subroutine mdread1()
    if ( igb == 10 .and. ipb == 0 ) ipb = 2
    if ( igb == 0  .and. ipb /= 0 ) igb = 10
 
-   if (plumed.eq.1) then
-     write(6, '(1x,a,/)') 'PLUMED is on'
-     write(6, '(1x,a,a,/)') 'PLUMEDfile is ',plumedfile
-   endif
-
    if (ifqnt == NO_INPUT_VALUE) then
       ifqnt = 0 ! default value
       if (mdin_qmmm) then
@@ -712,14 +671,7 @@ subroutine mdread1()
    ! boundary conditions. This must be done ASAP to ensure SANDER's
    ! electrostatics are initialized properly.
 
-   if (irism /= 0) then
-      periodicPotential = 'pme'
-
-#   ifndef API
-      write(6,'(a)') "|periodic 3D-RISM Forcing igb=0"
-#   endif
       igb = 0
-   end if
 
    if (ifqnt>0) then
       qmmm_nml%ifqnt = .true.

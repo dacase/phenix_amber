@@ -190,7 +190,6 @@ subroutine prntmd(nstep, time, ener, onefac, iout7, rms)
 #ifndef LES
   _REAL_ :: rms_pbs
 #endif
-  _REAL_ :: erism
   _REAL_ :: pot_array(potential_energy_rec_len)
   _REAL_ :: ect
   _REAL_ :: amd_boost
@@ -291,7 +290,6 @@ subroutine prntmd(nstep, time, ener, onefac, iout7, rms)
   edisp   = ener%pot%disp
   enemap   = ener%pot%emap
   amd_boost = ener%pot%amd_boost
-  erism   = ener%pot%rism
   ect     = ener%pot%ct
 
   write(6, 9018) nstep,time,temp,press
@@ -636,8 +634,6 @@ subroutine prntmd(nstep, time, ener, onefac, iout7, rms)
   9059 format (1x,'EELEC  = ',f14.4,2x,'EGB     = ',f14.4,2x, &
          'RESTRAINT  = ',f14.4)
   9060 format (1x,'EELEC  = ',f14.4,2x,'EPB     = ',f14.4,2x, &
-         'RESTRAINT  = ',f14.4)
-  9061 format (1x,'EELEC  = ',f14.4,2x,'ERISM   = ',f14.4,2x, &
          'RESTRAINT  = ',f14.4)
   9062 format (1x,'EMAP   = ',f14.4)
   9180 format (1x, 'EAMD_BOOST  = ', f14.4)

@@ -19,15 +19,6 @@ subroutine mdfil(VERSION, version_requested)
 #endif
    !     Author: George Seibel; many subsequent modifications by many others.
    use file_io_dat
-   use sander_rism_interface
-
-   !, only : xvvfile, guvfile, huvfile, cuvfile, uuvfile, &
-   !     quvfile, chgdistfile, excessChemicalPotentialfile, &
-   !     solvationEnergyfile, entropyfile, &
-   !     excessChemicalPotentialGFfile, solvationEnergyGFfile, entropyGFfile, &
-   !     excessChemicalPotentialPCPLUSfile, solvationEnergyPCPLUSfile, entropyPCPLUSfile, &
-   !     excessChemicalPotentialUCfile, solvationEnergyUCfile, entropyUCfile, &
-   !     solventPotentialEnergyfile, crdFile
 
    implicit none
 
@@ -126,22 +117,6 @@ subroutine mdfil(VERSION, version_requested)
    cph_dump = 'explicit_titration.dat'
    ce_dump = 'explicit_redox_titration.dat'
    cphe_dump = 'explicit_phredox_titration.dat'
-   xvvfile       = ''
-   guvfile       = ''
-   huvfile       = ''
-   cuvfile       = ''
-   uuvfile       = ''
-   quvfile       = ''
-   chgdistfile   = ''
-   excessChemicalPotentialfile    = ''
-   solvationEnergyfile   = ''
-   entropyfile   = ''
-   solventPotentialEnergyfile     = ''
-   crdFile = ''
-   rismcrdfil    = ''
-   rismfrcfil    = ''
-   rismcrdrstfil = ''
-   rismfrcrstfil = ''
    if (numgroup == 1) then
       groups(:) = ' '
       groupfile_holder(:) = ' '
@@ -216,10 +191,6 @@ subroutine mdfil(VERSION, version_requested)
       else if (arg == '-p') then
          iarg = iarg + 1
          call getarg_wrap(iarg,parm)
-      else if (arg == '-c') then
-         iarg = iarg + 1
-         call getarg_wrap(iarg,inpcrd)
-         crdFile = inpcrd
       else if (arg == '-vecs') then
          iarg = iarg + 1
          call getarg_wrap(iarg,vecs)
@@ -339,52 +310,6 @@ subroutine mdfil(VERSION, version_requested)
          scaledMDlog_specified = .true.
          iarg = iarg + 1
          call getarg_wrap(iarg, scaledMDlog)
-      else if (arg == '-xvv') then
-         iarg = iarg + 1
-         call getarg_wrap(iarg,xvvfile)
-      else if (arg == '-guv') then
-         iarg = iarg + 1
-         call getarg_wrap(iarg,guvfile)
-      else if (arg == '-huv') then
-         iarg = iarg + 1
-         call getarg_wrap(iarg,huvfile)
-      else if (arg == '-cuv') then
-         iarg = iarg + 1
-         call getarg_wrap(iarg,cuvfile)
-      else if (arg == '-uuv') then
-         iarg = iarg + 1
-         call getarg_wrap(iarg,uuvfile)
-      else if (arg == '-quv') then
-         iarg = iarg + 1
-         call getarg_wrap(iarg,quvfile)
-      else if (arg == '-chgdist') then
-         iarg = iarg + 1
-         call getarg_wrap(iarg,chgdistfile)
-      else if (arg == '-exchem') then
-         iarg = iarg + 1
-         call getarg_wrap(iarg,excessChemicalPotentialfile)
-      else if (arg == '-solvene') then
-         iarg = iarg + 1
-         call getarg_wrap(iarg,solvationEnergyfile)
-      else if (arg == '-entropy') then
-         iarg = iarg + 1
-         call getarg_wrap(iarg,entropyfile)
-      else if (arg == '-potUV') then
-         iarg = iarg + 1
-         call getarg_wrap(iarg,solventPotentialEnergyfile)
-      else if (arg == '-rismcrd') then
-         iarg = iarg + 1
-         call getarg_wrap(iarg,rismcrdfil)
-      else if (arg == '-rismfrc') then
-         iarg = iarg + 1
-         call getarg_wrap(iarg,rismfrcfil)
-      else if (arg == '-rismcrdrst') then
-         iarg = iarg + 1
-         call getarg_wrap(iarg,rismcrdrstfil)
-      else if (arg == '-rismfrcrst') then
-         iarg = iarg + 1
-         call getarg_wrap(iarg,rismfrcrstfil)
-
 #ifdef MPI
       else if (arg(1:3) == '-p4') then
          iarg = iarg+1

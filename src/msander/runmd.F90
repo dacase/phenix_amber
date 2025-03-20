@@ -225,7 +225,6 @@ module runmd_module
   integer nstep, nrep, nrek, iend, istart3, iend3
   integer nrx, nr, nr3, ntcmt, izero, istart
   logical ixdump, ivdump, itdump, ifdump
-  logical irismdump
 
   integer nvalid, nvalidi
   _REAL_ eke
@@ -261,13 +260,6 @@ module runmd_module
 
   _REAL_ :: kinetic_E_save(2)
   integer :: aqmmm_flag
-
-  ! PLUMED related variables
-  _REAL_ :: plumed_box(3,3), plumed_virial(3,3), plumed_kbt
-  integer :: plumed_version, plumed_stopflag
-  _REAL_ :: plumed_energyUnits, plumed_timeUnits, plumed_lengthUnits
-  _REAL_ :: plumed_chargeUnits
-  ! }}}
 
 private
 public :: runmd
@@ -311,14 +303,6 @@ subroutine runmd(xx, ix, ih, ipairs, x, winv, amass, f, v, vold, xc, &
     ! counter
     call nmrdcp
     call mtmdunstep
-
-    ! PLUMED force is added in this routine.
-    plumed_stopflag=0
-#ifdef PLUMED
-    if (plumed == 1) then
-#     include "Plumed_force.inc"
-    end if
-#endif
 
 #ifdef MPI
     onstep = .false.
@@ -512,11 +496,6 @@ subroutine runmd(xx, ix, ih, ipairs, x, winv, amass, f, v, vold, xc, &
   !     [This is where the force() routine mainly gets called:]
   call force(xx, ix, ih, ipairs, x, f, ener, ener%vir, xx(l96), xx(l97), &
              xx(l98), xx(l99), qsetup, do_list_update, nstep)
-#ifdef PLUMED
-  if (plumed == 1) then
-#     include "Plumed_force.inc"
-  end if
-#endif
 
 #ifdef MPI
    call thermodynamic_integration(f)
@@ -1016,8 +995,6 @@ subroutine runmd(xx, ix, ih, ipairs, x, winv, amass, f, v, vold, xc, &
   ! End contingency to calculate energies when on a reportable step
 
   ! Added for rbornstat
-  ! !FIX: TL - do we need to put in rismnrespa here?
-  if (mod(irespa,nrespai) == 0 .or. irespa < 2) nvalidi = nvalidi + 1
   ntnb = 0
   if ( nsnb /= 0 ) then
     if (mod(nstep,nsnb) == 0) ntnb = 1
@@ -1322,7 +1299,6 @@ subroutine runmd(xx, ix, ih, ipairs, x, winv, amass, f, v, vold, xc, &
   end if
 #endif /* DISABLE_NFE is NOT defined, but NFE_ENABLE_BBMD is */
 
-  if (plumed .ne. 0 .and. plumed_stopflag .ne. 0) goto 480
   ! }}}
 
   ! This is where we actually cycle back to the next MD step
@@ -1499,7 +1475,6 @@ subroutine runmd(xx, ix, ih, ipairs, x, winv, amass, f, v, vold, xc, &
     deallocate( frcti, stat = ierr )
     REQUIRE( ierr == 0 )
   end if
-  if (plumed .ne. 0) call plumed_f_gfinalize()
   ! }}}
 
   ! format statements: {{{
@@ -1681,13 +1656,6 @@ subroutine initialize_runmd(x,ix,v)
   ekhf2 = 0.0d0
 
 !------------------------------------------------------------------------------
-#ifdef PLUMED
-  ! PLUMED initialization.  PLUMED is an open-source plugin that
-  ! confers the functionality of a number of enhanced sampling methods.
-  if (plumed == 1) then
-#   include "Plumed_init.inc"
-  endif
-#endif
   ! }}}
 
 end subroutine initialize_runmd

@@ -91,7 +91,7 @@ QMAPIOBJ = \
     qmmm_adaptive_module.o prn_qmmm_dipole.o
 
 MMOBJ = \
-    align.o amd.o amopen.o assert.o \
+    align.o AmberNetcdf.o amd.o amopen.o assert.o \
     barostats.o binrestart.o bintraj.o charmm.o \
     constants.o crg_reloc.o csa.o cshf.o \
     debug.o decnvh.o degcnt.o dssp.o \
@@ -114,7 +114,7 @@ MMOBJ = \
     wallclock.o xminC.o veclib.o dsarpack.o nxtsec.o
 
 LESOBJ= \
-    align.o amd.o amopen.o \
+    align.o AmberNetcdf.o amd.o amopen.o \
     assert.o barostats.o binrestart.LES.o bintraj.LES.o charmm.o \
     constants.o crg_reloc.o csa.o \
     cshf.o debug.o decnvh.o degcnt.LES.o \

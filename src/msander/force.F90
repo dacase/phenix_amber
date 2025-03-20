@@ -150,7 +150,6 @@ subroutine force(xx, ix, ih, ipairs, x, f, ener, vir, fs, rborn, reff, &
 
   integer i
   _REAL_  virvsene, eelt, epol, esurf, edisp
-  _REAL_ erism
 
   ! Charge transfer
   _REAL_ ect
@@ -793,7 +792,7 @@ subroutine force(xx, ix, ih, ipairs, x, f, ener, vir, fs, rborn, reff, &
   pot%polar = epolar
   pot%tot   = pot%vdw + pot%elec + pot%gb + pot%pb + pot%bond + pot%angle + &
               pot%dihedral + pot%vdw_14 + pot%elec_14 + pot%hbond + &
-              pot%constraint + pot%rism + pot%ct
+              pot%constraint + pot%ct
   pot%tot = pot%tot + pot%polar + pot%surf + pot%scf + pot%disp
 
   !Charmm related

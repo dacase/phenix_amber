@@ -30,7 +30,6 @@ iccflags=""
 fc="gfortran"
 flibs_arch="-lgfortran -w"
 flibs_la=""
-flibs_fftw="-lfftw3"
 gccsys=""
 optflags="-g -Ofast -mtune=native"
 
@@ -39,7 +38,6 @@ yacc="bison -y"
 openmp='no'
 ompflag=""
 ldflags=""
-fftw_flags=""
 mkl="no"
 installtype="serial"
 
@@ -53,11 +51,7 @@ libsander="libsander"
 libsanderles="libsanderles"
 
 inc="-I$msanderhome/include"
-netcdflibf_static="$msanderhome/lib/libnetcdff.a $msanderhome/lib/libnetcdf.a"
-netcdflibf_shared="-L$msanderhome/lib -lnetcdff -lnetcdf"
-netcdflibf=$netcdflibf_shared
 
-#short_ene=short_ene_omp.o
 short_ene=short_ene.o   # short_ene_omp may slow things down or even crash
 
 #  process command-line flags:
@@ -84,7 +78,6 @@ for var in "$@"; do
             conda="yes";;
         --openmp)
             ompflag='-fopenmp -DOPENMP';
-            flibs_fftw="-lfftw3_omp -lfftw3"
             openmp="yes";;
         --gcc10)
             gcc10f="-Wno-argument-mismatch -fallow-argument-mismatch -fno-inline-arg-packing"
@@ -178,225 +171,32 @@ else
    lm=-lm
 fi
 
-if [ "$conda" == "no" ]; then
-
-#--------------------------------------------------------------------------
-#  Test if the C compiler works:
-#--------------------------------------------------------------------------
-
-cat <<EOF >testp.c
-#include <stdio.h>
-int main()
-{
-   printf( "testing a C program\n" );
-}
-EOF
-
-printf "Testing $cc ..."
-$cc -o testp testp.c
-./testp | grep "testing a C program" > /dev/null
-status=$?
-
-if [ $status -gt 0 ]; then
-    printf "\nError: Unable to compile a C program using gcc\n"
-    printf "       Please check your compiler settings.\n"
-    exit 1
-else
-    printf "OK\n"
-fi
-/bin/rm -f testp.c testp.o testp
-
-#--------------------------------------------------------------------------
-#  Test if the Fortran compiler works:
-#--------------------------------------------------------------------------
-
-cat <<EOF >testp.f
-      program testf
-      write(6,*) 'testing a Fortran program'
-      end program testf
-EOF
-
-printf "Testing $fc ..."
-$fc -o testp testp.f
-./testp | grep "testing a Fortran program" > /dev/null
-status=$?
-
-if [ $status -gt 0 ]; then
-    printf "\nError: Unable to compile a Fortran program using gfortran\n"
-    printf "       Please check your compiler settings.\n"
-    exit 1
-else
-	printf "OK\n"
-fi
-
-#--------------------------------------------------------------------------
-#  Test if bison is available and works
-#--------------------------------------------------------------------------
-
-  printf "Testing bison: "
-  cat <<EOF >testp.y
-%{
-static int curItemNo, curValueNo, itemIndex;
-%}
-%token NUMBER
-%%
-term: NUMBER  { curItemNo = 1; }
-
-%%
-EOF
-
-bison -y testp.y
-status=$?
-
-if [ $status -gt 0 ]; then
-    echo ""
-    echo "Error: Unable to run bison."
-    echo "       Please check your PATH, or install the program."
-    echo ""
-    exit 1
-else
-    printf "OK\n\n"
-fi
-
-/bin/rm -f testp.y y.tab.c testp.f testp.o testp
-
 #--------------------------------------------------------------------------
 #  Configure the linear algebra libraries:
 #--------------------------------------------------------------------------
 
-if [ "$openblas" == "yes" ]; then
-   echo "using OpenBLAS libraries from system"
-   flibs_la="-larpack -lopenblas -lpthread"
-elif [ "$conda" == "yes" ]; then
    echo "using OpenBLAS libraries from conda-forge"
    echo "using arpack   libraries from conda-forge"
    flibs_la="-L$CONDA_PREFIX/lib -lopenblas -larpack -lpthread"
    blas="skip"
    lapack="skip"
    arpack="skip"
-elif [ "$macAccelerate" == "yes" ]; then
-   echo "using macAccelerate frameworks"
-   flibs_la="-larpack -framework Accelerate"
-else
-   # use the compiled versions;
-   flibs_la="-larpack -llapack -lblas"
-   lapack=liblapack
-   blas=libblas
-fi
 
 #--------------------------------------------------------------------------
-#  Configure and build netcdf:
+#  Configure netcdf:
 #--------------------------------------------------------------------------
-
-if [ "$conda" == "yes" ]; then
 
    netcdflibf="-L$CONDA_PREFIX/lib -lnetcdff -lnetcdf"
    echo "using netcdf   libraries from conda-forge"
-
-elif [ ! -s "lib/libnetcdf.a" ]; then
-   cd src/netcdf-c-4.7.2
-   printf "Configuring the NetCDF C interface..."
-   make clean > /dev/null 2>&1
-   if [ "$conda" == "no" ]; then
-      ./configure CC="$cc" CFLAGS="-fPIC" LDFLAGS="" \
-         --prefix=$msanderhome --disable-netcdf-4 --disable-dap \
-         --enable-shared --disable-doxygen > ../netcdf_c.config.log 2>&1
-      ncerror=$?
-   else
-      ./configure CFLAGS="-fPIC" LDFLAGS="" \
-         --prefix=$msanderhome --disable-netcdf-4 --disable-dap \
-         --enable-shared --disable-doxygen > ../netcdf_c.config.log 2>&1
-      ncerror=$?
-   fi
-   if [ $ncerror -gt 0 ]; then
-       echo "Error: NetCDF configure failed!  Check netcdf_c.config.log"
-       exit 1
-   else
-       echo "OK"
-   fi
-   # The NetCDF C interface MUST be present prior to configuring the
-   # Fortran interface, so build it now.
-   printf "Compiling the NetCDF C interface..."
-   make install > ../netcdf_c.compile.log 2>&1
-   if [ $? -ne 0 ]; then
-       echo "Error: NetCDF compile failed!  Check netcdf_c.compile.log"
-       exit 1
-   else
-       echo "OK"
-   fi
-   # NetCDF Fortran configure/build
-   cd ../netcdf-fortran-4.5.2
-   # The NetCDF Fortran config script will need access to the C library.
-   export LD_LIBRARY_PATH="$msanderhome/lib:$LD_LIBRARY_PATH"
-   printf "Configuring the NetCDF Fortran interface..."
-   make clean > /dev/null 2>&1
-   if [ "$conda" == "no" ]; then
-      ./configure  CC="$cc" CFLAGS="-fPIC" \
-                  LDFLAGS="-L$msanderhome/lib $ldflags" \
-                  CPPFLAGS="-I$msanderhome/include" \
-                  FC="$fc" FCFLAGS="" \
-                  F77="$fc" FFLAGS="-fPIC" --enable-shared  --disable-doxygen \
-                  --prefix=$msanderhome >> ../netcdf_f.config.log 2>&1
-      ncerror=$?
-   else
-      ./configure CFLAGS="-fPIC" \
-                  LDFLAGS="-L$msanderhome/lib $ldflags" \
-                  CPPFLAGS="-I$msanderhome/include" \
-                  FCFLAGS="" \
-                  FFLAGS="-fPIC" --enable-shared  --disable-doxygen \
-                  --prefix=$msanderhome >> ../netcdf_f.config.log 2>&1
-      ncerror=$?
-   fi
-   if [ $ncerror -gt 0 ]; then
-       echo "Error: NetCDF configure failed!  Check netcdf_f.config.log"
-       exit 1
-   else
-       echo "OK"
-   fi
-   # Build the fortran interface
-   printf "Compiling the NetCDF Fortran interface..."
-   make install > ../netcdf_f.compile.log 2>&1
-   if [ $? -ne 0 ]; then
-     echo "Error: NetCDF Fortran compile failed!  Check netcdf_f.compile.log"
-     exit 1
-   else
-       echo "OK"
-   fi
-   cd ../..
-else
-   echo "Using the existing netcdf libraries"
-fi
 
 #--------------------------------------------------------------------------
 #  create the config.h file: may differ for different subsets
 #--------------------------------------------------------------------------
 
-if [ "$conda" == "yes" ]; then
-
 cat <<EOF > config.h
 
 #  msander configuration file.
 #  Created on `date` via $command
-EOF
-
-else
-
-cat <<EOF > config.h
-
-#  msander configuration file.
-#  Created on `date` via $command
-
-CC=$cc
-CXX=$cxx
-FC=$fc
-LDFLAGS=$ldflags
-YACC=$yacc
-
-EOF
-
-fi
-
-cat <<EOF >> config.h
 
 ###############################################################################
 
@@ -440,7 +240,7 @@ COPTFLAGS=$optflags
 #  (5)  Fortran compiler
 
 FFLAGS=$clangf $inc $ompflag $gcc10f $fpic $longlines $conda_incflags
-FLIBSF=-lsqm -larpack $flibs_la
+FLIBSF=-lsqm -larpack $flibs_la $netcdflibf
 FNOOPTFLAGS= -O0 -g
 FOPTFLAGS=$optflags
 SHORT_ENE=$short_ene

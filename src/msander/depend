@@ -377,7 +377,6 @@ dynlib.o: \
                     extra.h\
                     remd.o\
                     les.o\
-                    ../rism/amber_rism_interface.o\
                     qmmm_module.o\
                     state.o\
                     charmm.o\
@@ -410,7 +409,6 @@ dynlib.LES.o: \
                     extra.h\
                     remd.LES.o\
                     les.o\
-                    ../rism/amber_rism_interface.o\
                     qmmm_module.o\
                     state.o\
                     charmm.o\
@@ -442,7 +440,6 @@ dynlib.API.o: \
                     extra.h\
                     remd.o\
                     les.o\
-                    ../rism/amber_rism_interface.o\
                     qmmm_module.o\
                     state.o\
                     charmm.API.o\
@@ -474,7 +471,6 @@ dynlib.LESAPI.o: \
                     extra.h\
                     remd.o\
                     les.o\
-                    ../rism/amber_rism_interface.o\
                     qmmm_module.o\
                     state.o\
                     charmm.o\
@@ -1093,7 +1089,6 @@ force.o: \
                     qmmm_module.o\
                     softcore.o\
                     remd.o\
-                    ../rism/amber_rism_interface.o\
                     stack.o\
                     constants.o\
                     relax_mat.o\
@@ -1142,7 +1137,6 @@ force.LES.o: \
                     qmmm_module.o\
                     softcore.o\
                     remd.LES.o\
-                    ../rism/amber_rism_interface.o\
                     stack.o\
                     constants.o\
                     relax_mat.o\
@@ -1238,7 +1232,6 @@ interface.o: \
                     scaledMD.o\
                     ips.o\
                     emap.o\
-                    ../rism/amber_rism_interface.o\
                     dssp.o\
                     softcore.o\
                     mbar.o\
@@ -1297,7 +1290,6 @@ interface.LESAPI.o: \
                     scaledMD.o\
                     ips.o\
                     emap.o\
-                    ../rism/amber_rism_interface.o\
                     dssp.o\
                     softcore.o\
                     mbar.o\
@@ -1354,7 +1346,6 @@ interface_setup.F90: \
                     molecule.o\
                     nonbond_list.o\
                     stack.o\
-                    ../rism/amber_rism_interface.o\
                     linear_response.o\
                     charmm.o\
                     memory_module.o\
@@ -1476,7 +1467,6 @@ lmod.LES.o:   lmod.F90
 locmem.o: \
                     ../include/dprec.fh\
                     nonbond_list.o\
-                    ../rism/amber_rism_interface.o\
                     linear_response.o\
                     box.h\
                     nmr.h\
@@ -1497,7 +1487,6 @@ locmem.o:   locmem.F90
 locmem.LES.o: \
                     ../include/dprec.fh\
                     nonbond_list.LES.o\
-                    ../rism/amber_rism_interface.o\
                     linear_response.o\
                     box.h\
                     nmr.h\
@@ -1598,7 +1587,6 @@ mdread.o: \
                     mbar.o\
                     remd.o\
                     linear_response.o\
-                    ../rism/amber_rism_interface.o\
                     nfe-sander-proxy.o\
                     box.h\
                     def_time.h\
@@ -1651,7 +1639,6 @@ mdread.LES.o: \
                     mbar.o\
                     remd.LES.o\
                     linear_response.o\
-                    ../rism/amber_rism_interface.o\
                     nfe-sander-proxy.o\
                     box.h\
                     def_time.h\
@@ -2881,7 +2868,6 @@ printe.o: \
                     multitmd.h\
                     crg_reloc.o\
                     constants.o\
-                    ../rism/amber_rism_interface.o\
                     qmmm_module.o\
                     charmm.o\
                     emap.o\
@@ -3525,7 +3511,6 @@ runmd.o: \
                     nfe-sander-proxy.o\
                     mdfil.o\
                     md_scheme.o\
-                    ../rism/amber_rism_interface.o\
                     qmmm_module.o\
                     file_io_dat.o\
                     constants.o\
@@ -3575,7 +3560,6 @@ runmd.LES.o: \
                     nfe-sander-proxy.o\
                     mdfil.LES.o\
                     md_scheme.LES.o\
-                    ../rism/amber_rism_interface.o\
                     qmmm_module.o\
                     file_io_dat.o\
                     constants.o\
@@ -3639,7 +3623,6 @@ sander.o: \
                     molecule.o\
                     nonbond_list.o\
                     stack.o\
-                    ../rism/amber_rism_interface.o\
                     softcore.o\
                     mbar.o\
                     linear_response.o\
@@ -3703,7 +3686,6 @@ sander.LES.o: \
                     molecule.o\
                     nonbond_list.LES.o\
                     stack.o\
-                    ../rism/amber_rism_interface.o\
                     softcore.o\
                     mbar.o\
                     linear_response.o\

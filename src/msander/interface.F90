@@ -69,7 +69,6 @@ module sander_api
 !   _REAL_  :: les
 !   _REAL_  :: noe
 !   _REAL_  :: pb
-!   _REAL_  :: rism
 !   _REAL_  :: ct
 !   _REAL_  :: amd_boost
 ! end type potential_energy_rec
@@ -101,8 +100,6 @@ module sander_api
       integer :: ew_type
       integer :: ntb
       integer :: ifqnt
-      integer :: irism
-      integer :: rism_verbose
       integer :: jfastw
       integer :: ntf
       integer :: ntc
@@ -174,8 +171,6 @@ subroutine gas_sander_input(inp, gb)
    inp%gbsa = 0
    inp%jfastw = 0
    inp%ifqnt = 0
-   inp%irism = 0
-   inp%rism_verbose = -1
    inp%grdspc1 = 0.8d0
    inp%mdiis_del = 0.7d0
    inp%extdiel = 1.d0
@@ -239,8 +234,6 @@ subroutine pme_sander_input(inp)
    inp%ew_type = 0
    inp%gbsa = 0
    inp%ifqnt = 0
-   inp%irism = 0
-   inp%rism_verbose = -1
    inp%grdspc1 = 0.8d0
    inp%mdiis_del = 0.7d0
    inp%jfastw = 0
@@ -346,15 +339,6 @@ subroutine api_mdread1(input_options, ierr)
 #endif /* MPI */
    ! Parameter for LIE module
    use linear_response, only: ilrt, lrt_interval, lrtmask
-#  ifndef API
-   use sander_rism_interface, only: xvvfile, guvfile, huvfile, cuvfile,&
-        uuvfile, asympfile, quvFile, chgDistFile, electronMapFile, &
-        excessChemicalPotentialfile, solvationEnergyfile, entropyfile, &
-        excessChemicalPotentialGFfile, solvationEnergyGFfile, entropyGFfile, &
-        excessChemicalPotentialPCPLUSfile, solvationEnergyPCPLUSfile, entropyPCPLUSfile,&
-        excessChemicalPotentialUCfile, solvationEnergyUCfile, entropyUCfile,&
-        solventPotentialEnergyfile
-#  endif /* API */
    use nfe_sander_proxy, only: infe
    implicit none
 #  include "box.h"
@@ -397,7 +381,6 @@ subroutine api_mdread1(input_options, ierr)
    character(len=512) :: char_tmp_512
 #endif /* API */
 
-   integer irism, rism_verbose
    double precision grdspc1, mdiis_del
    character(len=8) periodicPotential
 
@@ -433,7 +416,6 @@ subroutine api_mdread1(input_options, ierr)
          numexchg, repcrd, numwatkeep, hybridgb, reservoir_exchange_step, &
          ntwprt,tausw, &
          ntwr,iyammp,imcdo, &
-         plumed,plumedfile, &
          igb,alpb,Arad,rgbmax,saltcon,offset,gbsa,vrand, &
          surften,nrespa,nrespai,gamma_ln,extdiel,intdiel, &
          cut_inner,icfe,clambda,klambda, rbornstat,lastrst,lastist,  &
@@ -463,7 +445,6 @@ subroutine api_mdread1(input_options, ierr)
 #ifdef DSSP
          idssp, &
 #endif
-         irism,&
          vdwmodel, & ! mjhsieh - the model used for van der Waals
          ! retired:
          dtemp, dxm, heat, timlim, &
@@ -601,10 +582,6 @@ subroutine api_mdread1(input_options, ierr)
    ithermostat = 1
    therm_par = 5.0d0
 ! } 
-! PLUMED
-   plumed = 0
-   plumedfile = 'plumed.dat'
-! END PLUMED
 #ifdef LES
    ! alternate temp for LES copies, if negative then use single bath
    ! single bath not the same as 2 baths with same target T
@@ -641,8 +618,6 @@ subroutine api_mdread1(input_options, ierr)
    ntwe = 0
    ipb = 0
    inp = 2
-   irism = 0
-   rism_verbose = -1
    grdspc1 = 0.8d0
    mdiis_del = 0.7d0
    ntave = 0
@@ -833,8 +808,6 @@ subroutine api_mdread1(input_options, ierr)
    tmode = 1 !default tangent mode for NEB calculation
 
    ifqnt = NO_INPUT_VALUE
-   rism_verbose = NO_INPUT_VALUE
-   irism = NO_INPUT_VALUE
    grdspc1 = NO_INPUT_VALUE_FLOAT
    mdiis_del = NO_INPUT_VALUE_FLOAT
 
@@ -932,8 +905,6 @@ subroutine api_mdread1(input_options, ierr)
    cut = input_options%cut
    dielc = input_options%dielc
    ifqnt = input_options%ifqnt
-   irism = input_options%irism
-   rism_verbose = input_options%rism_verbose
    grdspc1 = input_options%grdspc1
    mdiis_del = input_options%mdiis_del
    jfastw = input_options%jfastw
@@ -1001,11 +972,6 @@ subroutine api_mdread1(input_options, ierr)
    if ( igb == 10 .and. ipb == 0 ) ipb = 2
    if ( igb == 0  .and. ipb /= 0 ) igb = 10
 
-   if (plumed.eq.1) then
-     write(6, '(1x,a,/)') 'PLUMED is on'
-     write(6, '(1x,a,a,/)') 'PLUMEDfile is ',plumedfile
-   endif
-
    if (ifqnt == NO_INPUT_VALUE) then
       ifqnt = 0 ! default value
       if (mdin_qmmm) then
@@ -1015,12 +981,6 @@ subroutine api_mdread1(input_options, ierr)
       end if
    end if
 
-   if (irism == NO_INPUT_VALUE) then
-      irism = 0 ! default value
-   end if
-   if (rism_verbose == NO_INPUT_VALUE) then
-      rism_verbose = -1 ! default value
-   end if
    if (grdspc1 == NO_INPUT_VALUE) then
       grdspc1 = 0.8d0 ! default value
    end if

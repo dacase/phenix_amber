@@ -68,7 +68,6 @@ libs:
 	$(VB)cd ../blas && $(MAKE) $(BLAS)
 	$(VB)cd ../lapack && $(MAKE) $(LAPACK)
 	$(VB)cd ../arpack && $(MAKE) $(ARPACK)
-	$(VB)cd ../rism && $(MAKE) $(RISM)
 	$(VB)cd ../lib && $(MAKE) libsys
     
 

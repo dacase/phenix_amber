@@ -53,8 +53,6 @@ subroutine sander()
                     first_list_flag
   use stack
 
-  use sander_rism_interface, only: rism_setparam, rism_init, rism_finalize
-
 #ifdef MPI /* SOFT CORE */
   use softcore, only: setup_sc, cleanup_sc, ifsc, extra_atoms, sc_sync_x, &
                       summarize_ti_changes, sc_check_perturbed_molecules, &
@@ -316,9 +314,6 @@ subroutine sander()
       end if
 #endif
 
-      call rism_setparam(mdin, commsander, natom, ntypes, x(L15:L15+natom-1), &
-                         x(LMASS:LMASS+natom-1), cn1, cn2, &
-                         ix(i04:i04+ntypes**2-1), ix(i06:i06+natom-1))
       if (ifcr .ne. 0) then
         call cr_read_input(natom)
         call cr_check_input(ips)
@@ -551,13 +546,9 @@ subroutine sander()
 #endif
       call flush(6)
 !$    call set_omp_num_threads()
-!$    call set_omp_num_threads_rism()
 
     end if masterwork
     ! End of master process setup
-
-    ! rism initialization
-    call rism_init(commsander)
 
 #ifdef MPI
     call mpi_barrier(commsander,ier)
@@ -593,8 +584,6 @@ subroutine sander()
     call mpi_bcast(qmmm_struct%abfqmmm, 1, mpi_integer, 0, commsander, ier)
 
     call stack_setup()
-    call mpi_bcast(plumed, 1, MPI_INTEGER, 0, commsander, ier)
-    call mpi_bcast(plumedfile, MAX_FN_LEN, MPI_CHARACTER, 0, commsander, ier)
 
     ! GMS: Broadcast parameters from module 'molecule'
     call mpi_bcast(mol_info%natom, 1, mpi_integer, 0, commsander, ier)
@@ -1276,8 +1265,6 @@ subroutine sander()
   if (ilrt .ne. 0) then
     call cleanup_linear_response(master)
   end if
-
-   call rism_finalize()
 
   if (ifcr .ne. 0) then
     call cr_cleanup()
