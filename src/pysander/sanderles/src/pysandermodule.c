@@ -21,7 +21,7 @@ typedef int Py_ssize_t;
 // Amber-specific includes
 #include "sander.h"
 
-// Cordion off the type definitions, since they are large
+// Cordon off the type definitions, since they are large
 #include "pysandermoduletypes.c"
 
 /* sander can only be set up once, and must be cleaned up before being set up
@@ -42,6 +42,8 @@ pysander_setup(PyObject *self, PyObject *args) {
     double *coordinates;
     double box[6];
     size_t i;
+    int has_qmmm = 0;
+
     PyObject *arg2, *arg3, *arg4, *arg5;
     arg2 = NULL; arg3 = NULL; arg4 = NULL; arg5 = NULL;
 
@@ -84,10 +86,8 @@ pysander_setup(PyObject *self, PyObject *args) {
         return NULL;
     }
 
-    if (arg5 && !PyObject_TypeCheck(arg5, &pysander_QmInputOptionsType)) {
-        PyErr_SetString(PyExc_TypeError,
-                        "5th argument must be of type QmInputOptions");
-        return NULL;
+    if (arg5 && PyObject_TypeCheck(arg5, &pysander_QmInputOptionsType)) {
+        has_qmmm = 1;
     }
 
     mm_inp = (pysander_InputOptions *) arg4;
@@ -165,7 +165,8 @@ pysander_setup(PyObject *self, PyObject *args) {
             input.refc[i] = ' ';
     }
 
-    if (arg5) {
+    if (has_qmmm) {
+
         qm_inp = (pysander_QmInputOptions *) arg5;
         // Copy over values from qm_inp to qm_input
         qm_input.qmgb = (int) PyInt_AsLong(qm_inp->qmgb);
@@ -372,6 +373,7 @@ pysander_setup(PyObject *self, PyObject *args) {
             for (i = PyList_Size(qm_inp->buffer_iqmatoms); i < MAX_QUANTUM_ATOMS; i++)
                 qm_input.buffer_iqmatoms[i] = 0;
         }
+
     }
 
     Py_ssize_t ii;
@@ -649,7 +651,6 @@ pysander_energy_forces(PyObject *self) {
     py_energies->les = PyFloat_FromDouble(energies.les);
     py_energies->noe = PyFloat_FromDouble(energies.noe);
     py_energies->pb = PyFloat_FromDouble(energies.pb);
-    py_energies->rism = PyFloat_FromDouble(energies.rism);
     py_energies->ct = PyFloat_FromDouble(energies.ct);
     py_energies->amd_boost = PyFloat_FromDouble(energies.amd_boost);
 

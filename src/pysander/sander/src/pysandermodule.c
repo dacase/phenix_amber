@@ -54,8 +54,7 @@ pysander_setup(PyObject *self, PyObject *args) {
     qm_sander_input(&qm_input);
 
     // The passed arguments
-    if (!PyArg_ParseTuple(args, "sOOO|O", &prmtop, &arg2, &arg3, &arg4, 
-          &arg5))
+    if (!PyArg_ParseTuple(args, "sOOO|O", &prmtop, &arg2, &arg3, &arg4, &arg5))
         return NULL;
 
     if (IS_SETUP) {
@@ -120,8 +119,6 @@ pysander_setup(PyObject *self, PyObject *args) {
     input.rdt = PyFloat_AsDouble(mm_inp->rdt);
     input.fswitch = PyFloat_AsDouble(mm_inp->fswitch);
     input.restraint_wt = PyFloat_AsDouble(mm_inp->restraint_wt);
-    input.grdspc1 = PyFloat_AsDouble(mm_inp->grdspc1);
-    input.mdiis_del = PyFloat_AsDouble(mm_inp->mdiis_del);
 
     if (!PyObject_IS_STRING(mm_inp->restraintmask)) {
         PyErr_SetString(PyExc_ValueError, "restraintmask must be a string");
@@ -548,8 +545,6 @@ pysander_gas_input(PyObject *self, PyObject *args) {
     ASSIGN_FLOAT(rdt);
     ASSIGN_FLOAT(fswitch);
     ASSIGN_FLOAT(restraint_wt);
-    ASSIGN_FLOAT(grdspc1);
-    ASSIGN_FLOAT(mdiis_del);
 
     return (PyObject *) ret;
 }
@@ -592,8 +587,6 @@ pysander_pme_input(PyObject *self) {
     ASSIGN_FLOAT(rdt);
     ASSIGN_FLOAT(fswitch);
     ASSIGN_FLOAT(restraint_wt);
-    ASSIGN_FLOAT(grdspc1);
-    ASSIGN_FLOAT(mdiis_del);
 
     return (PyObject *) ret;
 }

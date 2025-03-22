@@ -17,8 +17,6 @@ typedef struct {
     PyObject *ew_type;  // int
     PyObject *ntb;      // int
     PyObject *ifqnt;    // int
-    PyObject *irism;    // int
-    PyObject *rism_verbose;  // int
     PyObject *jfastw;   // int
     PyObject *ntf;      // int
     PyObject *ntc;      // int
@@ -35,8 +33,6 @@ typedef struct {
     PyObject *rdt;      // double
     PyObject *fswitch;  // double
     PyObject *restraint_wt; // double
-    PyObject *grdspc1;  // double
-    PyObject *mdiis_del; // double
 
     PyObject *restraintmask; // string
     PyObject *bellymask; // string
@@ -55,8 +51,6 @@ pysander_InputOptions_dealloc(pysander_InputOptions* self) {
     Py_DECREF(self->ew_type);
     Py_DECREF(self->ntb);
     Py_DECREF(self->ifqnt);
-    Py_DECREF(self->irism);
-    Py_DECREF(self->rism_verbose);
     Py_DECREF(self->jfastw);
     Py_DECREF(self->ntf);
     Py_DECREF(self->ntc);
@@ -73,8 +67,6 @@ pysander_InputOptions_dealloc(pysander_InputOptions* self) {
     Py_DECREF(self->rdt);
     Py_DECREF(self->fswitch);
     Py_DECREF(self->restraint_wt);
-    Py_DECREF(self->grdspc1);
-    Py_DECREF(self->mdiis_del);
 
     Py_DECREF(self->restraintmask);
     Py_DECREF(self->bellymask);
@@ -103,8 +95,6 @@ pysander_InputOptions_new(PyTypeObject *type) {
         self->ew_type = PyInt_FromLong(0);
         self->ntb = PyInt_FromLong(0);
         self->ifqnt = PyInt_FromLong(0);
-        self->irism = PyInt_FromLong(0);
-        self->rism_verbose = PyInt_FromLong(0);
         self->jfastw = PyInt_FromLong(0);
         self->ntf = PyInt_FromLong(0);
         self->ntc = PyInt_FromLong(0);
@@ -121,8 +111,6 @@ pysander_InputOptions_new(PyTypeObject *type) {
         self->rdt = PyFloat_FromDouble(0.0);
         self->fswitch = PyFloat_FromDouble(0.0);
         self->restraint_wt = PyFloat_FromDouble(0.0);
-        self->grdspc1 = PyFloat_FromDouble(0.0);
-        self->mdiis_del = PyFloat_FromDouble(0.0);
 
         ASSIGN_STRING(restraintmask, "");
         ASSIGN_STRING(bellymask, "");
@@ -155,10 +143,6 @@ static PyMemberDef pysander_InputOptionMembers[] = {
                 "Whether PBC are present"},
     {"ifqnt", T_OBJECT_EX, offsetof(pysander_InputOptions, ifqnt), 0,
                 "Whether to use QM/MM"},
-    {"irism", T_OBJECT_EX, offsetof(pysander_InputOptions, irism), 0,
-	            "whether to use 3D-RISM"},
-    {"rism_verbose", T_OBJECT_EX, offsetof(pysander_InputOptions, rism_verbose), 0,
-	            "verbosity for 3D-RISM"},
     {"jfastw", T_OBJECT_EX, offsetof(pysander_InputOptions, jfastw), 0,
                 "Whether to use analytical constraint algo. for 3-pt. waters"},
     {"ntf", T_OBJECT_EX, offsetof(pysander_InputOptions, ntf), 0,
@@ -192,11 +176,6 @@ static PyMemberDef pysander_InputOptionMembers[] = {
                  "Jones\ninteractions"},
     {"restraint_wt", T_OBJECT_EX, offsetof(pysander_InputOptions, restraint_wt), 0,
                 "Force constant (kcal/mol/A^2) for positional restraints"},
-    {"grdspc1", T_OBJECT_EX, offsetof(pysander_InputOptions, grdspc1), 0,
-                "Grid spacing for 3D-RISM"},
-
-    {"mdiis_del", T_OBJECT_EX, offsetof(pysander_InputOptions, mdiis_del), 0,
-                "MDIIS scaling for 3D-RISM"},
 
     {"restraintmask", T_OBJECT_EX, offsetof(pysander_InputOptions, restraintmask), 0,
                 "Mask string selecting the atoms to restrain positions of"},
@@ -881,4 +860,3 @@ static PyTypeObject pysander_QmInputOptionsType = {
     (newfunc)pysander_QmInputOptions_new,// tp_new
 
 };
-
