@@ -21,8 +21,6 @@ typedef int Py_ssize_t;
 // Amber-specific includes
 #include "sander.h"
 
-// extern void rism_setparam2_( double *, double *, int * );
-
 // Cordon off the type definitions, since they are large
 #include "pysandermoduletypes.c"
 
@@ -54,8 +52,6 @@ pysander_setup(PyObject *self, PyObject *args) {
 
     // Needed to blank-out the strings
     qm_sander_input(&qm_input);
-    // Need to set up rism defaults early:
-    rism_defaults_();
 
     // The passed arguments
     if (!PyArg_ParseTuple(args, "sOOO|O", &prmtop, &arg2, &arg3, &arg4, 
@@ -108,8 +104,6 @@ pysander_setup(PyObject *self, PyObject *args) {
     input.ew_type = (int) PyInt_AsLong(mm_inp->ew_type);
     input.ntb = (int) PyInt_AsLong(mm_inp->ntb);
     input.ifqnt = (int) PyInt_AsLong(mm_inp->ifqnt);
-    input.irism = (int) PyInt_AsLong(mm_inp->irism);
-    input.rism_verbose = (int) PyInt_AsLong(mm_inp->rism_verbose);
     input.jfastw = (int) PyInt_AsLong(mm_inp->jfastw);
     input.ntf = (int) PyInt_AsLong(mm_inp->ntf);
     input.ntc = (int) PyInt_AsLong(mm_inp->ntc);
@@ -538,8 +532,6 @@ pysander_gas_input(PyObject *self, PyObject *args) {
     ASSIGN_INT(ew_type);
     ASSIGN_INT(ntb);
     ASSIGN_INT(ifqnt);
-    ASSIGN_INT(irism);
-    ASSIGN_INT(rism_verbose);
     ASSIGN_INT(jfastw);
     ASSIGN_INT(ntf);
     ASSIGN_INT(ntc);
@@ -584,8 +576,6 @@ pysander_pme_input(PyObject *self) {
     ASSIGN_INT(ew_type);
     ASSIGN_INT(ntb);
     ASSIGN_INT(ifqnt);
-    ASSIGN_INT(irism);
-    ASSIGN_INT(rism_verbose);
     ASSIGN_INT(jfastw);
     ASSIGN_INT(ntf);
     ASSIGN_INT(ntc);
@@ -668,7 +658,6 @@ pysander_energy_forces(PyObject *self) {
     py_energies->les = PyFloat_FromDouble(energies.les);
     py_energies->noe = PyFloat_FromDouble(energies.noe);
     py_energies->pb = PyFloat_FromDouble(energies.pb);
-    py_energies->rism = PyFloat_FromDouble(energies.rism);
     py_energies->ct = PyFloat_FromDouble(energies.ct);
     py_energies->amd_boost = PyFloat_FromDouble(energies.amd_boost);
 
