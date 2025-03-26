@@ -361,10 +361,10 @@ passed, a PARMSET will be created with that name.
 Currently it checks for the following possible problems:
 
 
-   - Long bonds.  A long bond is greater than 3.0 angstroms.
+   - Long bonds.
 
 
-   - Short bonds.  A short bond is less than 0.5 angstroms.
+   - Short bonds.
 
 
    - Non-integral total charge of the UNIT.
@@ -2161,7 +2161,7 @@ Flips the chirality of the selected atoms within _obj_.
 @@endHelp
 @@beginHelp:  _cmd_options_
 
-The command-line options for starting tleap and xleap are
+The command-line options for starting tleap and xleap are:
 
 
     -h         List these options.
@@ -2175,7 +2175,7 @@ The tleap and xleap shell scripts automatically provide
 
         -I$AMBERHOME/dat -I$AMBERHOME/dat/leap/lib -I$AMBERHOME/dat/leap/cmd
 
-where $AMBERHOME/dat          contains 'parm.dat' force field files,
+where $AMBERHOME/dat contains 'parm.dat' force field files,
       $AMBERHOME/dat/leap/lib contains residue libraries and
       $AMBERHOME/dat/leap/cmd contains the default leaprc and other scripts.
 

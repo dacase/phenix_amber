@@ -196,13 +196,20 @@ typedef struct  {
 
 
 extern  OBJEKT oGetObject( char *sName );
-int    yyerror( char *sStr );
-int    yylex();
-extern  int    yyparse();
+extern  int     yyparse();
+
+/*  avoid compiler warnings:  */
+int yylex();
+int yyerror( char * );
+
 %}
 
 
 %start  input
+
+
+
+
 
 %%
 /*------------------------------------------------------------
@@ -635,10 +642,9 @@ char            c;
 STRING		sCmd;
 STRING		sPossibleCmd;
 
-    /*
-     * Skip whitespace: blanks, tabs, end of lines, carriage returns, and commas.
-     */
-    while ( (c=cGetChar())==' ' || c=='\t' || c=='\n' || c=='\r' || c == ',' );
+                /* Skip over blanks, tabs, end of lines etc */
+
+    while ( (c=cGetChar())==' '  ||  c=='\t'  ||  c=='\n'  ||  c == ',' );
 
     if ( c == '\0' ) 
 	return(LENDOFCOMMAND);
@@ -684,16 +690,8 @@ STRING		sPossibleCmd;
 	/*
 	 *  whitespace is a delimiter outside of quotes
 	 */
-	if ( c == ' ' || c == '\t' || c == '\n' || c=='\r' || c == ',' ) {
+	if ( c == ' '  ||  c == '\t'  ||  c == '\n'  ||  c == ',' ) {
 	    	sStr[j] = '\0';
-	    	if ( c=='\r' ) {
-	    	    VPNOTE(("A carriage return character has been read.\n"
-	    	            "This is an indicator of DOS line endings.\n"
-	    	            "Although LEaP treats it as whitespace, other"
-	    	            " programs may not.\n"
-	    	            "One can convert line endings from DOS to UNIX with"
-	    	            " various tools including:\n    dos2unix\n" ));
-	    	}
 	    	break;
 	}
 	/*
@@ -1073,7 +1071,7 @@ extern	char	*optarg;
 		printf( " -f {file}  Source {file}.\n" );
 		exit(0);
 	    case 's':
-		printf( "-s: Ignoring all %s startup files.\n", LEAPRC );
+		printf( "-s: Ignoring startup file: %s\n", LEAPRC );
 		SbUseStartup = FALSE;
 		break;
 	    case 'I':

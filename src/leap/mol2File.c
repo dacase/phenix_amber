@@ -252,6 +252,7 @@ zMol2FileWriteResidueContainer( MOL2WRITEt *pwPFile, CONTAINER cCont )
 const int       RESIDUE_NAME_LENGTH = 3;
 //LOOP            lContents;
 char            *cPTemp;
+RESIDUE         rRes;
 
      cPTemp = sContainerName(cCont);
      strncpy( pwPFile->sResidueName, cPTemp, RESIDUE_NAME_LENGTH );
@@ -261,6 +262,7 @@ char            *cPTemp;
         VP0(( " Truncating residue name for PDB format: %s -> %s\n", 
                    sContainerName(cCont), pwPFile->sResidueName ));
         } 
+     rRes = (RESIDUE) cCont;
 
      return(sContainerName(cCont));	
 }

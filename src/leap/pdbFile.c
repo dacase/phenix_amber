@@ -683,10 +683,6 @@ char            cInsertionCode;
         switch ( p.record_type ) {
             case PDB_ATOM:
             case PDB_HETATM:
-                VPTRACE(( "Read PDB_ATOM or PDB_HETATM record.\n" ));
-                VPTRACE(( "bNewChain = %d; iPdbSequence = %d; iResNum = %d; "
-                          "iSerialNum = %d\n", bNewChain, iPdbSequence,
-                          iResNum, iSerialNum ));
                 /*
                  *  allow for right-shifted resnames
                  */
@@ -727,7 +723,7 @@ char            cInsertionCode;
                 if ( p.pdb.atom.residue.seq_num != iPdbSequence ||
                             strcmp( rnName.sName, resname ) ||
                             p.pdb.atom.residue.insert_code != cInsertionCode ) {
-                    VPTRACE(( "Detected a new residue.\n" ));
+                    /* This is a new residue */
                     if ( iResNum < 0 )
                         iResNum = p.pdb.atom.residue.seq_num;
                     else
@@ -782,9 +778,9 @@ char            cInsertionCode;
                 break;
 
             case PDB_TER:
-                VPTRACE(( "Read PDB_TER record.\n" ));
-                        /* If you read a TER card then make the */
-                        /* last RESIDUE read a terminating RESIDUE */
+                        /* If you read a TER card then make */
+                        /* the last RESIDUE read a terminating */
+                        /* RESIDUE */
                 if ( (iLast = iVarArrayElementCount( prPRead->vaResidues )) ) {
                     iLast--;    /* last element, maybe 0th */
                     PVAI( (prPRead->vaResidues), 
@@ -794,7 +790,6 @@ char            cInsertionCode;
                 break;
 
             case PDB_MTRIX:
-                VPTRACE(( "Read PDB_MTRIX record.\n" ));
                 iStart = iVarArrayElementCount(prPRead->vaMatrices);
                 iSerial = p.pdb.mtrix.serial_num;
                 if ( iSerial>iStart ) {
@@ -1296,7 +1291,6 @@ int             iPdbSequence, iResNum, iAtoms = 0;
 BOOL            bNewRes;
 char            cInsertionCode;
 
-    VPTRACEENTER(( "zPdbReadAndCreateUnit" ));
     iPdbSequence = iResNum = -9999;
     cInsertionCode = '-';  /* valid codes are alphabetic or blank */
 
@@ -1400,7 +1394,6 @@ char            cInsertionCode;
                 "you may want to use addPdbAtomMap to map\n"
                 "these names, or change the names in the PDB file.\n\n" ));
     }
-    VPTRACEEXIT (( "zPdbReadAndCreateUnit" ));
 }       
 
 
@@ -1677,7 +1670,7 @@ PDBREADt        prPdb;
 //ATOM            aAtom;
 int             i;
 
-    VPTRACEENTER(( "uPdbRead" ));
+
     prPdb.fPdbFile = fPdb;
     prPdb.vaUnits = vaUnits;
     prPdb.vaResidues = vaVarArrayCreate( sizeof(RESIDUENAMEt) );
@@ -1743,7 +1736,6 @@ int             i;
     if ( vaUnits == NULL )
         VarArrayDestroy( &(prPdb.vaUnits) );
  
-    VPTRACEEXIT (( "uPdbRead" ));
     return ( prPdb.uUnit );
 }
 

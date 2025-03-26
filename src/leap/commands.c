@@ -440,7 +440,7 @@ OBJEKT
 oCmd_debugOff( int iArgCount, ASSOC aaArgs[] )
 {
     if ( !bCmdGoodArguments( "debugOff", iArgCount, aaArgs, "s" ) ) {
-        VPFATALDELAYEDEXIT(( "usage:  debugOff <filename>\n" ));
+        VPFATALDELAYEDEXIT(( "usage:  debugOff\n" ));
         return(NULL);
     }
 
@@ -1634,22 +1634,8 @@ static          char parm15[] = "parm15";
             return(NULL);
         }
     }
-    if( strstr( sFile, parm99 ) ) {
-        parm99_loaded += 1;
-        if( parm99_loaded > 1 ){
-            VPNOTE(( "Skipping %s: already loaded\n", sFile ));
-            parm99_loaded -= 1;
-            return(NULL);
-        }
-    }
-    if( strstr( sFile, parm15 ) ) {
-        parm15_loaded += 1;
-        if( parm15_loaded > 1 ){
-            VPNOTE(( "Skipping %s: already loaded\n", sFile ));
-            parm15_loaded -= 1;
-            return(NULL);
-        }
-    }
+    if( strstr( sFile, parm99 ) ) parm99_loaded += 1;
+    if( strstr( sFile, parm15 ) ) parm15_loaded += 1;
 
     fIn = FOPENCOMPLAIN( sFile, "r" );
     if ( fIn == NULL ) 
@@ -5266,8 +5252,7 @@ RET:
  *  vaSolventResidues() - make array of residue pointers
  *      TODO - maybe restrict it to dShellExtent?
  */
-VARARRAY        vaSolventResidues( uUnit )
-UNIT            uUnit;
+VARARRAY        vaSolventResidues( UNIT uUnit )
 {
 VARARRAY        vaSolvent;
 LOOP            lRes;

@@ -4241,8 +4241,7 @@ static void SaveAmberParmCMAP(UNIT uUnit, FILE * fOut)
     // CMAP parameters, Mengjuei Hsieh and Yong Duan
     //
     int i, j, k, l;
-    int mapid, maptypes;
-//    int mapcount;
+    int mapid, mapcount, maptypes;
     int *mapflag, *mapidx;
     int iNumDIH;
     int nprospect, ires;
@@ -4261,7 +4260,7 @@ static void SaveAmberParmCMAP(UNIT uUnit, FILE * fOut)
     if (mapnum <= 0)
         return;
 
-//    mapcount = 0;
+    mapcount = 0;
     mapflag = (int *) malloc(sizeof(int) * (mapnum + 1));
     mapidx = (int *) malloc(sizeof(int) * (mapnum + 1));
 
@@ -4286,7 +4285,7 @@ static void SaveAmberParmCMAP(UNIT uUnit, FILE * fOut)
 
     stdpt0 = (SAVETORSIONtp *) malloc(sizeof(SAVETORSIONtp) * (iNumDIH));
     nprospect = 0;
-//    mapcount = 0;
+    mapcount = 0;
     // Loop over dihedral list
 // pre-filter removes the irrelevant torsions first ...
     for (i = 0; i < iNumDIH; i++, stPTorsion++) {
@@ -4868,7 +4867,7 @@ void zUnitIOSaveAmberParmFormat(UNIT uUnit, FILE * fOut, char *crdName,
   SAVETORSIONt *stPTorsion;
   SAVERESTRAINTt *srPRestraint;
   double dMass, dPolar, dR, dKb, dR0, dKpull, dRpull0, dKpress, dRpress0, dKt, dT0, dTkub,
-         dRkub, dKp, dP0, dC, dD, dTemp, dScEE, dScNB, dScreenF;
+         dRkub, dKp, dP0, dC, dD, dTemp, dScEE, dScNB, dScreenF, dSceeScaleFactor;
   STRING sAtom1, sAtom2, sAtom3, sAtom4, sType1, sType2;
   int iN, iAtoms, iMaxAtoms, iTemp, iAtom, iCalc14, iProper;
   int iElement, iHybridization, iStart, iFirstSolvent;

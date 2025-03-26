@@ -144,8 +144,12 @@ static char *stripwhite(char *string)
 
 int main(int argc, char *argv[])
 {
+//BOOL          bUseStartup, bGotCmd;
+    BOOL bGotCmd;
     BLOCK bCmd;
+//char          c;
     RESULTt rResult;
+
 
     setbuf(stdout, NULL);
 
@@ -159,6 +163,7 @@ int main(int argc, char *argv[])
 
     ParseInit(&rResult);
 
+    bGotCmd = FALSE;
     bCmd = bBlockCreate();
 
     while (rResult.iCommand != CQUIT) {

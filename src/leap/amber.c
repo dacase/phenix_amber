@@ -322,8 +322,10 @@ int             iRead,myiPOL;
 static void
 zAmberReadParmSetCMAP( VARARRAY *vaFoo, FILE *fIn )
 {
+    int    flag;
     STRING sLine,sLine0;
     STRING tmpchar1, tmpchar2;
+    int imap;
     int tmpint1;
     int i;
     CMNT *cmntt, *cmnt, *cmnt0;
@@ -348,6 +350,8 @@ zAmberReadParmSetCMAP( VARARRAY *vaFoo, FILE *fIn )
     cmnt=NULL;
     cmnt0=NULL;
     cmntt=NULL;
+    flag = 0;
+    imap = 0;
 //    mapnum = 0;
     cmnt0=(CMNT *)malloc(sizeof(CMNT));
     cmntt=cmnt0;
@@ -363,6 +367,7 @@ zAmberReadParmSetCMAP( VARARRAY *vaFoo, FILE *fIn )
         if ( sLine[0] == '%' ) {
             sscanf(sLine, "%s%s", tmpchar1, tmpchar2);
             if (strcmp("%FLAG", tmpchar1) == 0) {
+                flag=0;
                 if (strcmp("CMAP_COUNT", tmpchar2)==0){
                     sscanf(sLine, "%s%s%d", tmpchar1, tmpchar2, &tmpint1);
 
