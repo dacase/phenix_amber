@@ -96,7 +96,9 @@ void wmopout(char *filename, int atomnum, ATOM * atom, CONTROLINFO cinfo, MOLINF
 {
     char tmpchar[MAXCHAR];
     int status = 0;
-    strcpy(minfo.ekeyword, "AM1 ANALYT MMOK GEO-OK PRECISE");
+/*  strcpy(minfo.ekeyword, "AM1 ANALYT MMOK GEO-OK PRECISE"); */
+/*  ANALYT keyword was phased out of post-Fujitsu version of MOPAC, and it was never a very important keyword */
+    strcpy(minfo.ekeyword, "AM1 MMOK GEO-OK PRECISE");
     wmopcrt("mopac.in", atomnum, atom, minfo);
     if (cinfo.intstatus == 1 || cinfo.intstatus == 2)
         fprintf(stdout, "\nRunning: %s\n", tmpchar);

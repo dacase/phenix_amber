@@ -263,6 +263,7 @@ void rgaucharge(char *filename, char *chargemethod, int atomnum, ATOM atom[],
     int number = 0;
     int Found_Stationary = 0;
     int index = 0;
+    int suc = 0;
     char line[MAXCHAR];
     FILE *fpin;
 
@@ -295,15 +296,54 @@ void rgaucharge(char *filename, char *chargemethod, int atomnum, ATOM atom[],
         if (Found_Stationary == 1 && index == 1) {
             if (line[11] == '.') {
                 sscanf(&line[8], "%lf", &atom[number].charge);
+		suc = 1;
                 number++;
             }
             if (line[14] == '.') {
                 sscanf(&line[11], "%lf", &atom[number].charge);
+		suc = 1;
                 number++;
             }
         }
         if (number > atomnum)
             break;
+    }
+    if(suc == 0) {
+	rewind(fpin);
+	number = 0;
+    	for (;;) {
+        	if (fgets(line, MAXCHAR, fpin) == NULL)
+            		break;
+        	if (chargeindex == 1 && index == 0) {
+            		if (strncmp("Total atomic charges:", &line[1], 21) == 0)
+                		index = 1;
+            		if (strncmp("Mulliken atomic charges:", &line[1], 24) == 0)
+                		index = 1;
+            		if (strncmp("Mulliken charges:", &line[1], 16) == 0)
+                		index = 1;
+			continue;
+        	}
+        	if (chargeindex == 2 && index == 0
+            		&& strncmp("Fitting point charges", &line[1], 21) == 0)
+            		index = 1;
+        	if (index == 1 && strncmp("Atomic charges with hydrogens summed into heavy atoms", &line[1], 52) == 0)
+            		index = 2;
+        	if (index == 1 && strncmp("Sum of Mulliken charges", &line[1], 23) == 0)
+            		index = 2;
+        	if (index == 1) {
+            		if (line[11] == '.') {
+                		sscanf(&line[8], "%lf", &atom[number].charge);
+                		number++;
+            		}
+            		if (line[14] == '.') {
+                		sscanf(&line[11], "%lf", &atom[number].charge);
+                		suc = 1;
+                		number++;
+            		}
+        	}
+        	if (number > atomnum)
+            		break;
+    	}
     }
     fclose(fpin);
     if (number == 0) {
@@ -318,10 +358,7 @@ void rgaucharge(char *filename, char *chargemethod, int atomnum, ATOM atom[],
 void rjoutcharge(char *filename, char *chargemethod, int atomnum,
                                 ATOM atom[], MOLINFO *minfo)
 {
-        int chargeindex;
         int num;
-        int Found_Stationary = 0;
-        int index = 0;
 	int pos = -1;
 	int i;
         char line[MAXCHAR];
@@ -334,6 +371,7 @@ void rjoutcharge(char *filename, char *chargemethod, int atomnum,
                 return;
         }
 /*
+        int chargeindex;
         if (strcmp(chargemethod, "mul") == 0)
                 chargeindex = 1;
         else
@@ -425,8 +463,8 @@ void rcharge(char *filename, int atomnum, ATOM atom[], CONTROLINFO cinfo, MOLINF
     }
     fclose(fpcharge);
     if (number == 0) {
-        eprintf("Unable to find charges in file (%s).\n"
-                "Verify the filename and the file contents.", filename);
+        eprintf("\nUnable to read charges in the -cf file (%s).\n"
+                "Using charges from the -i input file.", filename);
     }
 //      if ((*minfo).usercharge < -9990.)
     if ((*minfo).icharge < -9990.)
@@ -602,10 +640,19 @@ void bccharge(int atomnum, ATOM atom[], int bondnum, BOND bond[], AROM arom[],
 //      done
     wac("ANTECHAMBER_AM1BCC_PRE.AC", atomnum, atom, bondnum, bond, *cinfo, *minfo);
     copied_size = build_exe_path(tmpchar1, "am1bcc", sizeof tmpchar1, 1);
-    strncat(tmpchar1,
-            " -i ANTECHAMBER_AM1BCC_PRE.AC -o ANTECHAMBER_AM1BCC.AC" " -f ac -p ",
+    if (strcmp((*cinfo).chargetype, "abcg2") == 0 || strcmp((*cinfo).chargetype, "ABCG2") == 0
+    	|| strcmp((*cinfo).chargetype, "8") == 0) {
+    	strncat(tmpchar1,
+            " -i ANTECHAMBER_AM1BCC_PRE.AC -o ANTECHAMBER_AM1BCC.AC" " -f ac -t abcg2 -p ",
             sizeof tmpchar1 - copied_size);
-    build_dat_path(tmpchar2, "BCCPARM.DAT", sizeof tmpchar2, 1);
+    	build_dat_path(tmpchar2, "BCCPARM_ABCG2.DAT", sizeof tmpchar2, 1);
+    }
+    else {
+    	strncat(tmpchar1,
+            " -i ANTECHAMBER_AM1BCC_PRE.AC -o ANTECHAMBER_AM1BCC.AC" " -f ac -t bcc -p ",
+            sizeof tmpchar1 - copied_size);
+    	build_dat_path(tmpchar2, "BCCPARM.DAT", sizeof tmpchar2, 1);
+    }
     strncat(tmpchar1, tmpchar2, sizeof(tmpchar1) - strlen(tmpchar1) - 1);
     strcat(tmpchar1, " -s ");
     sprintf(tmpchar2, "%d", (*cinfo).intstatus);
@@ -656,7 +703,6 @@ void bcc(char *filename, int atomnum, ATOM atom[], int bondnum, BOND bond[], ARO
          CONTROLINFO * cinfo, MOLINFO * minfo)
 {
     char tmpchar[MAXCHAR];
-    int status = 0;
 
     if (strcmp((*cinfo).intype, "mopout") == 0 || strcmp((*cinfo).intype, "12") == 0)
         rmopcharge(filename, atomnum, atom, minfo);
@@ -701,7 +747,6 @@ void bcc(char *filename, int atomnum, ATOM atom[], int bondnum, BOND bond[], ARO
 void cm1(int atomnum, ATOM atom[], CONTROLINFO * cinfo, MOLINFO * minfo)
 {
     char tmpchar[MAXCHAR];
-    int status = 0;
 
     if ((*minfo).divcon == 0) {
         eprintf("The mopac program cannot generate CM1 charges.");
@@ -750,7 +795,6 @@ void cm2(int atomnum, ATOM atom[], CONTROLINFO * cinfo, MOLINFO * minfo)
 void mul(char *filename, int atomnum, ATOM atom[], CONTROLINFO * cinfo, MOLINFO * minfo)
 {
     char tmpchar[MAXCHAR];
-    int status = 0;
 
     if (strcmp((*cinfo).intype, "gout") == 0 || strcmp((*cinfo).intype, "11") == 0)
         rgaucharge(filename, "mul", atomnum, atom, minfo);
@@ -988,7 +1032,6 @@ void write_sybyl_bat(char *str)
 {
     FILE *fpout;
     char tmpchar[MAXCHAR];
-    int status = 0;
 
     fpout = efopen("antechamber_sybyl.bat", "w");
     build_dat_path(tmpchar, "charge.spl", sizeof tmpchar, 0);

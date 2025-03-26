@@ -10,6 +10,7 @@ char *amberhome;
 # include "ac.c"
 # include "charmm.c"
 # include "mol2.c"
+# include "mmcif.c"
 # include "mopcrt.c"
 # include "divcrt.c"
 # include "mopint.c"
@@ -101,7 +102,7 @@ void usage()
         printf
             ("\n		Charmm             charmm  25  | Gaussian ESP       gesp   26 ");
         printf
-            ("\n		Component cif      ccif    27  |                              ");
+            ("\n		geostd cif         ccif    27  |                              ");
 
         printf
             ("\n		--------------------------------------------------------------\n");
@@ -140,7 +141,7 @@ void usage()
         printf
             ("\n	        Charmm             charmm  25  | Gaussian ESP       gesp   26 ");
         printf
-            ("\n	        Component cif      ccif    27  |                              ");
+            ("\n	        geostd cif         ccif    27  |                              ");
         printf
             ("\n            --------------------------------------------------------------\n");
     }
@@ -211,9 +212,9 @@ int main(int argc, char *argv[])
     fprintf(stdout, "\nWelcome to acdoctor %s: check and diagnose problems"
             " in molecular input files.\n\n", ANTECHAMBER_VERSION);
     esetprogramname(argv[0]);
-    amberhome = (char *) getenv("MSANDERHOME");
+    amberhome = (char *) getenv("AMBERCLASSICHOME");
     if (amberhome == NULL) {
-        eprintf("MSANDERHOME is not set.");
+        eprintf("AMBERCLASSICHOME is not set.");
     }
     if (argc == 2)
         if (strncmp(argv[1], "-h", 2) == 0 || strncmp(argv[1], "-H", 2) == 0) {
@@ -302,6 +303,26 @@ int main(int argc, char *argv[])
         adjustatomname_flag = 1;
         checkbyatomtype = 1;
         checkbybondtype = 1;
+    }
+
+    if (strcmp("ccif", cinfo.intype) == 0 || strcmp("27", cinfo.intype) == 0) {
+
+        overflow_flag =
+            rmmcif(ifilename, blockId, &atomnum, atom, &bondnum, bond, &cinfo, &minfo, 0);
+        if (overflow_flag) {
+            cinfo.maxatom = atomnum + 10;
+            cinfo.maxbond = bondnum + 10;
+            memory(7, cinfo.maxatom, cinfo.maxbond, cinfo.maxring);
+            overflow_flag =
+                rmmcif(ifilename, blockId, &atomnum, atom, &bondnum, bond, &cinfo, &minfo,
+                       0);
+        }
+        default_flag = 1;
+        atomicnum_flag = 1;
+        adjustatomname_flag = 1;
+        atomtype_flag = 1;
+        bondtype_flag = 2;
+        connect_flag = 1;
     }
 
     if (strcmp("mopint", cinfo.intype) == 0 || strcmp("9", cinfo.intype) == 0) {

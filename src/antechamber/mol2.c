@@ -43,19 +43,26 @@ int rmol2(char *filename, int *atomnum, ATOM atom[], int *bondnum, BOND bond[],
         }
 
         sscanf(line, "%s%s%s", tmpchar1, tmpchar2, tmpchar3);
+        /* Trace("Read line starting with string: (%s).\n", tmpchar1); */
         if (strcmp("@<TRIPOS>MOLECULE", tmpchar1) == 0) {
             index = 1;
             continue;
-        }
-        if (strcmp("@<TRIPOS>ATOM", tmpchar1) == 0) {
+        } else if (strcmp("@<TRIPOS>ATOM", tmpchar1) == 0) {
             atomrecord = 1;
             continue;
-        }
-        if (strcmp("@<TRIPOS>BOND", tmpchar1) == 0) {
+        } else if (strcmp("@<TRIPOS>BOND", tmpchar1) == 0) {
             bondrecord = 1;
             atomrecord = 0;
             continue;
+        } else if (strcmp("@<TRIPOS>SUBSTRUCTURE", tmpchar1) == 0) {
+            if ((*cinfo).intstatus == 2)
+                printf("Info: Ignoring Mol2 record type (%s).\n", tmpchar1);
+        } else if (strncmp("@<TRIPOS>", tmpchar1, strlen("@<TRIPOS>") ) == 0) {
+            printf("Warning: Ignoring Mol2 record type (%s).\n", tmpchar1);
+        } else {
+            /* do nothing */
         }
+
         if (bondrecord == 1 && strncmp("@<TRIPOS>", tmpchar1, 9) == 0) {        /* end of bonds */
             bondrecord = 0;
             continue;
@@ -145,6 +152,7 @@ int rmol2(char *filename, int *atomnum, ATOM atom[], int *bondnum, BOND bond[],
                 }
             }
             numatom++;
+            if(numatom >= read_atomnum) atomrecord = 0;
             if (numatom >= (*cinfo).maxatom && overflow_flag == 0) {
                 printf("Info: The number of atoms (%d) exceeded MAXATOM.\n",
                        numatom);
@@ -227,6 +235,7 @@ int rmol2(char *filename, int *atomnum, ATOM atom[], int *bondnum, BOND bond[],
                 bond[numbond].type = itype;
             }
             numbond++;
+            if(numbond >= read_bondnum) bondrecord = 0;
             if (numbond >= (*cinfo).maxbond && overflow_flag == 0) {
                 printf("Info: The number of bonds (%d) exceeded MAXBOND.\n",
                        numbond);

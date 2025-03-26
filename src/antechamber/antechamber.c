@@ -17,6 +17,7 @@ char *amberhome;
 # include "ac.c"
 # include "charmm.c"
 # include "mol2.c"
+# include "mmcif.c"
 # include "mopcrt.c"
 # include "divcrt.c"
 # include "sqmcrt.c"
@@ -31,6 +32,7 @@ char *amberhome;
 # include "orcout.c"
 # include "gamess.c"
 # include "pdb.c"
+# include "pdbqt.c"
 # include "csd.c"
 # include "mdl.c"
 # include "alc.c"
@@ -144,6 +146,7 @@ void usage()
                "[34m                          gaff2[0m: for gaff2 (beta-version)\n"
                "[34m                          amber[0m: for PARM94/99/99SB\n"
                "[34m                          bcc  [0m: bcc \n"
+               "[34m                          abcg2[0m: abcg2 \n"
                "[34m                          sybyl[0m: sybyl \n"
                "[31m                   -du   [0m fix duplicate atom names: yes(y)[default] or no(n)\n"
                "[31m                   -bk   [0m component/block Id, for ccif\n"
@@ -157,12 +160,12 @@ void usage()
                "[34m                          4    [0m: atom and full bond type \n"
                "[34m                          5    [0m: atom and part bond type \n"
                "[31m                   -s    [0m status information: 0(brief), 1(default) or 2(verbose)\n"
-               "[31m                   -eq   [0m equalizing atomic charge, default is 1 for '-c resp' and '-c bcc' and 0 for the other charge methods \n"
+               "[31m                   -eq   [0m equalizing atomic charge, default is 1 for '-c resp', '-c bcc', '-c abcg2' and 0 for the other charge methods \n"
                "[34m                          0    [0m: no use\n"
                "[34m                          1    [0m: by atomic paths \n"
                "[34m                          2    [0m: by atomic paths and structural information, i.e. E/Z configurations \n"
                "[31m                   -pf   [0m remove intermediate files: yes(y) or no(n)[default]\n"
-               "[31m                   -pl   [0m maximum path length to determin equivalence of atomic charges for resp and bcc,\n"
+               "[31m                   -pl   [0m maximum path length to determin equivalence of atomic charges for resp, bcc and abcg2,\n"
                "[31m                         [0m the smaller the value, the faster the algorithm, default is -1 (use full length),\n"
                "[31m                         [0m set this parameter to 10 to 30 if your molecule is big (# atoms >= 100)\n"
                "[31m                   -seq  [0m atomic sequence order changable: yes(y)[default] or no(n)\n"
@@ -210,6 +213,7 @@ void usage()
                "                          gaff2: for gaff2 (beta-version)\n"
                "                          amber: for PARM94/99/99SB\n"
                "                          bcc  : bcc \n"
+               "                          abcg2: abcg2 \n"
                "                          sybyl: sybyl \n"
                "                   -du    fix duplicate atom names: yes(y)[default] or no(n)\n"
                "                   -bk    component/block Id, for ccif\n"
@@ -223,12 +227,12 @@ void usage()
                "                          4    : atom and full bond type \n"
                "                          5    : atom and part bond type \n"
                "                   -s     status information: 0(brief), 1(default) or 2(verbose)\n"
-               "                   -eq    equalizing atomic charge, default is 1 for '-c resp' and '-c bcc' and 0 for the other charge methods \n"
+               "                   -eq    equalizing atomic charge, default is 1 for '-c resp', '-c bcc', '-c abcg2' and 0 for the other charge methods \n"
                "                          0    : no use\n"
                "                          1    : by atomic paths \n"
                "                          2    : by atomic paths and structural information, i.e. E/Z configurations \n"
                "                   -pf    remove intermediate files: yes(y) or no(n)[default]\n"
-               "                   -pl    maximum path length to determin equivalence of atomic charges for resp and bcc,\n"
+               "                   -pl    maximum path length to determin equivalence of atomic charges for resp, bcc and abcg2\n"
                "                          the smaller the value, the faster the algorithm, default is -1 (use full length),\n"
                "                          set this parameter to 10 to 30 if your molecule is big (# atoms >= 100)\n"
                "                   -seq   atomic sequence order changable: yes(y)[default] or no(n)\n"
@@ -258,8 +262,9 @@ void list()
              "\n		Divcon Input       divcrt  21  | Divcon Output      divout 22 "
              "\n		SQM Input          sqmcrt  23  | SQM Output         sqmout 24 "
              "\n		Charmm             charmm  25  | Gaussian ESP       gesp   26 "
-             "\n		Component cif      ccif    27  | GAMESS dat         gamess 28 "
+             "\n		geostd cif         ccif    27  | GAMESS dat         gamess 28 "
              "\n		Orca input         orcinp  29  | Orca output        orcout 30 "
+             "\n		pdbqt              pdbqt   31  |"
              "\n		--------------------------------------------------------------\n"
                "                AMBER restart file can only be read in as additional file.\n"
              "\n	         	    [31m List of the Charge Methods [0m \n"
@@ -268,8 +273,9 @@ void list()
              "\n		RESP               resp     1  |  AM1-BCC           bcc     2"
              "\n		CM1                cm1      3  |  CM2               cm2     4"
              "\n		ESP (Kollman)      esp      5  |  Mulliken          mul     6"
-             "\n		Gasteiger          gas      7  |  Read in charge    rc      8"
-             "\n		Write out charge   wc       9  |  Delete Charge     dc     10"
+             "\n		Gasteiger          gas      7  |  ABCG2             abcg2   8"
+             "\n		Read in charge     rc       9  |  Write out charge  wc     10"
+             "\n		Delete Charge      dc      11  |"
              "\n		--------------------------------------------------------------\n");
     } else {
         printf("	         	     List of the File Formats \n"
@@ -288,8 +294,9 @@ void list()
              "\n		Divcon Input       divcrt  21  | Divcon Output      divout 22 "
              "\n		SQM Input          sqmcrt  23  | SQM Output         sqmout 24 "
              "\n		Charmm             charmm  25  | Gaussian ESP       gesp   26 "
-             "\n		Component cif      ccif    27  | GAMESS dat         gamess 28 "
+             "\n		geostd cif         ccif    27  | GAMESS dat         gamess 28 "
              "\n		Orca input         orcinp  29  | Orca output        orcout 30 "
+             "\n		pdbqt              pdbqt   31  |"
              "\n		--------------------------------------------------------------\n"
                "                AMBER restart file can only be read in as additional file.\n"
              "\n	         	     List of the Charge Methods \n"
@@ -298,8 +305,9 @@ void list()
              "\n		RESP               resp     1  |  AM1-BCC            bcc    2"
              "\n		CM1                cm1      3  |  CM2                cm2    4"
              "\n		ESP (Kollman)      esp      5  |  Mulliken           mul    6"
-             "\n		Gasteiger          gas      7  |  Read in charge     rc     8"
-             "\n		Write out charge   wc       9  |  Delete Charge      dc    10"
+             "\n		Gasteiger          gas      7  |  ABCG2             abcg2   8"
+             "\n		Read in charge     rc       9  |  Write out charge  wc     10"
+             "\n		Delete Charge      dc      11  |"
              "\n		--------------------------------------------------------------\n");
     }
 }
@@ -415,12 +423,13 @@ int main(int argc, char *argv[])
     int overflow_flag = 0;      /* if overflow_flag ==1, reallocate memory */
     char *atomtype_args;
 
+    if( cinfo.intstatus) 
     fprintf(stdout, "\nWelcome to antechamber %s: molecular input file processor.\n\n",
             ANTECHAMBER_VERSION);
     esetprogramname(argv[0]);
-    amberhome = (char *) getenv("MSANDERHOME");
+    amberhome = (char *) getenv("AMBERCLASSICHOME");
     if (amberhome == NULL) {
-        eprintf("MSANDERHOME is not set.");
+        eprintf("AMBERCLASSICHOME is not set.");
     }
     if (argc == 2) {
         if (strncmp(argv[1], "-h", 2) == 0 || strncmp(argv[1], "-H", 2) == 0) {
@@ -515,12 +524,10 @@ int main(int argc, char *argv[])
             strcpy(bt_filename, argv[i + 1]);
             wb_flag = 1;
             continue;
-#if 0
         } else if (strcmp(argv[i], "-bk") == 0) {
             strncpy(blockId, argv[i + 1], MAX_CIF_BLOCK_CODE_LENGTH);
             blockId[MAX_CIF_BLOCK_CODE_LENGTH] = '\0';
             continue;
-#endif
         } else if (strcmp(argv[i], "-ao") == 0) {
             if (strcmp(argv[i + 1], "crd") == 0 || strcmp(argv[i + 1], "CRD") == 0) {
                 ao_flag = 1;
@@ -693,6 +700,9 @@ int main(int argc, char *argv[])
         if (strcmp(cinfo.chargetype, "bcc") == 0 || strcmp(cinfo.chargetype, "BCC") == 0
             || strcmp(cinfo.chargetype, "2") == 0)
             minfo.eqcharge = 1;
+        if (strcmp(cinfo.chargetype, "abcg2") == 0 || strcmp(cinfo.chargetype, "ABCG2") == 0
+            || strcmp(cinfo.chargetype, "8") == 0)
+            minfo.eqcharge = 1;
     }
     if (minfo.eqcharge == 1)
         cinfo.max_path_length = max_path_length;
@@ -714,8 +724,11 @@ int main(int argc, char *argv[])
     memory(0, MAXATOM, MAXBOND, MAXRING);
 
     if (checkformat) {
-        printf("acdoctor mode is on: check and diagnose problems in the input file.\n");
+        printf("Info: acdoctor mode is on: check and diagnose problems in the input file.\n");
     }
+    if( cinfo.intstatus )
+    printf("Info: The atom type is set to %s; the options available to the -at flag are\n"
+           "      gaff, gaff2, amber, bcc, abcg2, and sybyl.\n\n", minfo.atom_type_def);
     read_and_validate_input_file();
 
 /* when read in a mopout, divout, or sqmout file, always output a pdb file
@@ -889,6 +902,14 @@ int main(int argc, char *argv[])
             }
         }
 
+        if (strcmp("pdbqt", cinfo.atype) == 0 || strcmp("31", cinfo.atype) == 0) {
+            overflow_flag = rpdbqt(afilename, &atomnum_tmp, atom_tmp, cinfo, minfo);
+            if (overflow_flag) {
+                fprintf(stderr, "Overflow happens for additional files, exit");
+                exit(1);
+            }
+        }
+
         if (strcmp("mpdb", cinfo.atype) == 0 || strcmp("4", cinfo.atype) == 0) {
             overflow_flag = rpdb(afilename, &atomnum_tmp, atom_tmp, cinfo, minfo, 1);
             if (overflow_flag) {
@@ -1042,16 +1063,17 @@ int main(int argc, char *argv[])
 
 /* if charge type is bcc, the prediction_index must be '4'
    (since we need to assign am1-bcc bond types and atom types) */
-    if ((strcmp("bcc", cinfo.chargetype) == 0 || strcmp("2", cinfo.chargetype) == 0)
+    if ((strcmp("bcc", cinfo.chargetype) == 0 || strcmp("2", cinfo.chargetype) == 0 ||
+         strcmp("abcg2", cinfo.chargetype) == 0 || strcmp("8", cinfo.chargetype) == 0)
         && cinfo.prediction_index < 4) {
         if (cinfo.prediction_index <= 2) {
             fprintf(stdout,
-                    "Warning: the antechamber program automatically changes the prediction type from '%d' to '4' for bcc calculations !\n",
+                    "Warning: the antechamber program automatically changes the prediction type from '%d' to '4' for bcc/abcg2 calculations !\n",
                     cinfo.prediction_index);
             cinfo.prediction_index = 4;
         } else if (cinfo.prediction_index == 3) {
             fprintf(stdout,
-                    "Warning: the antechamber program automatically changes the prediction type from '3' to '4' for bcc calculations !\n");
+                    "Warning: the antechamber program automatically changes the prediction type from '3' to '4' for bcc/abcg2 calculations !\n");
             cinfo.prediction_index = 5;
             // TODO should it be 4  ^^^
         }
@@ -1236,11 +1258,13 @@ int main(int argc, char *argv[])
         mul(ifilename, atomnum, atom, &cinfo, &minfo);
     else if (strcmp("gas", cinfo.chargetype) == 0 || strcmp("7", cinfo.chargetype) == 0)
         gascharge(atomnum, atom, bondnum, bond, cinfo, &minfo);
-    else if (strcmp("rc", cinfo.chargetype) == 0 || strcmp("8", cinfo.chargetype) == 0)
+    else if (strcmp("abcg2", cinfo.chargetype) == 0 || strcmp("8", cinfo.chargetype) == 0)
+        bcc(ifilename, atomnum, atom, bondnum, bond, arom, &cinfo, &minfo);
+    else if (strcmp("rc", cinfo.chargetype) == 0 || strcmp("9", cinfo.chargetype) == 0)
         rcharge(cfilename, atomnum, atom, cinfo, &minfo);
-    else if (strcmp("wc", cinfo.chargetype) == 0 || strcmp("9", cinfo.chargetype) == 0)
+    else if (strcmp("wc", cinfo.chargetype) == 0 || strcmp("10", cinfo.chargetype) == 0)
         wcharge(cfilename, atomnum, atom, cinfo, minfo);
-    else if (strcmp("dc", cinfo.chargetype) == 0 || strcmp("10", cinfo.chargetype) == 0) {
+    else if (strcmp("dc", cinfo.chargetype) == 0 || strcmp("11", cinfo.chargetype) == 0) {
         for (i = 0; i < atomnum; i++)
             atom[i].charge = 0.0;
     } else if (chargemethod_flag == 1) {
@@ -1319,6 +1343,8 @@ int main(int argc, char *argv[])
     } else if (strcmp("sqmout", cinfo.outtype) == 0 || strcmp("24", cinfo.outtype) == 0) {
         wsqmout(ofilename, atomnum, atom, cinfo, minfo);
 /*	info(atomnum, atom, bondnum, bond, arom, cinfo, minfo); */
+    } else if (strcmp("pdbqt", cinfo.outtype) == 0 || strcmp("31", cinfo.outtype) == 0) {
+        wpdbqt();
     } else {
         eprintf("Unknown output file format (%s).", cinfo.outtype);
     }

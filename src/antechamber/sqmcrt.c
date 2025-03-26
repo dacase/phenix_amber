@@ -91,10 +91,10 @@ void wsqmcrt(char *filename, int atomnum, ATOM atom[], MOLINFO minfo)
     fprintf(fpout, "\n");
     fclose(fpout);
     nelectrons -= minfo.icharge;
-    printf("Info: Total number of electrons: %d; net charge: %d\n", nelectrons,
-            minfo.icharge);
     /*  check that the number of electrons is even:   */
     if (nelectrons % 2 != 0) {
+        printf("Info: Total number of electrons: %d; net charge: %d\n", 
+          nelectrons, minfo.icharge);
         printf("Info: The number of electrons is odd (%d).\n"
                "      Please check the total charge (-nc flag) and spin multiplicity (-m flag).\n",
                nelectrons);

@@ -300,7 +300,6 @@ void proceed1() {
 
 void proceed2() {
 	char command[MAXCHAR];
-	char tmpchar[MAXCHAR];
 
 	if(i_netcharge == 1) adjust_charge();
 	printf("[31mStep 1:  Generate AC file ... [0m\n");
@@ -329,9 +328,9 @@ int main(int argc, char *argv[])
 	int overflow_flag = 0;			/*if overflow_flag ==1, reallocate memory */
 	char command[MAXCHAR];
 
-    amberhome = (char *) getenv("MSANDERHOME");
+    amberhome = (char *) getenv("AMBERCLASSICHOME");
     if( amberhome == NULL ){
-       fprintf( stdout, "MSANDERHOME is not set!\n" );
+       fprintf( stdout, "AMBERCLASSICHOME is not set!\n" );
        exit(1);
     }
 	if (strcmp(COLORTEXT, "YES") == 0 || strcmp(COLORTEXT, "yes") == 0) {

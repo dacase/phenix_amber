@@ -66,6 +66,35 @@ void *emalloc(const size_t size)
 }
 
 
+// Print error message and soldier on.  E.g.:
+// antechamber: Non Fatal Error!
+// Bla, bla as in argument format.
+// If the caller's errno is nonzero, emit the std library errno message.
+
+void enonfatal(const char *format, ...)
+{
+    int callerserrno = errno;
+    va_list args;
+
+    fflush(stdout);
+    if (eprogramname() != NULL)
+        fprintf(stderr, "%s: Non Fatal Error!\n", eprogramname());
+
+    va_start(args, format);
+    vfprintf(stderr, format, args);
+    va_end(args);
+
+    // if the caller's errno is nonzero, emit the std library errno message.
+    if (callerserrno != 0) {
+        fprintf(stderr, "\n%s", strerror(errno));
+    }
+    fprintf(stderr, "\n");
+
+    errno = callerserrno;
+    return;
+}
+
+
 // Print error message and exit.  E.g.:
 // antechamber: Fatal Error!
 // Bla, bla as in argument format.

@@ -1835,9 +1835,9 @@ void read_parmchk_parm(char *filename)
 			parm[parmnum].mass     = mass;
 			parm[parmnum].equtype  = equtype;
 			parm[parmnum].atomicnum  = atomicnum;
-/*	Initalization */
+/*	Initialization */
 /*	for the sake of simplicity in the coding, an atom type equals to and corresponds to itself*/
-/*      Equal atom types must alos be corresponding atom types */
+/*      Equal atom types must also be corresponding atom types */
                         strcpy(parm[parmnum].equa[0].atomtype, atomtype);
                         strcpy(parm[parmnum].corr[0].atomtype, atomtype);
                         parm[parmnum].corr[0].bl   = 0;
@@ -2057,9 +2057,9 @@ void read_parmchk_parm_v2(char *filename)
 			parm[parmnum].mass     = mass;
 			parm[parmnum].equtype  = equtype;
 			parm[parmnum].atomicnum  = atomicnum;
-/*	Initalization */
+/*	Initialization */
 /*	for the sake of simplicity in the coding, an atom type equals to and corresponds to itself*/
-/*      Equal atom types must alos be corresponding atom types */
+/*      Equal atom types must also be corresponding atom types */
                         strcpy(parm[parmnum].equa[0].atomtype, atomtype);
                         strcpy(parm[parmnum].corr[0].atomtype, atomtype);
                         parm[parmnum].corr[0].bl   = 0;
@@ -2210,7 +2210,7 @@ void assign_parmid(void)
 				break;
 			}
                 if(parmid[i] < 0) {
-                        fprintf(stderr, "Atom type of %s does not shown up in PARMCHK.DAT\n", atom[i].ambername);
+                        fprintf(stderr, "Atom type of %s does not exist in PARMCHK.DAT\n", atom[i].ambername);
                         exit(1);
                 }
 	}
@@ -2226,7 +2226,7 @@ int pid;
 		}
 	}
         if(pid < 0) {
-                fprintf(stderr, "Atom type of %s does not shown up in PARMCHK.DAT\n", at);
+                fprintf(stderr, "Atom type of %s does not exist in PARMCHK.DAT\n", at);
 		exit(1);
 	}
 	return pid;
@@ -2294,7 +2294,7 @@ int empbond(char *tmpc1, char *tmpc2,  char *name1, char *name2, int id1, int id
 			}
 		}
 	}
-	if( bl <= 0) return 0; /*later we may use an empical rule to predict bond length*/
+	if( bl <= 0) return 0; /*later we may use an empirical rule to predict bond length*/
 
 	for(i=0;i<nblf_parm;i++) {
 		if(blf_parm[i].id1 == id1 && blf_parm[i].id2 == id2) {
@@ -2485,8 +2485,8 @@ int n1, n2, n3, n4;
 	n4 = parm[id4].equtype;
 	if(n1 == 0 && n2 == 0) return 0.0;
 
-	tn1 = fabs(n1) + fabs(n2);
-	tn2 = fabs(n3) + fabs(n4);
+	tn1 = abs(n1) + abs(n2);
+	tn2 = abs(n3) + abs(n4);
 	if(tn2 == 3 && tn1 != 3) return wt.EQUTYPE;
 	if(tn1 == 3 && tn2 != 3) return wt.EQUTYPE;
 /*	e.g. for X-cd-cf-X, both X-cd-cd-X and X-cf-cf are possible replacement.  
@@ -5527,9 +5527,9 @@ int main(int argc, char *argv[])
 
 	default_cinfo(&cinfo);
 	default_minfo(&minfo);
-    amberhome = (char *) getenv("MSANDERHOME");
+    amberhome = (char *) getenv("AMBERCLASSICHOME");
     if( amberhome == NULL ){
-       fprintf( stdout, "MSANDERHOME is not set!\n" );
+       fprintf( stdout, "AMBERCLASSICHOME is not set!\n" );
        exit(1);
     }
     minfo.connect_file[0] = '\0';
@@ -5559,15 +5559,15 @@ int main(int argc, char *argv[])
 		               "[31m                -o   [0m frcmod file name\n"
 			       "[31m                -f   [0m input file format (prepi, prepc, ac, mol2, frcmod, leaplog) \n"
 			       "[31m                -s   [0m ff parm set, it is suppressed by \"-p\" option\n"
-			       "[34m                      1:[0m gaff (the default)\n"
-			       "[34m                      2:[0m gaff2 \n"
-			       "[34m                      3:[0m parm99\n"
-			       "[34m                      4:[0m parm10\n"
-			       "[34m                      5:[0m lipid14\n"
+			       "[34m                      1 or gaff:   [0m gaff (the default)\n"
+			       "[34m                      2 or gaff2:  [0m gaff2 \n"
+			       "[34m                      3 or parm99: [0m parm99\n"
+			       "[34m                      4 or parm10: [0m parm10\n"
+			       "[34m                      5 or lipid14:[0m lipid14\n"
 			       "[31m                -frc [0m frcmod files to be loaded, the supported frcmods include\n" 
 			       "[31m                     [0m ff99SB, ff14SB, ff03 for proteins , bsc1, ol15, ol3 for DNA and yil for RNA\n"
 			       "[31m                     [0m eg. ff14SB+bsc1+yil, ff99SB+bsc1\n"
-			       "[31m                -p   [0m parmfile, supress '-s' flag, optional\n"
+			       "[31m                -p   [0m parmfile, suppress '-s' flag, optional\n"
 			       "[31m                -pf  [0m parmfile format \n"
 			       "[34m                      1:[0m for amber FF data file (the default)\n"
 			       "[34m                      2:[0m for additional force field parameter file\n"
@@ -5580,7 +5580,7 @@ int main(int argc, char *argv[])
 			       "[31m                -w   [0m print out parameters that matching improper dihedral parameters\n"
 			       "[31m                     [0m that contain 'X' in the force field parameter file, can be 'Y' (yes)\n"
 			       "[31m                     [0m or 'N' (no), default is 'Y'\n"
-			       "[31m                -fc  [0m option of force constant calcualtion for '-f frcmod' or '-f leaplog'\n"
+			       "[31m                -fc  [0m option of force constant calculation for '-f frcmod' or '-f leaplog'\n"
 			       "[34m                      1:[0m default behavior (the default option)\n"
 			       "[34m                      2:[0m do empirical calculation before using corresponding atom types\n"
 			       "[31m                -att [0m for the frcmod input format, option of performing parmchk\n"
@@ -5594,15 +5594,15 @@ int main(int argc, char *argv[])
 		               "[31m                -o   [0m frcmod file name\n"
 			       "[31m                -f   [0m input file format (prepi, prepc, ac, mol2, frcmod, leaplog) \n"
 			       "[31m                -s   [0m ff parm set, it is suppressed by \"-p\" option\n"
-			       "[34m                      1:[0m gaff (the default)\n"
-			       "[34m                      2:[0m gaff2 \n"
-			       "[34m                      3:[0m parm99\n"
-			       "[34m                      4:[0m parm10\n"
-			       "[34m                      5:[0m lipid14\n"
+			       "[34m                      1 or gaff:   [0m gaff (the default)\n"
+			       "[34m                      2 or gaff2:  [0m gaff2 \n"
+			       "[34m                      3 or parm99: [0m parm99\n"
+			       "[34m                      4 or parm10: [0m parm10\n"
+			       "[34m                      5 or lipid14:[0m lipid14\n"
 			       "[31m                -frc [0m frcmod files to be loaded, the supported frcmods include\n" 
 			       "[31m                     [0m ff99SB, ff14SB, ff03 for proteins , bsc1, ol15, ol3 for DNA and yil for RNA\n"
 			       "[31m                     [0m eg. ff14SB+bsc1+yil, ff99SB+bsc1\n"
-			       "[31m                -p   [0m parmfile, supress '-s' flag, optional\n"
+			       "[31m                -p   [0m parmfile, suppress '-s' flag, optional\n"
 			       "[31m                -pf  [0m parmfile format \n"
 			       "[34m                      1:[0m for amber FF data file (the default)\n"
 			       "[34m                      2:[0m for additional force field parameter file\n"
@@ -5615,7 +5615,7 @@ int main(int argc, char *argv[])
 			       "[31m                -w   [0m print out parameters that matching improper dihedral parameters\n"
 			       "[31m                     [0m that contain 'X' in the force field parameter file, can be 'Y' (yes)\n"
 			       "[31m                     [0m or 'N' (no), default is 'Y'\n"
-			       "[31m                -fc  [0m option of force constant calcualtion for '-f frcmod' or '-f leaplog'\n"
+			       "[31m                -fc  [0m option of force constant calculation for '-f frcmod' or '-f leaplog'\n"
 			       "[34m                      1:[0m default behavior (the default option)\n"
 			       "[34m                      2:[0m do empirical calculation before using corresponding atom types\n"
 			       "[31m                -att [0m for the frcmod input format, option of performing parmchk\n"
@@ -5631,15 +5631,15 @@ int main(int argc, char *argv[])
 		               "                -o    frcmod file name\n"
 			       "                -f    input file format (prepi, prepc, ac, mol2, frcmod, leaplog) \n"
 			       "                -s    ff parm set, it is suppressed by \"-p\" option\n"
-			       "                      1: gaff (the default)\n"
-			       "                      2: gaff2 \n"
-			       "                      3: parm99\n"
-			       "                      4: parm10\n"
-			       "                      5: lipid14\n"
+			       "                      1 or gaff:    gaff (the default)\n"
+			       "                      2 or gaff2:   gaff2 \n"
+			       "                      3 or parm99:  parm99\n"
+			       "                      4 or parm10:  parm10\n"
+			       "                      5 or lipid14: lipid14\n"
 			       "                -frc  frcmod files to be loaded, the supported frcmods include\n" 
 			       "                      ff99SB, ff14SB, ff03 for proteins , bsc1, ol15, ol3 for DNA and yil for RNA\n"
 			       "                      eg. ff14SB+bsc1+yil, ff99SB+bsc1\n"
-			       "                -p    parmfile, supress '-s' flag, optional\n"
+			       "                -p    parmfile, suppress '-s' flag, optional\n"
 			       "                -pf   parmfile format \n"
 			       "                      1: for amber FF data file (the default)\n"
 			       "                      2: for additional force field parameter file\n"
@@ -5652,7 +5652,7 @@ int main(int argc, char *argv[])
 			       "                -w    print out parameters that matching improper dihedral parameters\n"
 			       "                      that contain 'X' in the force field parameter file, can be 'Y' (yes)\n"
 			       "                      or 'N' (no), default is 'Y'\n"
-			       "                -fc   option of force constant calcualtion for '-f frcmod' or '-f leaplog'\n"
+			       "                -fc   option of force constant calculation for '-f frcmod' or '-f leaplog'\n"
 			       "                      1: default behavior (the default option)\n"
 			       "                      2: do empirical calculation before using corresponding atom types\n"
 			       "                -att  for the frcmod input format, option of performing parmchk\n"
@@ -5666,15 +5666,15 @@ int main(int argc, char *argv[])
 		               "                -o    frcmod file name\n"
 			       "                -f    input file format (prepi, prepc, ac, mol2, frcmod, leaplog) \n"
 			       "                -s    ff parm set, it is suppressed by \"-p\" option\n"
-			       "                      1: gaff (the default)\n"
-			       "                      2: gaff2 \n"
-			       "                      3: parm99\n"
-			       "                      4: parm10\n"
-			       "                      5: lipid14\n"
+			       "                      1 or gaff:    gaff (the default)\n"
+			       "                      2 or gaff2:   gaff2 \n"
+			       "                      3 or parm99:  parm99\n"
+			       "                      4 or parm10:  parm10\n"
+			       "                      5 or lipid14: lipid14\n"
 			       "                -frc  frcmod files to be loaded, the supported frcmods include\n" 
 			       "                      ff99SB, ff14SB, ff03 for proteins , bsc1, ol15, ol3 for DNA and yil for RNA\n"
 			       "                      eg. ff14SB+bsc1+yil, ff99SB+bsc1\n"
-			       "                -p    parmfile, supress '-s' flag, optional\n"
+			       "                -p    parmfile, suppress '-s' flag, optional\n"
 			       "                -pf   parmfile format \n"
 			       "                      1: for amber FF data file (the default)\n"
 			       "                      2: for additional force field parameter file\n"
@@ -5687,7 +5687,7 @@ int main(int argc, char *argv[])
 			       "                -w    print out parameters that matching improper dihedral parameters\n"
 			       "                      that contain 'X' in the force field parameter file, can be 'Y' (yes)\n"
 			       "                      or 'N' (no), default is 'Y'\n"
-			       "                -fc   option of force constant calcualtion for '-f frcmod' or '-f leaplog'\n"
+			       "                -fc   option of force constant calculation for '-f frcmod' or '-f leaplog'\n"
 			       "                      1: default behavior (the default option)\n"
 			       "                      2: do empirical calculation before using corresponding atom types\n"
 			       "                -att  for the frcmod input format, option of performing parmchk\n"
@@ -5765,13 +5765,18 @@ int main(int argc, char *argv[])
 			strcpy(additional_frcmod_file, argv[i+1]);
 			iadditional_frcmod = 1;
 		}
-		if (strcmp(argv[i], "-att") == 0) 
-			attn_opt = atoi(argv[i + 1]);
 		if (strcmp(argv[i], "-fc") == 0) 
 			fc_opt = atoi(argv[i + 1]);
 		if (strcmp(argv[i], "-atc") == 0) {
 			strcpy(atcfilename, argv[i + 1]);
 			iatc = 1;
+		} else if (strcmp(argv[i], "-att") == 0) {
+			attn_opt = atoi(argv[i + 1]);
+		} else if (strcmp(argv[i], "-at") == 0) {
+			printf("Error: option -at does not exist !\n"
+			"    You are probably looking for -s or mistyping"
+			" options -atc or -att \n");
+			exit(1);
 		}
 	}
 	if(ipfilename == 0) {
@@ -5817,7 +5822,8 @@ int main(int argc, char *argv[])
 			fclose(fptmp);
 		}
 		else {
-			fprintf(stderr, "No parmchk corresponding score file exists, exit\n");
+			fprintf(stderr, "PARMCHK.DAT, the parmchk corresponding"
+				" score file, does not exist; exiting.\n");
 			exit(1);
 		}
 	}
@@ -6195,7 +6201,7 @@ int main(int argc, char *argv[])
 	last_vdwparmnum = vdwparmnum;
 
 	if(pformat == 1) readparm(pfilename);		/*principle parameter file */
-	if(pformat == 2) readfrcmod(pfilename);	        /*principle parmaeter file in frcmod format*/
+	if(pformat == 2) readfrcmod(pfilename);	        /*principle parameter file in frcmod format*/
 
 	if (iformat == 0 || iformat == 1)
 		improper_id1(ifilename);

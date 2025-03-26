@@ -11,7 +11,7 @@ add_library(antechamber_eprintf_obj OBJECT eprintf.c)
 
 #most antechamber programs are compiled from a single .c file
 # --------------------------------------------------------------------
-set(PROGRAMS am1bcc atomtype espgen parmcal parmchk2 prepgen residuegen respgen)
+set(PROGRAMS am1bcc atomtype espgen parmcal parmchk2 prepgen residuegen respgen match match_atomname)
 
 foreach(PROGRAM ${PROGRAMS})
 	add_executable(${PROGRAM} "${PROGRAM}.c" $<TARGET_OBJECTS:antechamber_eprintf_obj>)
@@ -27,7 +27,7 @@ target_link_libraries(antechamber cifparse)
 
 add_executable(bondtype bondtype.c ncsu-penalties.c $<TARGET_OBJECTS:antechamber_eprintf_obj>)
 
-add_executable(bondtype.orig bondtype.cpp $<TARGET_OBJECTS:antechamber_eprintf_obj>)
+# add_executable(bondtype.orig bondtype.cpp $<TARGET_OBJECTS:antechamber_eprintf_obj>)
 
 add_executable(test-penalties test-penalties.c ncsu-penalties.c $<TARGET_OBJECTS:antechamber_eprintf_obj>)
 
@@ -39,8 +39,8 @@ set_target_properties(test-combination PROPERTIES COMPILE_DEFINITIONS ENABLE_COM
 
 # --------------------------------------------------------------------
 
-set(ALL_PROGRAMS ${PROGRAMS} antechamber bondtype bondtype.orig test-penalties test-int-part test-combination)
+set(ALL_PROGRAMS ${PROGRAMS} antechamber bondtype test-penalties test-int-part test-combination)
 
 targets_link_libraries(${ALL_PROGRAMS} LIBRARIES C::Math)
 
-install_executables_wrapped(TARGETS ${PROGRAMS} antechamber bondtype bondtype.orig)
+install_executables_wrapped(TARGETS ${PROGRAMS} antechamber bondtype)

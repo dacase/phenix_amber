@@ -17,6 +17,7 @@ extern void *ecalloc(const size_t num, const size_t size);
 extern FILE *efopen(const char *filename, const char *mode);
 extern char *egetenv(const char *name);
 extern void *emalloc(const size_t n);
+extern void enonfatal(const char *format, ...);
 extern void eprintf(const char *format, ...);
 extern char *eprogramname();
 extern void *erealloc(void *p, const size_t n);

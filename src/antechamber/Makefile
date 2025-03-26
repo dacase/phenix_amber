@@ -23,171 +23,169 @@ TRANSLATEOBJS = translate.o eprintf.o
 TOP2FFOBJS = top2ff.o eprintf.o
 TOP2MOL2OBJS = top2mol2.o eprintf.o
 
-# Dispatched programs are wrapper scripts of programs; these scripts
-# automatically set MSANDERHOME; the programs themselves live in 
-# $(BINDIR)/x/
 DISPATCHEDPROGS = \
-	$(BINDIR)/x/am1bcc$(SFX) \
-	$(BINDIR)/x/antechamber$(SFX) \
-	$(BINDIR)/x/atomtype$(SFX) \
-	$(BINDIR)/x/bondtype$(SFX) \
-	$(BINDIR)/x/espgen$(SFX) \
-	$(BINDIR)/x/parmchk2$(SFX) \
-	$(BINDIR)/x/prepgen$(SFX) \
-	$(BINDIR)/x/residuegen$(SFX) \
-	$(BINDIR)/x/respgen$(SFX) \
-
-LOCALPROGS = \
-	am1bcc$(SFX) \
-	antechamber$(SFX) \
-	atomtype$(SFX) \
-	bondtype$(SFX) \
-	espgen$(SFX) \
-	parmchk2$(SFX) \
-	prepgen$(SFX) \
-	residuegen$(SFX) \
-	respgen$(SFX) \
+	$(BINDIR)/wrapped_progs/am1bcc \
+	$(BINDIR)/wrapped_progs/antechamber \
+	$(BINDIR)/wrapped_progs/atomtype \
+	$(BINDIR)/wrapped_progs/bondtype \
+	$(BINDIR)/wrapped_progs/espgen \
+	$(BINDIR)/wrapped_progs/parmchk2 \
+	$(BINDIR)/wrapped_progs/prepgen \
+	$(BINDIR)/wrapped_progs/residuegen \
+	$(BINDIR)/wrapped_progs/respgen \
 
 PROGS = \
-	$(BINDIR)/am1bcc$(SFX) \
-	$(BINDIR)/antechamber$(SFX) \
-	$(BINDIR)/atomtype$(SFX) \
-	$(BINDIR)/bondtype$(SFX) \
-	$(BINDIR)/espgen$(SFX) \
-	$(BINDIR)/parmchk2$(SFX) \
-	$(BINDIR)/prepgen$(SFX) \
-	$(BINDIR)/residuegen$(SFX) \
-	$(BINDIR)/respgen$(SFX) \
-
-TESTS = test-penalties test-int-part test-combination
+	$(BINDIR)/am1bcc \
+	$(BINDIR)/antechamber \
+	$(BINDIR)/atomtype \
+	$(BINDIR)/bondtype \
+	$(BINDIR)/espgen \
+	$(BINDIR)/parmchk2 \
+	$(BINDIR)/prepgen \
+	$(BINDIR)/residuegen \
+	$(BINDIR)/respgen
 
 #############################################################################
 
-all: $(PROGS)
+install_ac: $(DISPATCHEDPROGS) dispatch $(BINDIR)/resp
 
 dispatch:
-	SFX=$(SFX) BINDIR=$(BINDIR) sh patch.sh
-
-tests: $(TESTS)
-
-.PHONY: ac
-ac: $(DISPATCHEDPROGS) dispatch
+	$(VB)BINDIR=$(BINDIR) sh patch.sh
 
 clean:
-	/bin/rm -f *.o $(LOCALPROGS) $(TESTS)
+	/bin/rm -f *.o 
 
 uninstall:
 	/bin/rm -f $(PROGS) $(DISPATCHEDPROGS)
 
 #############################################################################
 
+$(LIBDIR)/libcifparse.a:
+	$(VB)cd ../cifparse && $(MAKE) install
+
 .c.o:
 	@echo "[ANTECHAMBER]  CC $<"
 	$(VB)$(CC) -c $(CNOOPTFLAGS) $(CFLAGS) $(AMBERCFLAGS) -o $@ $<
 
-#_____________________________________________________________________________
-# compilation rules.
+$(BINDIR)/resp: lapack.o resp.F
+	@echo "[ANTECHAMBER] FC $<"
+	$(VB)$(FC) $(FFLAGS) $(FOPTFLAGS) resp.F lapack.o -o $@
 
-$(BINDIR)/x/acdoctor$(SFX): $(ACDOCTOROBJS)
+lapack.o: lapack.F
+	@echo "[ANTECHAMBER] FC $<"
+	$(VB)$(FC) $(FFLAGS) $(FOPTFLAGS) -c -o $@ $<
+
+#_____________________________________________________________________________
+
+
+$(BINDIR)/wrapped_progs/acdoctor: $(ACDOCTOROBJS) $(LIBDIR)/libcifparse.a
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) $(ACDOCTOROBJS) \
-	    $(LM) -o $@
+	    -L$(LIBDIR) -lcifparse $(LM) -o $@
 
-$(BINDIR)/x/am1bcc$(SFX): $(AM1BCCOBJS)
+$(BINDIR)/wrapped_progs/am1bcc: $(AM1BCCOBJS)
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) $(AM1BCCOBJS) \
 	    $(LM) -o $@
 
-$(BINDIR)/x/antechamber$(SFX): $(ANTECHAMBEROBJS)
+$(BINDIR)/wrapped_progs/antechamber: $(ANTECHAMBEROBJS) $(LIBDIR)/libcifparse.a
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) $(ANTECHAMBEROBJS) \
-	    $(LM) -o $@
+	    -L$(LIBDIR) -lcifparse $(LM) -o $@
 
-$(BINDIR)/x/atomtype$(SFX): $(ATOMTYPEOBJS)
+$(BINDIR)/wrapped_progs/atomtype: $(ATOMTYPEOBJS)
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) \
 	    $(ATOMTYPEOBJS) $(LM) -o $@
 
-$(BINDIR)/x/bondtype$(SFX): $(BONDTYPEOBJS)
+$(BINDIR)/wrapped_progs/bondtype: $(BONDTYPEOBJS)
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) \
 	    $(BONDTYPEOBJS) $(LM) -o $@
 
-$(BINDIR)/x/charmmgen$(SFX): $(CHARMMGENOBJS)
+$(BINDIR)/wrapped_progs/bondtype.orig.o: bondtype.cpp
+	@echo "[ANTECHAMBER]  CC $@"
+	$(VB)$(CXX) -c $(CXXNOOPTFLAGS) $(CXXFLAGS) $(AMBERCXXFLAGS) -o bondtype.orig.o bondtype.cpp
+
+$(BINDIR)/wrapped_progs/bondtype.orig: bondtype.orig.o
+	@echo "[ANTECHAMBER]  CC $@"
+	$(VB)$(CXX) $(CXXFLAGS) $(AMBERCXXFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) bondtype.orig.o $(LM) -o $@
+
+$(BINDIR)/wrapped_progs/charmmgen: $(CHARMMGENOBJS)
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) \
 	    $(CHARMMGENOBJS) $(LM) -o $@
 
-$(BINDIR)/x/crdgrow$(SFX): $(CRDGROWOBJS)
+$(BINDIR)/wrapped_progs/crdgrow: $(CRDGROWOBJS)
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) \
 	    $(CRDGROWOBJS) $(LM) -o $@
 
-$(BINDIR)/x/database$(SFX): $(DATABASEOBJS)
+$(BINDIR)/wrapped_progs/database: $(DATABASEOBJS)
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) \
 	    $(DATABASEOBJS) $(LM) -o $@
 
-$(BINDIR)/x/delphigen$(SFX): $(DELPHIGENOBJS)
+$(BINDIR)/wrapped_progs/delphigen: $(DELPHIGENOBJS)
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) \
 	    $(DELPHIGENOBJS) -o $@
 
-$(BINDIR)/x/espgen$(SFX): $(ESPGENOBJS)
+$(BINDIR)/wrapped_progs/espgen: $(ESPGENOBJS)
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) \
 	    $(ESPGENOBJS) $(LM) -o $@
 
-$(BINDIR)/x/match$(SFX): $(MATCHOBJS)
+$(BINDIR)/wrapped_progs/match: $(MATCHOBJS)
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) \
 	    $(MATCHOBJS) $(LM) -o $@
 
-$(BINDIR)/x/match_atomname$(SFX): $(MATCH_ATOMNAMEOBJS)
+$(BINDIR)/wrapped_progs/match_atomname: $(MATCH_ATOMNAMEOBJS)
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) \
 	    $(MATCH_ATOMNAMEOBJS) $(LM) -o $@
 
-$(BINDIR)/x/parmcal$(SFX): $(PARMCALOBJS)
+$(BINDIR)/wrapped_progs/parmcal: $(PARMCALOBJS)
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) \
 	    $(PARMCALOBJS) $(LM) -o $@
 
-$(BINDIR)/x/parmchk2$(SFX): $(PARMCHK2OBJS)
+$(BINDIR)/wrapped_progs/parmchk2: $(PARMCHK2OBJS)
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) \
 	    $(PARMCHK2OBJS) $(LM) -o $@
 
-$(BINDIR)/x/parmjoin$(SFX): parmjoin.o
+$(BINDIR)/wrapped_progs/parmjoin: parmjoin.o
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) parmjoin.o -o $@
 
-$(BINDIR)/x/prepgen$(SFX): $(PREPGENOBJS)
+$(BINDIR)/wrapped_progs/prepgen: $(PREPGENOBJS)
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) \
 	    $(PREPGENOBJS) $(LM) -o $@
 
-$(BINDIR)/x/residuegen$(SFX): $(RESIDUEGENOBJS)
+$(BINDIR)/wrapped_progs/residuegen: $(RESIDUEGENOBJS)
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) \
 	    $(RESIDUEGENOBJS) $(LM) -o $@
 
-$(BINDIR)/x/respgen$(SFX): $(RESPGENOBJS)
+$(BINDIR)/wrapped_progs/respgen: $(RESPGENOBJS)
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) \
 	    $(RESPGENOBJS) $(LM) -o $@
 
-$(BINDIR)/x/translate$(SFX): $(TRANSLATEOBJS)
+$(BINDIR)/wrapped_progs/translate: $(TRANSLATEOBJS)
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) \
 	    $(TRANSLATEOBJS) $(LM) -o $@
 
-$(BINDIR)/x/top2ff$(SFX): $(TOP2FFOBJS)
+$(BINDIR)/wrapped_progs/top2ff: $(TOP2FFOBJS)
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) \
 	    $(TOP2FFOBJS) $(LM) -o $@
 
-$(BINDIR)/x/top2mol2$(SFX): $(TOP2MOL2OBJS)
+$(BINDIR)/wrapped_progs/top2mol2: $(TOP2MOL2OBJS)
 	@echo "[ANTECHAMBER]  CC $@"
 	$(VB)$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) \
 	    $(TOP2MOL2OBJS) $(LM) -o $@
@@ -195,85 +193,71 @@ $(BINDIR)/x/top2mol2$(SFX): $(TOP2MOL2OBJS)
 #_____________________________________________________________________________
 # Programs
 
-$(BINDIR)/acdoctor$(SFX): acdoctor$(SFX)
-	$(VB)$(MV) acdoctor$(SFX) $@
+$(BINDIR)/acdoctor: acdoctor
+	$(VB)$(MV) acdoctor $@
 
-$(BINDIR)/am1bcc$(SFX): am1bcc$(SFX)
-	$(VB)$(MV) am1bcc$(SFX) $@
+$(BINDIR)/am1bcc: am1bcc
+	$(VB)$(MV) am1bcc $@
 
-$(BINDIR)/antechamber$(SFX): antechamber$(SFX)
-	$(VB)$(MV) antechamber$(SFX) $@
+$(BINDIR)/antechamber: antechamber
+	$(VB)$(MV) antechamber $@
 
-$(BINDIR)/atomtype$(SFX): atomtype$(SFX)
-	$(VB)$(MV) atomtype$(SFX) $@
+$(BINDIR)/atomtype: atomtype
+	$(VB)$(MV) atomtype $@
 
-$(BINDIR)/bondtype$(SFX): bondtype$(SFX)
-	$(VB)$(MV) bondtype$(SFX) $@
+$(BINDIR)/bondtype: bondtype
+	$(VB)$(MV) bondtype $@
 
-$(BINDIR)/charmmgen$(SFX): charmmgen$(SFX)
-	$(VB)$(MV) charmmgen$(SFX) $@
+$(BINDIR)/bondtype.orig: bondtype.orig
+	$(VB)$(MV) bondtype.orig $@
 
-$(BINDIR)/crdgrow$(SFX): crdgrow$(SFX)
-	$(VB)$(MV) crdgrow$(SFX) $@
+$(BINDIR)/charmmgen: charmmgen
+	$(VB)$(MV) charmmgen $@
 
-$(BINDIR)/database$(SFX): database$(SFX)
-	$(VB)$(MV) database$(SFX) $@
+$(BINDIR)/crdgrow: crdgrow
+	$(VB)$(MV) crdgrow $@
 
-$(BINDIR)/delphigen$(SFX): delphigen$(SFX)
-	$(VB)$(MV) delphigen$(SFX) $@
+$(BINDIR)/database: database
+	$(VB)$(MV) database $@
 
-$(BINDIR)/espgen$(SFX): espgen$(SFX)
-	$(VB)$(MV) espgen$(SFX) $@
+$(BINDIR)/delphigen: delphigen
+	$(VB)$(MV) delphigen $@
 
-$(BINDIR)/match$(SFX): match$(SFX)
-	$(VB)$(MV) match$(SFX) $@
+$(BINDIR)/espgen: espgen
+	$(VB)$(MV) espgen $@
 
-$(BINDIR)/match_atomname$(SFX): match_atomname$(SFX)
-	$(VB)$(MV) match_atomname$(SFX) $@
+$(BINDIR)/match: match
+	$(VB)$(MV) match $@
 
-$(BINDIR)/parmcal$(SFX): parmcal$(SFX)
-	$(VB)$(MV) parmcal$(SFX) $@
+$(BINDIR)/match_atomname: match_atomname
+	$(VB)$(MV) match_atomname $@
 
-$(BINDIR)/parmchk2$(SFX): parmchk2$(SFX)
-	$(VB)$(MV) parmchk2$(SFX) $@
+$(BINDIR)/parmcal: parmcal
+	$(VB)$(MV) parmcal $@
 
-$(BINDIR)/parmjoin$(SFX): parmjoin$(SFX)
-	$(VB)$(MV) parmjoin$(SFX) $@
+$(BINDIR)/parmchk2: parmchk2
+	$(VB)$(MV) parmchk2 $@
 
-$(BINDIR)/prepgen$(SFX): prepgen$(SFX)
-	$(VB)$(MV) prepgen$(SFX) $@
+$(BINDIR)/parmjoin: parmjoin
+	$(VB)$(MV) parmjoin $@
 
-$(BINDIR)/residuegen$(SFX): residuegen$(SFX)
-	$(VB)$(MV) residuegen$(SFX) $@
+$(BINDIR)/prepgen: prepgen
+	$(VB)$(MV) prepgen $@
 
-$(BINDIR)/respgen$(SFX): respgen$(SFX)
-	$(VB)$(MV) respgen$(SFX) $@
+$(BINDIR)/residuegen: residuegen
+	$(VB)$(MV) residuegen $@
 
-$(BINDIR)/translate$(SFX): translate$(SFX)
-	$(VB)$(MV) translate$(SFX) $@
+$(BINDIR)/respgen: respgen
+	$(VB)$(MV) respgen $@
 
-$(BINDIR)/top2ff$(SFX): top2ff$(SFX)
-	$(VB)$(MV) top2ff$(SFX) $@
+$(BINDIR)/translate: translate
+	$(VB)$(MV) translate $@
 
-$(BINDIR)/top2mol2$(SFX): top2mol2$(SFX)
-	$(VB)$(MV) top2mol2$(SFX) $@
+$(BINDIR)/top2ff: top2ff
+	$(VB)$(MV) top2ff $@
 
-#_____________________________________________________________________________
-# Tests
-
-test:
-	cd ../../test/antechamber; make clean; make; make check
-
-test-penalties: ncsu-penalties.o test-penalties.o
-	$(CC) $(CFLAGS) $(AMBERCFLAGS) -o test-penalties $(LDFLAGS) $(AMBERLDFLAGS) ncsu-penalties.o test-penalties.o
-
-test-int-part: ncsu-penalties.h ncsu-penalties.c
-	$(CC)  $(CNOOPTFLAGS) $(CFLAGS) $(AMBERCFLAGS) -o test-int-part ncsu-penalties.c $(LDFLAGS) $(AMBERLDFLAGS) \
-   -DENABLE_INT_PART_MAIN=1
-
-test-combination: ncsu-penalties.h ncsu-penalties.c
-	$(CC) $(CNOOPTFLAGS) $(CFLAGS) $(AMBERCFLAGS) -o test-combination ncsu-penalties.c $(LDFLAGS) $(AMBERLDFLAGS) \
-   -DENABLE_COMBINATION_MAIN=1
+$(BINDIR)/top2mol2: top2mol2
+	$(VB)$(MV) top2mol2 $@
 
 #############################################################################
 # DO NOT DELETE
@@ -281,16 +265,16 @@ test-combination: ncsu-penalties.h ncsu-penalties.c
 #_____________________________________________________________________________
 # Dependencies, from ./makedepend:
 
-ac.o: eprintf.h
+acdoctor.o: common.h
 acdoctor.o: define.h
 acdoctor.o: atom.h
-acdoctor.o: eprintf.h
 acdoctor.o: utility.c
 acdoctor.o: common.c
 acdoctor.o: rotate.c
 acdoctor.o: ac.c
 acdoctor.o: charmm.c
 acdoctor.o: mol2.c
+acdoctor.o: mmcif.c
 acdoctor.o: mopcrt.c
 acdoctor.o: divcrt.c
 acdoctor.o: mopint.c
@@ -304,6 +288,7 @@ acdoctor.o: orca.c
 acdoctor.o: gzmat.c
 acdoctor.o: gout.c
 acdoctor.o: orcout.c
+acdoctor.o: gamess.c
 acdoctor.o: pdb.c
 acdoctor.o: csd.c
 acdoctor.o: mdl.c
@@ -316,9 +301,10 @@ acdoctor.o: jcrt.c
 acdoctor.o: jout.c
 acdoctor.o: checkmolecule.c
 acdoctor.o: fileformat.c
+am1bcc.o: common.h
 am1bcc.o: define.h
 am1bcc.o: atom.h
-am1bcc.o: eprintf.h
+am1bcc.o: utility.c
 am1bcc.o: common.c
 am1bcc.o: rotate.c
 am1bcc.o: ac.c
@@ -332,6 +318,7 @@ antechamber.o: equatom.c
 antechamber.o: ac.c
 antechamber.o: charmm.c
 antechamber.o: mol2.c
+antechamber.o: mmcif.c
 antechamber.o: mopcrt.c
 antechamber.o: divcrt.c
 antechamber.o: sqmcrt.c
@@ -345,6 +332,7 @@ antechamber.o: gzmat.c
 antechamber.o: gout.c
 antechamber.o: orcout.c
 antechamber.o: gamess.c
+antechamber.o: rotate.c
 antechamber.o: pdb.c
 antechamber.o: csd.c
 antechamber.o: mdl.c
@@ -359,9 +347,9 @@ antechamber.o: gesp.c
 antechamber.o: charge.c
 antechamber.o: fileformat.c
 antechamber.o: checkmolecule.c
+atomtype.o: common.h
 atomtype.o: define.h
 atomtype.o: atom.h
-atomtype.o: eprintf.h
 atomtype.o: utility.c
 atomtype.o: common.c
 atomtype.o: ring.c
@@ -369,19 +357,17 @@ atomtype.o: rotate.c
 atomtype.o: ac.c
 atomtype.o: mol2.c
 bondtype.o: ncsu-penalties.h
+bondtype.o: common.h
 bondtype.o: define.h
 bondtype.o: atom.h
-bondtype.o: eprintf.h
 bondtype.o: utility.c
 bondtype.o: common.c
 bondtype.o: ring.c
 bondtype.o: ac.c
 bondtype.o: mol2.c
-charge.o: eprintf.h
-charmm.o: eprintf.h
+charmmgen.o: common.h
 charmmgen.o: define.h
 charmmgen.o: atom.h
-charmmgen.o: eprintf.h
 charmmgen.o: utility.c
 charmmgen.o: common.c
 charmmgen.o: rotate.c
@@ -390,12 +376,10 @@ charmmgen.o: mol2.c
 charmmgen.o: prep.c
 checkmolecule.o: define.h
 checkmolecule.o: atom.h
-checkmolecule.o: eprintf.h
 common.o: define.h
-common.o: eprintf.h
+crdgrow.o: common.h
 crdgrow.o: define.h
 crdgrow.o: atom.h
-crdgrow.o: eprintf.h
 crdgrow.o: utility.c
 crdgrow.o: rotate.c
 crdgrow.o: common.c
@@ -403,7 +387,6 @@ crdgrow.o: pdb.c
 crdgrow.o: ac.c
 crdgrow.o: prep.c
 database.o: define.h
-database.o: eprintf.h
 database.o: utility.c
 delphigen.o: common.h
 delphigen.o: define.h
@@ -411,32 +394,19 @@ delphigen.o: atom.h
 delphigen.o: common.c
 delphigen.o: ac.c
 delphigen.o: pdb.c
-divcrt.o: eprintf.h
 eprintf.o: eprintf.h
-equatom.o: eprintf.h
 equatom.o: rotate.c
-equatom2.o: eprintf.h
 equatom2.o: rotate.c
+errormsg.o: errormsg.h
+espgen.o: common.h
 espgen.o: define.h
 espgen.o: atom.h
-espgen.o: eprintf.h
 fileformat.o: define.h
 fileformat.o: atom.h
 fileformat.o: checkmolecule.c
-fileformat.o: eprintf.h
-gamess.o: eprintf.h
-gcrt.o: eprintf.h
-gesp.o: eprintf.h
-gout.o: eprintf.h
-gzmat.o: eprintf.h
-hin.o: eprintf.h
-jcrt.o: eprintf.h
-jzmat.o: eprintf.h
-lsfit.o: eprintf.h
 match.o: common.h
 match.o: define.h
 match.o: atom.h
-match.o: eprintf.h
 match.o: utility.c
 match.o: common.c
 match.o: ring.c
@@ -445,9 +415,9 @@ match.o: pdb.c
 match.o: mol2.c
 match.o: mdl.c
 match.o: rst.c
+match_atomname.o: common.h
 match_atomname.o: define.h
 match_atomname.o: atom.h
-match_atomname.o: eprintf.h
 match_atomname.o: utility.c
 match_atomname.o: common.c
 match_atomname.o: equatom2.c
@@ -455,17 +425,11 @@ match_atomname.o: pdb.c
 match_atomname.o: ac.c
 match_atomname.o: prep.c
 match_atomname.o: mol2.c
-mdl.o: eprintf.h
-mem.o: eprintf.h
-mol2.o: eprintf.h
-mopint.o: eprintf.h
-mopout.o: eprintf.h
+mmcif.o: ../cifparse/cifparse.h
 ncsu-penalties.o: ncsu-penalties.h
-orca.o: eprintf.h
-orcout.o: eprintf.h
+parmcal.o: common.h
 parmcal.o: define.h
 parmcal.o: atom.h
-parmcal.o: eprintf.h
 parmcal.o: utility.c
 parmcal.o: common.c
 parmchk2.o: common.h
@@ -480,8 +444,6 @@ parmchk2.o: prep.c
 parmjoin.o: common.h
 parmjoin.o: define.h
 parmjoin.o: utility.c
-pdb.o: eprintf.h
-prep.o: eprintf.h
 prepgen.o: common.h
 prepgen.o: define.h
 prepgen.o: atom.h
@@ -496,24 +458,20 @@ residuegen.o: atom.h
 residuegen.o: utility.c
 residuegen.o: common.c
 residuegen.o: ac.c
+respgen.o: common.h
 respgen.o: define.h
 respgen.o: atom.h
-respgen.o: eprintf.h
+respgen.o: utility.c
 respgen.o: common.c
 respgen.o: ac.c
 respgen.o: equatom.c
-ring.o: eprintf.h
-rotate.o: eprintf.h
-rst.o: eprintf.h
+rotate.o: common.h
 smiles.o: define.h
 smiles.o: eprintf.h
-sqmout.o: eprintf.h
 test-penalties.o: ncsu-penalties.h
-top2ff.o: eprintf.h
-top2mol2.o: eprintf.h
+translate.o: common.h
 translate.o: define.h
 translate.o: atom.h
-translate.o: eprintf.h
 translate.o: utility.c
 translate.o: common.c
 translate.o: rotate.c

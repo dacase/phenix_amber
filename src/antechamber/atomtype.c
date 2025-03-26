@@ -13,6 +13,18 @@
 *  October, 2001                                                      *
 ************************************************************************
 */
+
+/* There are magic numbers herein.  The sscanf arguments are
+ * protected with maximum field widths, ie, %Zs, where Z is a positive
+ * integer.  The source of a Z is documented, eg:
+ * magic number source:
+ * char wildname[10]; } WILDATOM; WILDATOM wildatom[MAXWILDATOM];
+ *
+ * Those updating the sizes of arrays are forewarned.
+ * Of course a better approach is updating to C++, which was started and
+ * stopped years ago...
+ */
+
 char *amberhome;
 # include "define.h"
 # include "atom.h"
@@ -1579,7 +1591,10 @@ void jat(void)
                 break;
             }
             if (strncmp("WILDATOM", line, 8) == 0 && weindex == 1) {
-                sscanf(&line[9], "%s", wildatom[wenum].wildname);
+                /* magic number source:
+                 * char wildname[10]; } WILDATOM; WILDATOM wildatom[MAXWILDATOM];
+                 */
+                sscanf(&line[9], "%9s", wildatom[wenum].wildname);
                 namenum = 0;
                 readindex = 0;
 
@@ -1596,6 +1611,9 @@ void jat(void)
                     }
                     if (readindex == 3) {
                         sscanf(&line[j], "%s", wildname);
+                        /* magic number source:
+                        * char wildname[10];
+                        */
                         assignwildatom(wenum, namenum, wildname);
                         namenum++;
                         readindex = 4;
@@ -1617,10 +1635,13 @@ void jat(void)
                 }
             }
             if (strncmp("ATD", line, 3) == 0) {
-                sscanf(line, "%s%s%s%s%s%s%s%s%s%s", tmpchar, keyword0, keyword1,
-                       keyword2, keyword3, keyword4, keyword5, keyword6, keyword7,
-                       keyword8);
-/* resideu name */
+                /* magic number source:
+                 * char tmpchar[10]; char keyword0[10]; ... char keyword6[MAXCHAR];
+                 */
+                sscanf(line, "%9s%9s%9s%9s%9s%9s%9s%2047s%2047s%2047s",
+                       tmpchar, keyword0, keyword1, keyword2, keyword3,
+                       keyword4, keyword5, keyword6, keyword7, keyword8);
+/* residue name */
                 if (strcmp(keyword1, "&") == 0) {
                     strcpy(atom[i].ambername, keyword0);
                     break;
@@ -2010,17 +2031,18 @@ int main(int argc, char *argv[])
     int overflow_flag = 0;      /*if overflow_flag ==1, reallocate memory */
     char *fname;
 
-    amberhome = egetenv("MSANDERHOME");
+    amberhome = egetenv("AMBERCLASSICHOME");
     if (strcmp(COLORTEXT, "YES") == 0 || strcmp(COLORTEXT, "yes") == 0) {
         if (argc == 2 && (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "-H") == 0)) {
             printf("[31mUsage: atomtype -i[0m input file name\n"
                    "[31m                -o[0m output file name(ac)\n"
                    "[31m                -f[0m input file format(ac (the default) or mol2)\n"
-                   "[31m                -p[0m atom type set, supressed by \"-d\" option\n"
+                   "[31m                -p[0m atom type set, suppressed by \"-d\" option\n"
                    "[34m                   gaff  :[0m the default\n"
                    "[34m                   gaff2 :[0m for gaff2 (beta-version)\n"
                    "[34m                   amber :[0m for PARM94/99/99SB\n"
                    "[34m                   bcc   :[0m for AM1-BCC\n"
+                   "[34m                   abcg2 :[0m for ABCG2\n"
                    "[34m                   gas   :[0m for Gasteiger charge\n"
                    "[34m                   sybyl :[0m for atom types used in sybyl\n"
                    "[31m                -d[0m atom type defination file, optional\n"
@@ -2033,11 +2055,12 @@ int main(int argc, char *argv[])
             printf("[31mUsage: atomtype -i[0m input file name\n"
                    "[31m                -o[0m output file name (ac)\n"
                    "[31m                -f[0m input file format(ac (the default) or mol2)\n"
-                   "[31m                -p[0m atom type set, supressed by \"-d\" option\n"
+                   "[31m                -p[0m atom type set, suppressed by \"-d\" option\n"
                    "[34m                   gaff  :[0m the default\n"
                    "[34m                   gaff2 :[0m for gaff2 (beta-version)\n"
                    "[34m                   amber :[0m for PARM94/99/99SB\n"
                    "[34m                   bcc   :[0m for AM1-BCC \n"
+                   "[34m                   abcg2 :[0m for ABCG2\n"
                    "[34m                   gas   :[0m for Gasteiger charge\n"
                    "[34m                   sybyl :[0m for atom types used in sybyl\n"
                    "[31m                -d[0m atom type defination file, optional\n"
@@ -2051,11 +2074,12 @@ int main(int argc, char *argv[])
                 printf("Usage: atomtype -i input file name\n"
                        "                -o output file name (ac)\n"
                        "                -f input file format(ac (the default) or mol2)\n"
-                       "                -p atom type set, supressed by \"-d\" option\n"
+                       "                -p atom type set, suppressed by \"-d\" option\n"
                        "                   gaff  : the default\n"
                        "                   gaff2 : for gaff2 (beta-version)\n"
                        "                   amber : for PARM94/99/99SB\n"
                        "                   bcc   : for AM1-BCC\n"
+                       "                   abcg2 : for ABCG2\n"
                        "                   gas   : for Gasteiger charge \n"
                        "                   sybyl : for atom types used in sybyl\n"
                        "                -d atom type defination file, optional\n"
@@ -2075,11 +2099,12 @@ int main(int argc, char *argv[])
             printf("Usage: atomtype -i input file name\n"
                    "                -o output file name (ac)\n"
                    "                -f input file format(ac (the default) or mol2)\n"
-                   "                -p atom type set, supressed by \"-d\" option\n"
+                   "                -p atom type set, suppressed by \"-d\" option\n"
                    "                   gaff  : the default\n"
                    "                   gaff2 : for gaff2 (beta-version)\n"
                    "                   amber : for PARM94/99/99SB\n"
                    "                   bcc   : for AM1-BCC \n"
+                   "                   abcg2 : for ABCG2\n"
                    "                   gas   : for Gasteiger charge \n"
                    "                   sybyl : for atom types used in sybyl\n"
                    "                -d atom type defination file, optional\n"
@@ -2122,6 +2147,8 @@ int main(int argc, char *argv[])
                 pindex = 4;
             if (strcmp("gaff2", argv[i + 1]) == 0 || strcmp("GAFF2", argv[i + 1]) == 0)
                 pindex = 5;
+            if (strcmp("abcg2", argv[i + 1]) == 0 || strcmp("ABCG2", argv[i + 1]) == 0)
+                pindex = 6;
         }
 
         if (strcmp(argv[i], "-an") == 0) {
@@ -2147,11 +2174,12 @@ int main(int argc, char *argv[])
         printf("Usage: atomtype -i input file name\n"
                "                -o output file name (ac)\n"
                "                -f input file format(ac (the default) or mol2)\n"
-               "                -p atom type set, supressed by \"-d\" option\n"
+               "                -p atom type set, suppressed by \"-d\" option\n"
                "                   gaff  : the default\n"
                "                   gaff2 : for gaff2 (beta-version)\n"
                "                   amber : for PARM94/99/99SB\n"
                "                   bcc   : for AM1-BCC \n"
+               "                   abcg2 : for ABCG2 \n"
                "                   gas   : for Gasteiger charge \n"
                "                   sybyl : for atom types used in sybyl\n"
                "                -d atom type defination file, optional\n"
@@ -2178,6 +2206,8 @@ int main(int argc, char *argv[])
             fname = "ATOMTYPE_SYBYL.DEF";
         else if (pindex == 5)
             fname = "ATOMTYPE_GFF2.DEF";
+        else if (pindex == 6)
+            fname = "ATOMTYPE_ABCG2.DEF";
         else {
             printf("Warning: Cannot find atom type definition file.\n"
                    "         Define it with the \"-d\" option.\n");
@@ -2240,7 +2270,7 @@ int main(int argc, char *argv[])
 
     bondinfo();
 
-    if (pindex != 2)
+    if (pindex != 2 && pindex != 6)
         overflow_flag =
             ringdetect(atomnum, atom, bondnum, bond, &ringnum, ring, arty, cinfo.maxatom,
                        cinfo.maxring, minfo.inf_filename, 0);
@@ -2252,7 +2282,7 @@ int main(int argc, char *argv[])
         cinfo.maxring = ringnum + 10;
         free(ring);
         ring = (RING *) emalloc(sizeof(RING) * cinfo.maxring);
-        if (pindex != 2)
+        if (pindex != 2 && pindex != 6)
             overflow_flag =
                 ringdetect(atomnum, atom, bondnum, bond, &ringnum, ring, arty,
                            cinfo.maxatom, cinfo.maxring, minfo.inf_filename, 0);

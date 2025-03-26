@@ -23,17 +23,28 @@ char *amberhome;
 # include "rotate.c"
 # include "ac.c"
 # include "pdb.c"
-# define MAX_BCCATOMTYPENUM 110
-# define MAX_BCCBONDTYPENUM 15
+# define MAX_BCCPARM 1024
+# define MAX_BCCCORR 50
 # define debug 0
 
 ATOM *atom;
 BOND *bond;
 int atomnum = 0;
 int bondnum = 0;
-int *bcctype;
 MOLINFO minfo;
 CONTROLINFO cinfo;
+
+typedef struct {
+char ati[10];
+char atj[10];
+int    bt;
+double bcc;
+} BCCPARM;
+
+typedef struct {
+char at[10];
+char ref[10];
+} BCCCORR;
 
 FILE *fpparm;
 FILE *fpin;
@@ -43,47 +54,114 @@ char ifilename[MAXCHAR];
 char ofilename[MAXCHAR];
 char pfilename[MAXCHAR] = "BCCPARM.DAT";
 char line[MAXCHAR];
+char am1bcc_type[MAXCHAR]="bcc";
 int i, j, k, l;
 int intstatus = 1;
-double bccparm[MAX_BCCATOMTYPENUM][MAX_BCCATOMTYPENUM][MAX_BCCBONDTYPENUM];
+BCCPARM bcc_parm[MAX_BCCPARM];
+BCCCORR bcc_corr[MAX_BCCCORR];
+int num_bcc_parm=0;
+int num_bcc_corr=0;
+int  i_am1bcc_type = 0;
 double totalcharge = 0.0;
 
 
 void rparm(char *filename)
 {
     int i, j, k;
-    int tmpint1, tmpint2, tmpint3, tmpint4;
-    double tmpfloat;
+    int tmpint; 
+    char tmpchar[MAXCHAR];
     char line[MAXCHAR];
     FILE *fpin;
 
     fpin = efopen(filename, "r");
 
-    for (i = 0; i < MAX_BCCATOMTYPENUM; i++)
-        for (j = 0; j < MAX_BCCATOMTYPENUM; j++)
-            for (k = 0; k < MAX_BCCBONDTYPENUM; k++)
-                bccparm[i][j][k] = 0.0;
-
     for (;;) {
         if (fgets(line, MAXCHAR, fpin) == NULL)
             break;
-        sscanf(line, "%d%d%d%d%lf", &tmpint1, &tmpint2, &tmpint3, &tmpint4, &tmpfloat);
-        bccparm[tmpint2][tmpint3][tmpint4] = tmpfloat;
+	if(strncmp(line, "CORR", 4) == 0) { 
+		sscanf(line, "%s%s%s", tmpchar, bcc_corr[num_bcc_corr].at, bcc_corr[num_bcc_corr].ref);
+		num_bcc_corr++;
+	}
+	else {
+        	sscanf(line, "%d%s%s%d%lf", &tmpint,  bcc_parm[num_bcc_parm].ati, bcc_parm[num_bcc_parm].atj,
+                                                     &bcc_parm[num_bcc_parm].bt, &bcc_parm[num_bcc_parm].bcc); 
+		num_bcc_parm++;
+	}
     }
     if (debug > 1) {
-        for (i = 0; i < MAX_BCCATOMTYPENUM; i++)
-            for (j = i; j < MAX_BCCATOMTYPENUM; j++)
-                for (k = 0; k < MAX_BCCBONDTYPENUM; k++)
-                    if (fabs(bccparm[i][j][k]) < 0.00000000001)
-                        continue;
-                    else
-                        printf("\n%5d%5d%5d%10.4lf", i, j, k, bccparm[i][j][k]);
+        for (i = 0; i < num_bcc_corr; i++) 
+            printf("\nCORR %5d%5s%5s", i+1, bcc_corr[i].at, bcc_corr[i].ref);
+        for (i = 0; i < num_bcc_parm; i++) 
+            printf("\nPARM %5d%5s%5s%5d%10.4lf", i+1, bcc_parm[i].ati, bcc_parm[i].atj, bcc_parm[i].bt, bcc_parm[i].bcc);
     }
 }
 
+double chk_bcc_parm(char *ati, char *atj, int bt) {
+double bcc=-999.9;
+int i;
+        for(i=0; i<num_bcc_parm; i++) {
+                if(strcmp(ati, bcc_parm[i].ati) == 0 &&
+                   strcmp(atj, bcc_parm[i].atj) == 0 &&
+                   bt == bcc_parm[i].bt) {
+                        bcc = bcc_parm[i].bcc;
+                        break;
+                }
+                if(strcmp(ati, bcc_parm[i].atj) == 0 &&
+                   strcmp(atj, bcc_parm[i].ati) == 0 &&
+                   bt == bcc_parm[i].bt) {
+                        bcc =-bcc_parm[i].bcc;
+                        break;
+                }
+        }
+return bcc;
+}
+double bccparm(int ati, int atj, int bt) {
+double bcc=0;
+char ati_str[10];
+char atj_str[10]; 
+char ati_corr_str[10];
+char atj_corr_str[10]; 
+int  icorr_ati = 0;
+int  icorr_atj = 0;
+int suc = 0;
+	strcpy(ati_str, atom[ati].ambername);
+	strcpy(atj_str, atom[atj].ambername);
+	bcc = chk_bcc_parm(ati_str, atj_str, bt); 
+	if(bcc > -999.0) suc = 1;	
+
+	if(suc == 0 && num_bcc_corr > 0) {
+		for(i=0;i<num_bcc_corr;i++) 
+			if(strcmp(bcc_corr[i].at, ati_str) == 0) {		
+				strcpy(ati_corr_str, bcc_corr[i].ref); 
+				icorr_ati = 1;
+				break;
+			}
+		for(i=0;i<num_bcc_corr;i++) 
+			if(strcmp(bcc_corr[i].at, atj_str) == 0) {		
+				strcpy(atj_corr_str, bcc_corr[i].ref); 
+				icorr_atj = 1;
+				break;
+			}
+		if(suc == 0 && icorr_ati == 1) {
+			bcc = chk_bcc_parm(ati_corr_str, atj_str, bt); 
+			if(bcc > -999.0) suc = 1;	
+		}
+		if(suc == 0 && icorr_atj == 1) {
+			bcc = chk_bcc_parm(ati_str, atj_corr_str, bt); 
+			if(bcc > -999.0) suc = 1;	
+		}
+		if(suc == 0 && icorr_ati == 1 && icorr_atj == 1) {
+			bcc = chk_bcc_parm(ati_corr_str, atj_corr_str, bt); 
+			if(bcc > -999.0) suc = 1;	
+		}
+	}
+	if(suc == 0) bcc = 0;
+return bcc;
+}
 void charge(void)
 {
-    int i, j, k, l, m, n, p, q, r, s;
+    int i, j, k, l; 
+    double bcc;
     if (debug > 0)
         printf
             ("\n bond  at1  at2       pre-bcc       correction(code)         post-bcc\n");
@@ -91,29 +169,16 @@ void charge(void)
         i = bond[l].bondi;
         j = bond[l].bondj;
         k = bond[l].type;
-        m = bcctype[i];
-        n = bcctype[j];
-        if (m > n) {
-            p = j;
-            q = i;
-            r = n;
-            s = m;
-        } else {
-            p = i;
-            q = j;
-            r = m;
-            s = n;
-        }
-
+	bcc=bccparm(i,j,k);
+	
         if (debug > 0) {
-            printf("%4d %4s %4s  %8.4lf %8.4lf   %8.4lf (%02d%02d%02d)   %8.4lf %8.4lf\n",
-                   l, atom[p].name, atom[q].name, atom[p].charge, atom[q].charge,
-                   bccparm[r][s][k], r, k, s, atom[p].charge + bccparm[r][s][k],
-                   atom[q].charge - bccparm[r][s][k]);
+            printf("%4d %4s %4s  %8.4lf %8.4lf   %8.4lf (%2s-%2s-%02d)   %8.4lf %8.4lf\n",
+                   l, atom[i].name, atom[j].name, atom[i].charge, atom[j].charge,
+                   bcc, atom[i].ambername, atom[j].ambername, k, atom[i].charge + bcc, atom[j].charge - bcc);
 
         }
-        atom[p].charge += bccparm[r][s][k];
-        atom[q].charge -= bccparm[r][s][k];
+        atom[i].charge += bcc;
+        atom[j].charge -= bcc;
     }
 
     if (debug > 1)
@@ -132,7 +197,7 @@ int main(int argc, char *argv[])
     char command_bt[2 * MAXCHAR];
     int overflow_flag = 0;      /*if overflow_flag ==1, reallocate memory */
 
-    amberhome = egetenv("MSANDERHOME");
+    amberhome = egetenv("AMBERCLASSICHOME");
     default_cinfo(&cinfo);
     default_minfo(&minfo);
 
@@ -141,6 +206,7 @@ int main(int argc, char *argv[])
             printf("[31mUsage: am1bcc -i[0m input file name in ac format \n"
                    "[31m              -o[0m output file name \n"
                    "[31m              -f[0m output file format(pdb or ac, optional, default is ac)\n"
+                   "[31m              -t[0m am1bcc type, default is 'bcc', can also be 'abcg2'\n"
                    "[31m              -p[0m bcc parm file name (optional))\n"
                    "[31m              -s[0m status information, can be 0 (brief), 1 (the default) and 2 (verbose)\n"
                    "[31m              -j[0m atom and bond type judge option, default is 0)\n"
@@ -152,10 +218,11 @@ int main(int argc, char *argv[])
                    "[32m                 5[0m: Atom and partial bond type\n");
             exit(0);
         }
-        if (argc != 7 && argc != 9 && argc != 11 && argc != 13) {
+        if (argc != 7 && argc != 9 && argc != 11 && argc != 13 && argc != 15) {
             printf("[31mUsage: am1bcc -i[0m input file name in ac format \n"
                    "[31m              -o[0m output file name \n"
                    "[31m              -f[0m output file format(pdb or ac, optional, default is ac)\n"
+                   "[31m              -t[0m am1bcc type, default is 'bcc', can also be 'abcg2'\n"
                    "[31m              -p[0m bcc parm file name (optional))\n"
                    "[31m              -s[0m status information, can be 0 (brief), 1 (the default) and 2 (verbose)\n"
                    "[31m              -j[0m atom and bond type judge option, default is 0)\n"
@@ -172,6 +239,7 @@ int main(int argc, char *argv[])
             printf("Usage: am1bcc -i input file name in ac format \n"
                    "              -o output file name \n"
                    "              -f output file format(pdb or ac, optional, default is ac)\n"
+                   "              -t am1bcc type, default is 'bcc', can also be 'abcg2'\n"
                    "              -p bcc parm file name (optional))\n"
                    "              -s status information, can be 0 (brief), 1 (the default) and 2 (verbose)\n"
                    "              -j atom and bond type judge option, default is 0)\n"
@@ -182,10 +250,11 @@ int main(int argc, char *argv[])
                    "                 5: Atom and partial bond type\n");
             exit(0);
         }
-        if (argc != 7 && argc != 9 && argc != 11 && argc != 13) {
+        if (argc != 7 && argc != 9 && argc != 11 && argc != 13 && argc != 15) {
             printf("Usage: am1bcc -i input file name in ac format \n"
                    "              -o output file name \n"
                    "              -f output file format(pdb or ac, optional, default is ac)\n"
+                   "              -t am1bcc type, default is 'bcc', can also be 'abcg2'\n"
                    "              -p bcc parm file name (optional))\n"
                    "              -s status information, can be 0 (brief), 1 (the default) and 2 (verbose)\n"
                    "              -j atom and bond type judge option, default is 0)\n"
@@ -205,6 +274,8 @@ int main(int argc, char *argv[])
             strcpy(ifilename, argv[i + 1]);
         if (strcmp(argv[i], "-o") == 0)
             strcpy(ofilename, argv[i + 1]);
+        if (strcmp(argv[i], "-t") == 0)
+            strcpy(am1bcc_type, argv[i + 1]);
         if (strcmp(argv[i], "-j") == 0)
             judge_flag = atoi(argv[i + 1]);
         if (strcmp(argv[i], "-s") == 0)
@@ -221,14 +292,25 @@ int main(int argc, char *argv[])
             index = 1;
         }
     }
+
+    i_am1bcc_type = 0;
+    if(strcmp(am1bcc_type, "abcg2") == 0 || strcmp(am1bcc_type, "ABCG2") == 0) 
+    i_am1bcc_type = 1;
+
     if (index == 0) {
         pfilename[0] = '\0';
-        build_dat_path(pfilename, "BCCPARM.DAT", sizeof pfilename, 0);
+	if(i_am1bcc_type == 1)
+        	build_dat_path(pfilename, "BCCPARM_ABCG2.DAT", sizeof pfilename, 0);
+	else
+        	build_dat_path(pfilename, "BCCPARM.DAT", sizeof pfilename, 0);
     }
     command_at[0] = '\0';
     command_bt[0] = '\0';
     build_exe_path(command_at, "atomtype", sizeof command_at, 1);
-    strcat(command_at, " -f ac -p bcc -o ANTECHAMBER_AM1BCC.AC -i ");
+    if(i_am1bcc_type == 1)
+    	strcat(command_at, " -f ac -p abcg2 -o ANTECHAMBER_AM1BCC.AC -i ");
+    else
+    	strcat(command_at, " -f ac -p bcc -o ANTECHAMBER_AM1BCC.AC -i ");
     build_exe_path(command_bt, "bondtype", sizeof command_bt, 1);
     strcat(command_bt, " -f ac -o ANTECHAMBER_AM1BCC.AC -i ");
 
@@ -281,7 +363,6 @@ int main(int argc, char *argv[])
     for (i = 0; i < cinfo.maxbond; ++i) {
         bond[i].jflag = -1;     /* bond type has not been assigned */
     }
-    bcctype = (int *) emalloc(sizeof(int) * cinfo.maxatom);
 /*read ac file*/
     overflow_flag = rac(ifilename, &atomnum, atom, &bondnum, bond, &cinfo, &minfo);
     if (overflow_flag) {
@@ -289,21 +370,17 @@ int main(int argc, char *argv[])
         cinfo.maxbond = bondnum + 10;
         free(atom);
         free(bond);
-        free(bcctype);
         atom = (ATOM *) emalloc(sizeof(ATOM) * cinfo.maxatom);
         bond = (BOND *) emalloc(sizeof(BOND) * cinfo.maxbond);
         int i;
         for (i = 0; i < cinfo.maxbond; ++i) {
             bond[i].jflag = -1; /* bond type has not been assigned */
         }
-        bcctype = (int *) emalloc(sizeof(int) * cinfo.maxatom);
         overflow_flag = rac(ifilename, &atomnum, atom, &bondnum, bond, &cinfo, &minfo);
     }
     atomicnum(atomnum, atom);
     adjustatomname(atomnum, atom, 1);
 
-    for (i = 0; i < atomnum; i++)
-        bcctype[i] = atoi(atom[i].ambername);
     rparm(pfilename);
     charge();
     if (format == 0)
@@ -313,7 +390,6 @@ int main(int argc, char *argv[])
 /*
 	 free(atom);
 	 free(bond);
-	 free(bcctype);
 */
     return (0);
 }

@@ -20,22 +20,34 @@
    Assumptions:  strncat correctly handles a non-positive 3rd argument.
    'for_system' indicates if the path will be used in a 'system'
    command and therefore needs quotes if there are spaces in the
-   MSANDERHOME variable.
-   dac change: code to handle spaces in MSANDERHOME is wrong! remove earlier refs to quote
+   AMBERCLASSICHOME variable.
  */
 size_t build_path(char *path, const char *subdir, const char *fname, size_t sizeof_path,
                   int for_system)
 {
     /* number of chars copied plus 1; on overflow > sizeof_path */
+    char *quote = NULL;
     size_t c = 1;
     path[0] = '\0';
 
+    if (for_system && strchr(amberhome, ' ') != NULL) {
+        if (strchr(amberhome, '"') == NULL)
+            quote = "\"";
+        else
+            quote = "'";
+        strncat(path, quote, sizeof_path - c);
+        c += 1;
+    }
     strncat(path, amberhome, sizeof_path - c);
     c += strlen(amberhome);
     strncat(path, subdir, sizeof_path - c);
     c += strlen(subdir);
     strncat(path, fname, sizeof_path - c);
     c += strlen(fname);
+    if (quote != NULL) {
+        strncat(path, quote, sizeof_path - c);
+        c += 1;
+    }
     if (c > sizeof_path) {
         eprintf("Insufficient string size.\n"
         "Increase MAXCHAR in define.h and rebuild.\n"
@@ -60,8 +72,9 @@ size_t build_dat_path(char *path, const char *command, size_t sizeof_path, int f
 void default_minfo(MOLINFO * minfo)
 {
     strcpy((*minfo).dkeyword, "CARTESIAN AM1 STANDARD DIRECT OPT=BFGS XTEST=0.0001");
-    strcpy((*minfo).mkeyword, "AM1 ANALYT MMOK GEO-OK PRECISE");
-
+/*   strcpy((*minfo).mkeyword, "AM1 ANALYT MMOK GEO-OK PRECISE"); */
+/*   ANALYT keyword was phased out of post-Fujitsu versions of MOPAC */
+    strcpy((*minfo).mkeyword, "AM1 MMOK GEO-OK PRECISE");
 /* RCW Below is the old setting from AMBER 12, 14. It is ridiculously tight. 
  * As of AmberTools 15 remove tight_p_conv and set grms_tol to 0.0005
  * tests show it makes no major difference to the charges - max diff = 0.001.
@@ -555,7 +568,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Au");
                 atom[i].type = 3;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'B':
@@ -588,7 +601,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Bk");
                 atom[i].type = 1;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'C':
@@ -637,7 +650,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Cu");
                 atom[i].type = 3;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'D':
@@ -660,7 +673,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Dy");
                 atom[i].type = 4;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'E':
@@ -681,11 +694,11 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Eu");
                 atom[i].type = 4;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'F':
-            if (! isalpha(atom[i].name[1])) {  // don't match eg FA
+            if (!  islower(atom[i].name[1])) { 
                 atom[i].atomicnum = 9;
                 strcpy(atom[i].element, "F");
                 atom[i].type = 0;
@@ -702,7 +715,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Fr");
                 atom[i].type = 1;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'G':
@@ -719,7 +732,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Ge");
                 atom[i].type = 2;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'H':
@@ -748,7 +761,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Hs");
                 atom[i].type = 3;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'I':
@@ -765,7 +778,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Ir");
                 atom[i].type = 3;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'K':
@@ -778,7 +791,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Kr");
                 atom[i].type = 5;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'l':
@@ -787,7 +800,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "lp");
                 atom[i].type = 0;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'L':
@@ -812,7 +825,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "LP");
                 atom[i].type = 0;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'M':
@@ -837,7 +850,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Mt");
                 atom[i].type = 3;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'N':
@@ -874,7 +887,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Np");
                 atom[i].type = 4;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'O':
@@ -887,7 +900,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Os");
                 atom[i].type = 3;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'P':
@@ -928,7 +941,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Pu");
                 atom[i].type = 4;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'R':
@@ -961,7 +974,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Rn");
                 atom[i].type = 5;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'S':
@@ -1002,7 +1015,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Sn");
                 atom[i].type = 3;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'T':
@@ -1045,7 +1058,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Tm");
                 atom[i].type = 4;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'U':
@@ -1054,7 +1067,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "U");
                 atom[i].type = 4;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'V':
@@ -1063,7 +1076,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "V");
                 atom[i].type = 3;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'W':
@@ -1072,7 +1085,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "W");
                 atom[i].type = 3;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'X':
@@ -1081,7 +1094,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Xe");
                 atom[i].type = 5;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'Y':
@@ -1094,7 +1107,7 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Yb");
                 atom[i].type = 4;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         case 'Z':
@@ -1107,11 +1120,11 @@ void atomicnum(int atomnum, ATOM * atom)
                 strcpy(atom[i].element, "Zr");
                 atom[i].type = 3;
             } else {
-                eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+                eprintf("Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
             }
             break;
         default:
-            eprintf("Unrecognized case-sensitive atomic symbol (%5s).", atom[i].name);
+            eprintf("default Unrecognized case-sensitive atomic symbol (%s).", atom[i].name);
         }
     }
 }

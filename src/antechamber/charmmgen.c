@@ -3555,9 +3555,9 @@ int main(int argc, char *argv[])
 
     default_cinfo(&cinfo);
     default_minfo(&minfo);
-    amberhome = (char *) getenv("MSANDERHOME");
+    amberhome = (char *) getenv("AMBERCLASSICHOME");
     if (amberhome == NULL) {
-        fprintf(stdout, "MSANDERHOME is not set!\n");
+        fprintf(stdout, "AMBERCLASSICHOME is not set!\n");
         exit(1);
     }
     build_dat_path(minfo.connect_file, "CONNECT.TPL", sizeof minfo.connect_file, 0);
@@ -3893,7 +3893,7 @@ int main(int argc, char *argv[])
     if (pformat == 1)
         readparm(pfilename);    /*principle parameter file */
     if (pformat == 2)
-        readfrcmod(pfilename);  /*principle parmaeter file in frcmod format */
+        readfrcmod(pfilename);  /*principle parameter file in frcmod format */
 
     if (format == 0 || format == 1)
         improper_id1(ifilename);

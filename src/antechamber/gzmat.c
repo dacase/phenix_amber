@@ -10,9 +10,8 @@ int rgzmat(char *filename, int *atomnum, ATOM * atom, CONTROLINFO cinfo, MOLINFO
     } STRNAME;
 
     FILE *fpin;
-    int i, j, index, index0;
+    int i, index, index0;
     int overflow_flag = 0;
-    int findindex;
     int numatom;
     int coordinate_flag = 0;
     STRNAME *bondstr;
@@ -179,7 +178,6 @@ void wgzmat(char *filename, int atomnum, ATOM atom[], MOLINFO minfo)
     FILE *fpin;
     FILE *fpout;
     char *amberhome;
-    char keyword[MAXCHAR];
     char espparm_file[MAXCHAR];
     char line[MAXCHAR];
     char akeyword[MAXCHAR] = "";
@@ -226,7 +224,7 @@ void wgzmat(char *filename, int atomnum, ATOM atom[], MOLINFO minfo)
         esp_flag = 1;
     //      when the default gaussian keyword is used, or esp_flag ==1, read ESP.PARM
     if (minfo.igkeyword == 0 || esp_flag == 1) {
-        amberhome = egetenv("MSANDERHOME");
+        amberhome = egetenv("AMBERCLASSICHOME");
         strcpy(espparm_file, amberhome);
         strcat(espparm_file, "/dat/antechamber/ESPPARM.DAT");
         fpin = efopen(espparm_file, "r");

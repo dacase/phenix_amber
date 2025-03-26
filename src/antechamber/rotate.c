@@ -93,11 +93,11 @@ varible AngleChange should larger than 0
 
     if (ya4 >= 0 && za4 <= 0)
         w3 = -acos(ya4 / sqrt(ya4 * ya4 + za4 * za4));
-    else if (ya4 >= 0 && za4 >= 0)
+    if (ya4 >= 0 && za4 >= 0)
         w3 = acos(ya4 / sqrt(ya4 * ya4 + za4 * za4));
-    else if (ya4 <= 0 && za4 >= 0)
+    if (ya4 <= 0 && za4 >= 0)
         w3 = -acos(-ya4 / sqrt(ya4 * ya4 + za4 * za4)) + PAI;
-    else if (ya4 <= 0 && za4 <= 0)
+    if (ya4 <= 0 && za4 <= 0)
         w3 = acos(-ya4 / sqrt(ya4 * ya4 + za4 * za4)) - PAI;
 
     /*  xa5=xa4; */

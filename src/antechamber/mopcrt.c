@@ -87,7 +87,7 @@ void wmopcrt(char *filename, int atomnum, ATOM atom[], MOLINFO minfo)
     fprintf(fpout, "\ncreated by wmopcrt() for mopac\n\n");
         Temporary patch for minfo.ekeyword bug above:
 */
-    fprintf(fpout, "\ncreated by wmopcrt() for mopac\n");
+    fprintf(fpout, "\n\ncreated by wmopcrt() for mopac\n");
 
     initialize_elements_in_atom_to_symbols_upto_atomnum(atomnum, atom);
     nelectrons = 0;

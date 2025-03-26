@@ -26,7 +26,7 @@ extern int checkbybondtype;     // bond type based weird bond checking
 # define MAXCORR 256
 # define debug 0
 
-int checkmolecule = 1;          // check molecule in the manner of acdoctor
+int checkmolecule = 0;          // check molecule in the manner of acdoctor
 int checkbyatomtype = 0;        // atom type based open valence checking
 int checkbybondtype = 0;        // bond type based weird bond checking
 

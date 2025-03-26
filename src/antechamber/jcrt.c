@@ -24,7 +24,7 @@ int rjcrt(char *filename, int *atomnum, ATOM * atom, CONTROLINFO cinfo, MOLINFO 
         if (fgets(line, MAXCHAR, fpin) == NULL) {
             break;
         }
-        sscanf(line, "%19s", tmpchar);
+        sscanf(line, "%s", tmpchar);
         if (strncmp(tmpchar, "&zmat", 5) == 0) {
             flag = 1;
             continue;
