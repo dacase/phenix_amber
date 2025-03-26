@@ -3,13 +3,14 @@ package:
 #  version 1.4.1 adds --openmp to configure
 #  version 1.5   uses the new Jan 2022 code from Sergei
 #  version 1.6   use more conda libraries -- no rism or fftw
-  version: 1.6
+#  version 1.7   update dat, leap, antechamber to current codes
+  version: 1.7
 
 source:
   path: ../
   
 build:
-  number: 1
+  number: 0
 
 requirements:
   build:
