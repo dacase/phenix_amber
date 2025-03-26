@@ -191,6 +191,9 @@ subroutine mdfil(VERSION, version_requested)
       else if (arg == '-p') then
          iarg = iarg + 1
          call getarg_wrap(iarg,parm)
+      else if (arg == '-c') then
+         iarg = iarg + 1
+         call getarg_wrap(iarg,inpcrd)
       else if (arg == '-vecs') then
          iarg = iarg + 1
          call getarg_wrap(iarg,vecs)

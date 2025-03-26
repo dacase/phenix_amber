@@ -26,7 +26,7 @@ LESAPIOBJ= memory_module.o stack.o file_io_dat.o les.o \
     parms.o softcore.o mbar.o \
     linear_response.o molecule.o dssp.o \
     charmm.API.o crg_reloc.o barostats.o prmtop_type.o \
-    bintraj.LES.o binrestart.LES.o getcor.LES.o mdfil.LES.o \
+    AmberNetcdf.o bintraj.LES.o binrestart.LES.o getcor.LES.o mdfil.LES.o \
     mdwrit.LES.o lmod.LES.o trajene.o ew_box.LESAPI.o minrit.LES.o \
     set.LESAPI.o qm_mm.LESAPI.o amd.o scaledMD.o interface.LESAPI.o \
     music_module.o dsarpack.o nxtsec.o
