@@ -4,6 +4,9 @@
 #             	(Cmd: antechamber -fi gout -fo ac -i input.gout -o output.ac)
 INPUT_FILE    	ala.ac
 
+#ATOMTYPE_SET	can be amber, gaff, gaff2. If not specified, using the default atom type set from INPUT_FILE
+ATOM_TYPE_SET   amber
+
 #CONF_NUM: 	Number of conformations applied
 CONF_NUM    	2
 
@@ -13,11 +16,28 @@ CONF_NUM    	2
 #             	(cmd: cat output1.esp output2.esp output3.esp ... > output.esp)
 ESP_FILE    	ala.esp
 
-#SEP_BOND: 	bonds that separate residue and caps, input in a format of (Atom_Name1 Atom_Name2), 
+#SEP_BOND: 	bonds that separate residue and caps, in a format of 
+#		(Atom_Name1 Atom_Name2 Type Atom_Type_1 Atom_Type_2), 
 #		where Atom_Name1 belongs to the residue and Atom_Name2 belongs to a cap. 
-#		must not show up more than three times
-SEP_BOND    	N1 C2
-SEP_BOND 	C5 N2 
+#		Type can be 1 for N-terminal/O5', -1 for C-terminal/O3', and 0 for neither the cases, 
+#		Atom_Type_1 is the atom type of Atom_Name1 and Atom_Type_2 is atom type of Atom_Name2. 
+#		The default value of 'Type' is 0. 
+#		The last two items (Atom_Type1 and Atom_Type2) are optional.
+#		If not provided, the program makes judgement itself. 
+#		However, if Atom_Type2 is specified, both 'Type' and 'Atom_Type1' must also be specified. 
+#		SEP_BOND may appear multiple times
+SEP_BOND    	N1 C2   1 
+SEP_BOND 	C5 N2  -1
+
+#HEAD_ATOM	alternatively, one can define head_atom directly. Defination takes a format of 
+#		(head_atom_name head_atom_type pre_head_atom_type) 
+#		HEAD_ATOM overrides SEP_BOND definition
+#HEAD_ATOM	N1 N C
+
+#TAIL_ATOM	alternatively, one can define tail_atom directly. Defination takes a format of 
+#		(tail_atom_name tail_atom_type post_tail_atom_type) 
+#		TAIL_ATOM overrides SEP_BOND definition
+#TAIL_ATOM	C5 C N
 
 #NET_CHARGE: 	net charge of the residue, such as 0 of ALA and -1 of ASP and 1 of LYS
 NET_CHARGE   	0

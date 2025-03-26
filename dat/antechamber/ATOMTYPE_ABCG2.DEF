@@ -1,7 +1,7 @@
 # Please go to the end to see rules of defining an atom  
 
 ============================================================================================
-                        Definition begin
+                        Defination begin
 ============================================================================================
 --------------------------------------------------------------------------------------------
 WILDATOM XX C N O S P
@@ -12,12 +12,15 @@ WILDATOM XD S P
  f1  f2    f3  f4  f5  f6  f7  f8      		f9          
 -------------------------------------------------------------------------------------------- 
 //3-membered ring atom
+//ATD  18    *   6   4  3  &
+//ATD  19    *   6   4  0  &
 ATD  11    *   6   4  &
 ATD  15    *   6   2  &
 ATD  15    *   6   1  &
 ATD  17    *   6   3  *  *  [AR1.AR2]         (O2[AR1.AR2]) & 
 ATD  17    *   6   3  *  *  [AR1.AR2] 	      (N2[AR1.AR2]) &
 ATD  16    *   6   3  *  *  [AR1.AR2]         &
+ATD  1A    *   6   3  *  *  *                     (XA1,C3[AR1],C3[AR1]) &   
 ATD  14    *   6   3  *  *  *                     (XA1) &   
 ATD  14    *   6   3  *  *  *                     (XA1,XA1) &   
 ATD  13    *   6   3  *  *  *			  (N2[db']) &   
@@ -31,11 +34,19 @@ ATD  11    *   6   &
 //end of carbon
 ATD  91    *   1   &
 ATD  61    *   14  & 
+ATD  7X    *   9   1  0  *  *                     (C4(F1,F1)) &
+ATD  7X    *   9   1  0  *  *                     (C4(F1)) &
 ATD  71    *   9   &
+ATD  7Y    *   17  1  0  *  *                     (C4(Cl1,Cl1)) &
 ATD  72    *   17  &
+ATD  7Z    *   35  1  0  *  *                     (C4(Br1,Br1)) &
 ATD  73    *   35  &      
+ATD  7W    *   53  1  0  *  *                     (C4(I1,I1)) &
 ATD  74    *   53  &      
 //
+ATD  44    *   15  4  *  *  *     		  (S1,C3[AR1]) &
+ATD  43    *   15  4  *  *  *     		  (S1) &
+ATD  43    *   15  4  *  *  *     		  (O1) &
 ATD  42    *   15  4  &  
 ATD  41    *   15  2  &  
 ATD  41    *   15  1  &  
@@ -45,34 +56,66 @@ ATD  41    *   15  &
 //end of phosphorus
 ATD  33    *   8   1  *  *  *     		  (C3[RG](O2)) &
 ATD  33    *   8   1  *  *  *     		  (C3[RG](N3)) &
+ATD  3F    *   8   1  *  *  *     		  (P4(F1)) &
+ATD  3P    *   8   2  *  *  *     		  (P4(O1)) &
+ATD  3Q    *   8   2  *  *  *     		  (P4(S1)) &
+ATD  3S    *   8   2  1  *  *     		  (S4(O1)(O1)(O2)) &
+ATD  3X    *   8   2  1  *  *     		  (C3(O1)) &
+ATD  3X    *   8   1  *  *  *     		  (C3(O(H))) &
+ATD  3Y    *   8   1  *  *  *     		  (C3(O1)) &
 ATD  32    *   8   1  *  *  *     		  (C3(O2)) &
+ATD  30    *   8   2  1  *  *     		  (C4(C4(O2(C4)))) &
+ATD  30    *   8   2  1  *  *     		  (C4(C4(O2(H),C4(O2(H))))) &
+ATD  34    *   8   2  *  *  *     		  (C4(O2(C4),O2(C4))) &
 ATD  31    *   8   1  &
 ATD  31    *   8   2  &
 ATD  31    *   8   &
 //end of oxygen
-ATD  21    *   7   4  &  
+ATD  2X    *   7   4  &  
 ATD  25    *   7   1  &
+ATD  2Y    *   7   3  *  *  [db]      		  (C3(N3,N3)) & 
 ATD  23    *   7   3  *  *  [AR1.AR2]  		  & 
+ATD  2W    *   7   3  *  *  [AR2.AR3]		  (C3(O1),C3(O1)) & 
+ATD  2W    *   7   3  *  *  [AR2.AR3]		  (C3(S1),C3(S1)) & 
+ATD  2V    *   7   3  *  *  [AR2.AR3]		  (C3(O1,C3)) & 
+ATD  2V    *   7   3  *  *  [AR2.AR3]		  (C3(S1,C3)) & 
+ATD  2U    *   7   3  *  *  [AR2.AR3]		  (C3(O1)) & 
+ATD  2U    *   7   3  *  *  [AR2.AR3]		  (C3(S1)) & 
+ATD  2T    *   7   3  *  *  *  			  (C3(O1),C3[AR1]) & 
 ATD  22    *   7   3  *  *  *  			  (C3(O1)) & 
 ATD  22    *   7   3  *  *  *  			  (C3(S1)) & 
-ATD  23    *   7   3  *  *  *  			  (O1,O1) &
+ATD  20    *   7   3  *  *  *  			  (O1,O1) &
 ATD  23    *   7   3  *  *  *          		  (C3(N3[db])) & 
 ATD  23    *   7   3  *  *  *          		  (N2(N3[db])) & 
 ATD  23    *   7   3  *  *  *          		  (P2(N3[db])) & 
 ATD  23    *   7   3  *  *  *          		  (XX[AR1.AR2]<a1>,XB(XB(XX[AR1.AR2]<a2>))) a1:a2:any 
 ATD  23    *   7   3  *  *  *          		  (XB(XX[AR1.AR2]<a1>),XB(XX[AR1.AR2]<a2>)) a1:a2:any 
 ATD  23    *   7   3  *  *  [db]   		  & 
+ATD  2F    *   7   3  *  *  *                     (C3[AR1](C3[AR1](C3[AR1](C3(O1,C3[AR1]))))) &
+ATD  2F    *   7   3  *  *  *                     (C3[AR1](C3[AR1](C3(O1,C3[AR1])))) &
 ATD  21    *   7   3  &
 ATD  22    *   7   2  *  *  [2sb]  		  (C3(O1)) &
 ATD  22    *   7   2  *  *  [2sb]  		  (C3(S1)) & 
 ATD  21    *   7   2  *  *  [2sb]   		  &
+ATD  2A    *   7   2  *  *  [SB,DB]               (C2(O1)) &
+ATD  2B    *   7   2  *  *  [SB,DB]               (C2(S1)) &
+ATD  2C    *   7   2  *  *  [SB,DB]               (C2) &
+ATD  2D    *   7   2  *  *  [SB,DB]               (C3,N2) &
+ATD  2E    *   7   2  *  *  [SB,DB]               (C3,O2) &
+ATD  29    *   7   2  *  *  [SB,DB]               (C3) &
+ATD  28    *   7   2  *  *   [RG5]                &
+ATD  27    *   7   2  *  *   [RG6]                (C3(N2[RG6])) &
+ATD  26    *   7   2  *  *   [RG6]                (C3(C3(N2[RG6]))) &
 ATD  24    *   7   2  *  *  [sb,db]   		  &
 ATD  24    *   7   2   *   *   [RG5]             (N2[RG5](N2[RG5](N2[RG5])))    &
 ATD  24    *   7   2   *   *   [RG5]             (N2[RG5],N2[RG5](N2[RG5]))     &
 ATD  25    *   7   2  &
 ATD  25    *   7   &
 //end of nitrogen
+ATD  50    *   16  2  0  *  [RG3]                  (C,C) &
 ATD  51    *   16  1  & 
+ATD  54    *   16  2  *  *  *     		  (P4(O1)) &
+ATD  54    *   16  2  *  *  *     		  (P4(S1)) &
 ATD  51    *   16  2  &
 ATD  52    *   16  3  & 
 ATD  53    *   16  4  & 
@@ -180,7 +223,7 @@ ATD  DU  &
 ============================================================================================
 			Field descriptions
 ============================================================================================
-f1  ATD, which stands for atom type definition, ATD should always in the first three columns 
+f1  ATD, which stands for atom type defination, ATD should always in the first three columns 
 f2  Atom type name, can be letters or numbers   
 f3  Residue names, which means this description is only applied to atoms in special residues
 f4  Atomic number 
@@ -188,15 +231,15 @@ f5  Number of attached atoms
 f6  Number of attached hydrogen atoms
 f7  For hydrogen, number of the electron-withdrawal atoms connected to the atom that the 
     hydrogen attached
-f8  Atomic property
-f9  Chemical environment definitions
+f8  atomic property
+f9  Chemical enviornment definations
 
 
 ============================================================================================
 			Specific symbols
 ============================================================================================
 *  Ignore this field
-&  End of definition 
+&  End of defination 
 .  "or" operation in the ring and aromatity descriptions 
 
 
@@ -205,11 +248,11 @@ f9  Chemical environment definitions
 ============================================================================================
 EW   Electron-withdraw atom
 AA   Amino acid residue
-NA   Nucleic acid
+NA   Nucleric acid
 BIO  AA + NA
 
 AR1  Pure aromatic atom (such as benzene and pyridine)
-AR2  Atom in a planar ring, usually the ring has two continuous single bonds and at least two 
+AR2  Atom in a planar ring, usually the ring has two continous single bonds and at least two 
      double bonds
 AR3  Atom in a planar ring, which has one or several double bonds formed between non-ring atoms
      and the ring atoms
@@ -224,31 +267,31 @@ RG6  6-membered ring
 RG7  7-membered ring 
 RG8  8-membered ring 
 RG9  9-membered ring 
-NR   Non-ring atom
+NR   non-ring atom
 
 SB   Single bond
 DB   Double bond
 TB   Triple bond
 AB   Aromatic bond
 DL   Delocalized bond (9 in AM1-BCC)
-sb   Single bond, including aromatic single, delocalized bond (9 in AM1-BCC) 
+sb   Single bond, including aromtaic single, delocalized bond (9 in AM1-BCC) 
 db   Double bond, including aromatic double
 tb   Triple bond
  
 '    Bond type (SB sb etc) followed by ' means the current atom forms this kind of bond with the 
-     immediate predecessor in a chain of atoms
+     immediately precessor in a chain of atoms
      For example, (XD3[SB',db]) means the current atom XD3 has a double bond with the atom in 
-     definition 
+     defination 
 ''   Bond type (SB sb etc) followed by '' means the current atom does not form this kind of bond 
-     with the immediate predecessor in a chain of atoms
+     with the immediately precessor in a chain of atoms
 ============================================================================================
 			Miscellaneous
 ============================================================================================
-1. Maximum line length is MAXCHAR (defined in define.h) characters
-2. No space in the atomic property string
-3. No space in the chemical environment string 
-4. No filed missing before &
-5. The definition order is crucial, special atom types should defined before the more general 
+1. maximum line length is MAXCHAR (defined in define.h) characters
+2. no space in the atomic property string
+3. no space in the chemical environment string 
+4. no filed missing before &
+5. the defination order is crucial, special atom types should defined before the more general 
    ones
-6. For AM1-BCC, five-membered ring connected to a six-membered aromatic ring (like indole) is not
-   considered aromatic.
+6. For AM1-BCC, five-memberred ring connected to a six memberred aromatic ring (like indole) is not
+   considerred aromatic.

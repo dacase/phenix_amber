@@ -16,6 +16,8 @@ WILDATOM XD S P
 ATD  cx    *   6   4   *   *   [RG3]            &
 //4-membered ring atom
 ATD  cy    *   6   4   *   *   [RG4]            &
+ATD  c5    *   6   4   *   *   [RG5]            &
+ATD  c6    *   6   4   *   *   [RG6]            &
 //other sp3 C
 ATD  c3    *   6   4   &
 //C=S
