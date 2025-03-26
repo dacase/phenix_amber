@@ -10,7 +10,7 @@ char *amberhome;
 # include "ac.c"
 # include "charmm.c"
 # include "mol2.c"
-# include "mmcif.c"
+// # include "mmcif.c"
 # include "mopcrt.c"
 # include "divcrt.c"
 # include "mopint.c"
@@ -305,6 +305,7 @@ int main(int argc, char *argv[])
         checkbybondtype = 1;
     }
 
+#if 0
     if (strcmp("ccif", cinfo.intype) == 0 || strcmp("27", cinfo.intype) == 0) {
 
         overflow_flag =
@@ -324,6 +325,7 @@ int main(int argc, char *argv[])
         bondtype_flag = 2;
         connect_flag = 1;
     }
+#endif
 
     if (strcmp("mopint", cinfo.intype) == 0 || strcmp("9", cinfo.intype) == 0) {
 

@@ -17,7 +17,7 @@ char *amberhome;
 # include "ac.c"
 # include "charmm.c"
 # include "mol2.c"
-# include "mmcif.c"
+// # include "mmcif.c"
 # include "mopcrt.c"
 # include "divcrt.c"
 # include "sqmcrt.c"
@@ -524,10 +524,12 @@ int main(int argc, char *argv[])
             strcpy(bt_filename, argv[i + 1]);
             wb_flag = 1;
             continue;
+#if 0
         } else if (strcmp(argv[i], "-bk") == 0) {
             strncpy(blockId, argv[i + 1], MAX_CIF_BLOCK_CODE_LENGTH);
             blockId[MAX_CIF_BLOCK_CODE_LENGTH] = '\0';
             continue;
+#endif
         } else if (strcmp(argv[i], "-ao") == 0) {
             if (strcmp(argv[i + 1], "crd") == 0 || strcmp(argv[i + 1], "CRD") == 0) {
                 ao_flag = 1;
