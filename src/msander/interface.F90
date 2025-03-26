@@ -3970,7 +3970,7 @@ subroutine read_inpcrd_file(filename, coordinates, box, ierr)
    ierr = 0
 
    ! Make sure the NetCDF module doesn't scream at us...
-   verbose_netcdf = .false.
+   ! verbose_netcdf = .false.
 
    if (NC_checkRestart(filename)) then
       ! See if there are box coordinates
@@ -4074,7 +4074,7 @@ subroutine get_inpcrd_natom(filename, natom)
    integer           :: id1, id2, id3
 
    ! Make sure the NetCDF module doesn't scream at us...
-   verbose_netcdf = .false.
+   ! verbose_netcdf = .false.
 
    if (NC_checkRestart(filename)) then
       ! Get the number of atoms

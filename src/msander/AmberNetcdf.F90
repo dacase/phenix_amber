@@ -34,8 +34,6 @@ module AmberNetcdf_mod
   character(5), parameter  :: NCTEMPERATURE = "temp0"
   double precision, parameter :: velocityScale = 20.455d0
 
-  logical, public, save :: verbose_netcdf = .true.
-
   public NC_create, NC_setupAmberNetcdf, NetcdfFileExists, NC_error, &
          NC_openRead, NC_openWrite, &
          NC_setupMdcrd, NC_defineRemdIndices, NC_close, &
@@ -59,12 +57,6 @@ logical function NC_error(err, location)
 
   NC_error=.false.
   if (err .ne. nf90_noerr) then
-    if (verbose_netcdf) then
-      write(mdout, '(a,a)') 'NetCDF error: ', trim(nf90_strerror(err))
-      if (present(location)) then
-        write(mdout, '(a,a)') '  at ', location
-      end if
-    end if
     NC_error=.true.
   endif
 end function NC_error
@@ -77,12 +69,6 @@ subroutine checkNCerror(err, location)
   implicit none
   integer, intent(in)                :: err
   character(*), optional, intent(in) :: location
-  if (err .ne. nf90_noerr .and. verbose_netcdf) then
-    write(mdout, '(a,a)') 'NetCDF error: ', trim(nf90_strerror(err))
-    if (present(location)) then
-      write(mdout, '(a,a)') '  at ', location
-    end if
-  end if
 end subroutine checkNCerror
 
 !--------------------------------------------------------------------
