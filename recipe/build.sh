@@ -8,10 +8,13 @@ if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" == "1" ]]; then
 fi
 
 export MSANDERHOME=`pwd`
-./configure --conda --openmp
+CFLAGS=$CFLAGS FFLAGS=$FFLAGS ./configure --conda --openmp
 
 # check configuration
 cat config.h
+ls $PREFIX/include/*.mod
+echo $CFLAGS
+echo $FFLAGS
 
 cd src
 make -f Makefile.ap install
