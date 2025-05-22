@@ -1,42 +1,205 @@
-# Overview
+About amber_phenix-feedstock
+============================
 
-This project contains the source for building force-field components for
-the phenix crystallographic refinement program.  It contains"msander",
-a "modern" version of parts of sander, plus other pieces of AmberTools
-needed for basic building and simulations of biomolecules.  Tools inlcuded
-are:
+Feedstock license: [BSD-3-Clause](https://github.com/bkpoon/phenix_amber/blob/main/LICENSE.txt)
+
+Home: https://www.phenix-online.org/documentation/reference/amber.html
+
+Package license: GNU General Public License (GPL/LGPL)
+
+Summary: Parts of AmberTools that are needed for interaction with the phenix crystallographic refinement package.
+
+Current build status
+====================
+
+
+<table>
+    
+  <tr>
+    <td>Azure</td>
+    <td>
+      <details>
+        <summary>
+          <a href="https://dev.azure.com/bkpoon/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+            <img src="https://dev.azure.com/bkpoon/feedstock-builds/_apis/build/status/phenix_amber?branchName=main">
+          </a>
+        </summary>
+        <table>
+          <thead><tr><th>Variant</th><th>Status</th></tr></thead>
+          <tbody><tr>
+              <td>linux_64_numpy1.22python3.10.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/bkpoon/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/bkpoon/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=linux&configuration=linux%20linux_64_numpy1.22python3.10.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_64_numpy1.22python3.9.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/bkpoon/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/bkpoon/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=linux&configuration=linux%20linux_64_numpy1.22python3.9.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_64_numpy1.23python3.11.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/bkpoon/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/bkpoon/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=linux&configuration=linux%20linux_64_numpy1.23python3.11.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_64_numpy1.26python3.12.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/bkpoon/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/bkpoon/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=linux&configuration=linux%20linux_64_numpy1.26python3.12.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_numpy1.22python3.10.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/bkpoon/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/bkpoon/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx%20osx_64_numpy1.22python3.10.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_numpy1.22python3.9.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/bkpoon/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/bkpoon/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx%20osx_64_numpy1.22python3.9.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_numpy1.23python3.11.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/bkpoon/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/bkpoon/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx%20osx_64_numpy1.23python3.11.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_numpy1.26python3.12.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/bkpoon/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/bkpoon/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx%20osx_64_numpy1.26python3.12.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_numpy1.22python3.10.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/bkpoon/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/bkpoon/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx%20osx_arm64_numpy1.22python3.10.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_numpy1.22python3.9.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/bkpoon/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/bkpoon/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx%20osx_arm64_numpy1.22python3.9.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_numpy1.23python3.11.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/bkpoon/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/bkpoon/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx%20osx_arm64_numpy1.23python3.11.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_numpy1.26python3.12.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/bkpoon/feedstock-builds/_build/latest?definitionId=None&branchName=main">
+                  <img src="https://dev.azure.com/bkpoon/feedstock-builds/_apis/build/status/phenix_amber?branchName=main&jobName=osx&configuration=osx%20osx_arm64_numpy1.26python3.12.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </details>
+    </td>
+  </tr>
+</table>
+
+Current release info
+====================
+
+| Name | Downloads | Version | Platforms |
+| --- | --- | --- | --- |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-amber__phenix-green.svg)](https://anaconda.org/phenix-project/amber_phenix) | [![Conda Downloads](https://img.shields.io/conda/dn/phenix-project/amber_phenix.svg)](https://anaconda.org/phenix-project/amber_phenix) | [![Conda Version](https://img.shields.io/conda/vn/phenix-project/amber_phenix.svg)](https://anaconda.org/phenix-project/amber_phenix) | [![Conda Platforms](https://img.shields.io/conda/pn/phenix-project/amber_phenix.svg)](https://anaconda.org/phenix-project/amber_phenix) |
+
+Installing amber_phenix
+=======================
+
+Installing `amber_phenix` from the `phenix-project` channel can be achieved by adding `phenix-project` to your channels with:
+
 ```
-   addles  antechamber  tleap  msander  parmed  sqm
-```
-Also included are the API's to msander, and various X-ray-related utilities
-
-# Warning
-
-This project is really only useful for building a conda package for phenix.
-Testing of the code needs to be done inside phenix.  We will try to keep
-things here in a useable state, but that may not always be the case.
-
-Visit https://phenix-online.org/ for more information about phenix.
-
-# Building the code
-
-*Conda build
-```
-   conda build [ --python x.x ] recipe 
-      (note: you should have conda-forge at the top of your channel
-      list in ~/.condarc.  You should also have done a "conda install
-      conda-forge-pinning" in your conda build environment.
+conda config --add channels phenix-project
+conda config --set channel_priority strict
 ```
 
-*Non-conda build  (MacOSX, Linux, probably WSL):
+Once the `phenix-project` channel has been enabled, `amber_phenix` can be installed with `conda`:
+
 ```
-   ./configure --help   #  then choose the options you want
-   make install
-   make test
+conda install amber_phenix
 ```
 
-# License
-This project is generally licensed under the GNU (Lesser) General Public 
-License, version 3 (GPL/LGPL v3).  Some components use different, but 
-compatible, open source licenses.  See the LICENSE file for more information.
+or with `mamba`:
+
+```
+mamba install amber_phenix
+```
+
+It is possible to list all of the versions of `amber_phenix` available on your platform with `conda`:
+
+```
+conda search amber_phenix --channel phenix-project
+```
+
+or with `mamba`:
+
+```
+mamba search amber_phenix --channel phenix-project
+```
+
+Alternatively, `mamba repoquery` may provide more information:
+
+```
+# Search all versions available on your platform:
+mamba repoquery search amber_phenix --channel phenix-project
+
+# List packages depending on `amber_phenix`:
+mamba repoquery whoneeds amber_phenix --channel phenix-project
+
+# List dependencies of `amber_phenix`:
+mamba repoquery depends amber_phenix --channel phenix-project
+```
+
+
+
+
+Updating amber_phenix-feedstock
+===============================
+
+If you would like to improve the amber_phenix recipe or build a new
+package version, please fork this repository and submit a PR. Upon submission,
+your changes will be run on the appropriate platforms to give the reviewer an
+opportunity to confirm that the changes result in a successful build. Once
+merged, the recipe will be re-built and uploaded automatically to the
+`phenix-project` channel, whereupon the built conda packages will be available for
+everybody to install and use from the `phenix-project` channel.
+Note that all branches in the bkpoon/amber_phenix-feedstock are
+immediately built and any created packages are uploaded, so PRs should be based
+on branches in forks and branches in the main repository should only be used to
+build distinct package versions.
+
+In order to produce a uniquely identifiable distribution:
+ * If the version of a package **is not** being increased, please add or increase
+   the [``build/number``](https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#build-number-and-string).
+ * If the version of a package **is** being increased, please remember to return
+   the [``build/number``](https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#build-number-and-string)
+   back to 0.
+
+Feedstock Maintainers
+=====================
+
+* [@bkpoon](https://github.com/bkpoon/)
+* [@dacase](https://github.com/dacase/)
 
